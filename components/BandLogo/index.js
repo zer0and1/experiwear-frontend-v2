@@ -3,20 +3,21 @@ import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
-import { LOGO_IMAGE_PATH } from 'utils/constants/image-paths'
+import { BAND_LOGO_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles(() => ({
   picture: {
     display: 'flex',
   },
   img: props => ({
-    width: props.width,
+    width: '100%',
+    maxWidth: props.width,
     objectFit: 'contain'
   })
 }));
 
-const Logo = ({
-  width = 166,
+const BandLogo = ({
+  width = 489,
   className,
   ...rest
 }) => {
@@ -24,13 +25,13 @@ const Logo = ({
 
   return (
     <picture className={clsx(classes.picture, className)} {...rest}>
-      <source srcSet={LOGO_IMAGE_PATH} />
+      <source srcSet={BAND_LOGO_IMAGE_PATH} />
       <img
         className={classes.img}
-        src={LOGO_IMAGE_PATH}
-        alt='logo' />
+        src={BAND_LOGO_IMAGE_PATH}
+        alt='band-logo' />
     </picture>
   )
 }
 
-export default memo(Logo);
+export default memo(BandLogo);
