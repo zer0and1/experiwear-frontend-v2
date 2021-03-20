@@ -1,5 +1,5 @@
 
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Typography,
@@ -7,25 +7,27 @@ import {
 } from '@material-ui/core'
 import clsx from 'clsx'
 
-import GreyEyeIcon from 'components/Icons/GreyEyeIcon'
-import GreyEyeCloseIcon from 'components/Icons/GreyEyeCloseIcon'
-
 const useStyles = makeStyles(theme => ({
   root: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%'
+  },
+  container: {
     width: '100%'
   },
   textField: {
     width: '100%',
-    border: `1px solid ${theme.palette.background.primary}`,
-    borderRadius: 50,
-    backgroundColor: theme.palette.background.primary
+    border: `1px solid ${theme.custom.palette.border}`,
+    borderRadius: theme.spacing(1),
+    backgroundColor: theme.palette.background.border
   },
   input: {
     color: theme.custom.palette.lightBlack,
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'roboto, sans-serif',
     lineHeight: 'normal',
-    padding: theme.spacing(1.5, 2.5),
+    padding: theme.spacing(1),
     '&::placeholder': {
       lineHeight: 'normal',
       color: theme.palette.text.secondary
@@ -45,32 +47,27 @@ const useStyles = makeStyles(theme => ({
   errorInput: {
     border: `1px solid ${theme.palette.danger.main}`
   },
-  label: {
-    padding: theme.spacing(0, 2.5, 1)
-  },
+  label: (props) => ({
+    fontSize: 16,
+    width: props.labelWidth,
+    textAlign: 'end',
+    paddingRight: theme.spacing(1)
+  }),
   error: {
-    padding: theme.spacing(1, 2.5, 0)
+    fontSize: 14
   },
-  eyeIcon: {
-    cursor: 'pointer'
-  }
 }));
 
 const MagicTextField = React.forwardRef(({
   label,
+  labelWidth = 150,
   type = 'text',
   error,
   className,
   ...rest
 }, ref) => {
 
-  const classes = useStyles();
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const eyeIconHandler = () => {
-    setShowPassword(prev => !prev)
-  }
+  const classes = useStyles({ labelWidth });
 
   return (
     <div className={clsx(classes.root, className)}>
@@ -80,51 +77,37 @@ const MagicTextField = React.forwardRef(({
           color='textSecondary'
           className={classes.label}
         >
-          {label}
+          {label}:
         </Typography>
       }
-      <OutlinedInput
-        inputRef={ref}
-        variant='outlined'
-        type={showPassword ? 'text' : type}
-        error={!!error}
-        endAdornment={
-          type === 'password' && (
-            showPassword
-              ? (
-                <GreyEyeCloseIcon
-                  className={classes.eyeIcon}
-                  onClick={eyeIconHandler}
-                />
-              ) : (
-                <GreyEyeIcon
-                  className={classes.eyeIcon}
-                  onClick={eyeIconHandler}
-                />
-              )
-          )
+      <div className={classes.container}>
+        <OutlinedInput
+          inputRef={ref}
+          variant='outlined'
+          type={type}
+          error={!!error}
+          className={clsx(
+            'form-control form-control-lg',
+            classes.textField
+          )}
+          classes={{
+            input: classes.input,
+            error: classes.errorInput,
+            notchedOutline: classes.notchedOutline
+          }}
+          {...rest}
+        />
+        {
+          !!error &&
+          <Typography
+            color='error'
+            variant='subtitle2'
+            className={classes.error}
+          >
+            {error}
+          </Typography>
         }
-        className={clsx(
-          'form-control form-control-lg',
-          classes.textField
-        )}
-        classes={{
-          input: classes.input,
-          error: classes.errorInput,
-          notchedOutline: classes.notchedOutline
-        }}
-        {...rest}
-      />
-      {
-        !!error &&
-        <Typography
-          color='error'
-          variant='subtitle2'
-          className={classes.error}
-        >
-          {error}
-        </Typography>
-      }
+      </div>
     </div>
   );
 });

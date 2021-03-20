@@ -5,8 +5,10 @@ import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Logo from 'components/Logo'
+import BandLogo from 'components/BandLogo'
 import MagicLoading from 'components/MagicLoading'
 import { AUTH_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
+import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,15 +28,23 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 752,
     margin: theme.spacing(3),
-    padding: theme.spacing(4, 8),
+    padding: theme.spacing(2.5, 16.5),
     borderRadius: theme.spacing(1),
-    backgroundColor: theme.palette.background.secondary,
+    backgroundColor: theme.palette.background.default,
     [theme.breakpoints.down('xs')]: {
-      padding: theme.spacing(4, 2)
+      padding: theme.spacing(2)
     }
   },
+  bandLogo: {
+    margin: theme.spacing(4, 0)
+  },
   logo: {
-    marginBottom: theme.spacing(2)
+    marginTop: theme.spacing(4)
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(4)
   }
 }));
 
@@ -43,18 +53,27 @@ const authPageStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '100%'
   },
   input: {
-    marginBottom: theme.spacing(2.5)
+    marginBottom: theme.spacing(1.5)
   },
   button: {
-    height: 56,
-    margin: theme.spacing(2.5)
+    margin: theme.spacing(1)
+  },
+  forgotLink: {
+    width: '100%',
+    textAlign: 'end'
+  },
+  emailLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    color: theme.custom.palette.red,
   }
 }));
 
 const AuthWrapper = ({
+  title,
   children
 }) => {
   const classes = useStyles()
@@ -67,8 +86,15 @@ const AuthWrapper = ({
         <MagicLoading loading={loadingStatus} />
       }
       <Paper className={classes.container}>
-        <Logo className={classes.logo} />
+        <BandLogo className={classes.bandLogo} />
+        <Typography
+          color='textPrimary'
+          className={classes.title}
+        >
+          {title}
+        </Typography>
         {children}
+        <Logo className={classes.logo} />
       </Paper>
     </div>
   )

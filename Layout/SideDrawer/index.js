@@ -14,13 +14,11 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: theme.custom.layout.drawerWidth,
     color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.secondary,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(5.5, 3)
   },
-  logoContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    padding: theme.spacing(5)
+  logo: {
+    paddingBottom: theme.spacing(5.5)
   }
 }));
 
@@ -37,12 +35,7 @@ const SideDrawer = () => {
         paper: classes.drawerPaper
       }}
     >
-      <div className={classes.logoContainer}>
-        <Logo
-          width={80}
-          height={85}
-        />
-      </div>
+      <Logo className={classes.logo} />
       <SideDrawerList />
     </Drawer>
   );

@@ -1,35 +1,29 @@
 
 import { memo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import * as authAPI from 'services/api-auth'
-import { setUserToken } from 'actions/auth'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicTextField from 'components/UI/MagicTextField'
 import AuthWrapper, { authPageStyles } from '../Shared/AuthWrapper'
 import useLoading from 'utils/hooks/useLoading'
 import { showErrorToast } from 'utils/helpers/toast'
-import {
-  EMAIL_VALID,
-  PASSWORD_VALID
-} from 'utils/constants/validations'
-import LinkButton from 'components/UI/Buttons/LinkButton'
+import { EMAIL_VALID } from 'utils/constants/validations'
 import LINKS from 'utils/constants/links'
 
 const schema = yup.object().shape({
-  email: EMAIL_VALID,
-  password: PASSWORD_VALID
+  email: EMAIL_VALID
 });
 
-const SignIn = () => {
-  const dispatch = useDispatch();
+const ForgotPassword = () => {
+  const router = useRouter();
   const authClasses = authPageStyles();
   const { changeLoadingStatus } = useLoading();
 
-  const { control, handleSubmit, errors, reset } = useForm({
+  const { control, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -38,27 +32,15 @@ const SignIn = () => {
     try {
       const params = {
         email: data.email,
-        password: data.password
       }
 
       if (false) {
-        const { user, token } = await authAPI.login(params);
-        dispatch(setUserToken({
-          accessToken: token,
-          user
-        }));
+        await authAPI.login(params);
       }
-
-      const token = 'adfasdfasdfasdfasdfasdfasdf';
-      const user = {
-        email: data.email,
-        name: 'Mark W',
-        avatar: 'https://images.unsplash.com/photo-1542596594-03574c130a79?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDM1fHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-      }
-      dispatch(setUserToken({
-        accessToken: token,
-        user
-      }));
+      router.push({
+        pathname: LINKS.RESET_PASSWORD.HREF,
+        query: { email: data.email }
+      });
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
@@ -68,15 +50,8 @@ const SignIn = () => {
     changeLoadingStatus(false)
   };
 
-  const resetHandler = () => {
-    reset({
-      email: '',
-      password: ''
-    })
-  }
-
   return (
-    <AuthWrapper title='Login'>
+    <AuthWrapper title='Reset Password'>
       <form
         noValidate
         className={authClasses.form}
@@ -92,35 +67,19 @@ const SignIn = () => {
           control={control}
           defaultValue=''
         />
-        <Controller
-          as={<MagicTextField />}
-          name='password'
-          type='password'
-          label='Password'
-          error={errors.password?.message}
-          className={authClasses.input}
-          control={control}
-          defaultValue=''
-        />
-        <LinkButton
-          href={LINKS.FORGOT_PASSWORD.HREF}
-          className={authClasses.forgotLink}
-        >
-          Forgot Password
-        </LinkButton>
         <div>
           <ContainedButton
             color='red'
             className={authClasses.button}
-            onClick={resetHandler}
+            href={LINKS.SIGN_IN.HREF}
           >
-            Reset
+            Cancel
           </ContainedButton>
           <ContainedButton
             type='submit'
             className={authClasses.button}
           >
-            Log In
+            Submit
           </ContainedButton>
         </div>
       </form>
@@ -128,4 +87,4 @@ const SignIn = () => {
   )
 }
 
-export default memo(SignIn)
+export default memo(ForgotPassword)

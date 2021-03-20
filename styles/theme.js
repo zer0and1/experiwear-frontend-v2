@@ -4,72 +4,74 @@ import {
   responsiveFontSizes
 } from '@material-ui/core/styles'
 
-const ubuntu = {
-  fontFamily: 'Ubuntu',
+const montserrat = {
+  fontFamily: 'Montserrat',
   fontStyle: 'normal',
   fontDisplay: 'swap',
   fontWeight: 400,
   src: `
-    local('Ubuntu'),
-    url('/assets/fonts/Ubuntu.woff2') format('woff2')`
+    local('Montserrat'),
+    url('/assets/fonts/Montserrat.woff') format('woff')`
 };
 
 const theme = responsiveFontSizes(createMuiTheme({
   typography: {
-    fontFamily: 'Ubuntu',
+    fontFamily: 'Montserrat',
   },
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': [ubuntu]
+        '@font-face': [montserrat]
       }
     }
   },
   palette: {
     primary: {
       light: '#4791db',
-      main: '#f2556f',
-      dark: '#ecebed',
+      main: '#000000',
+      dark: '#115293',
       contrastText: '#ffffff'
     },
     secondary: {
       light: '#555e6c',
-      main: '#0a00ff',
-      dark: '#1e2532',
+      main: '#587489',
+      dark: '#2c3b46',
       contrastText: '#ffffff'
     },
     danger: {
       light: '#c944dd',
-      main: '#eb196e',
+      main: '#df0026',
       dark: '#b20000',
       contrastText: '#ffffff'
     },
     background: {
       default: '#ffffff',
-      primary: '#1b1f2e',
-      secondary: '#0f1118'
+      primary: '#f6f6f6',
+      secondary: '#000000'
     },
     text: {
-      primary: '#fff',
-      secondary: '#a2a1b2'
+      primary: '#161616',
+      secondary: '#2c2c2c'
     },
   },
   custom: {
     palette: {
+      black: '#000000',
+      red: '#df0026',
+      blue: '#01a1c3',
+      purple: '#6f64f8',
       grey: '#ecebed',
       darkGrey: '#14161f',
       orange: '#da532c',
       white: '#ffffff',
       pink: '#d808dd',
-      red: '#f2556f',
       yellow: '#ffb418',
       green: '#41d98d',
-      blue: '#4595e6',
-      border: '#f1f0f2'
+      border: '#d6d6d6'
     },
     layout: {
       topAppBarHeight: 80,
-      drawerWidth: 294
+      drawerWidth: 280
     }
   }
 }));

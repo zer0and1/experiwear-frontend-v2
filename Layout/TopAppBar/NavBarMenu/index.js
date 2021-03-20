@@ -4,7 +4,7 @@ import { memo } from 'react'
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
-import OutlinedButton from 'components/UI/Buttons/OutlinedButton'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import ProfileDropMenu from './ProfileDropMenu'
 import LINKS from 'utils/constants/links'
 
@@ -28,12 +28,12 @@ const NavBarMenu = () => {
       {
         !accessToken
           ? (
-            <OutlinedButton
+            <ContainedButton
               href={LINKS.SIGN_IN.HREF}
               className={classes.button}
             >
               Log In
-            </OutlinedButton>
+            </ContainedButton>
           ) : (
             <ProfileDropMenu />
           )

@@ -2,7 +2,7 @@
 import { memo, useCallback, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
-import OutlinedButton from 'components/UI/Buttons/OutlinedButton'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import UserTables from './UserTables'
 import AddEditUserDialog from './AddEditUserDialog'
 
@@ -38,11 +38,11 @@ const User = () => {
   return (
     <main className={classes.root}>
       <div className={classes.actionBar}>
-        <OutlinedButton
+        <ContainedButton
           onClick={addHandler}
         >
           Add User
-        </OutlinedButton>
+        </ContainedButton>
       </div>
 
       <UserTables

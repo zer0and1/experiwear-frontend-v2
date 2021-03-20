@@ -10,7 +10,7 @@ import { addUser, editUser } from 'actions/users'
 import * as userAPI from 'services/api-user'
 import MagicDialog from 'components/MagicDialog'
 import MagicTextField from 'components/UI/MagicTextField'
-import GradientButton from 'components/UI/Buttons/GradientButton'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import useLoading from 'utils/hooks/useLoading'
 import { showErrorToast } from 'utils/helpers/toast'
 import { isEmpty } from 'utils/helpers/utility'
@@ -141,12 +141,12 @@ const AddEditUserDialog = ({
           control={control}
           defaultValue=''
         />
-        <GradientButton
+        <ContainedButton
           type='submit'
           className={classes.button}
         >
           Submit
-        </GradientButton>
+        </ContainedButton>
       </form>
     </MagicDialog>
   );
