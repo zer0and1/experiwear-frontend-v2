@@ -26,6 +26,7 @@ const MagicSelect = React.forwardRef(({
   items,
   placeholder,
   label,
+  labelWidth,
   ...rest
 }, ref) => {
 
@@ -36,7 +37,12 @@ const MagicSelect = React.forwardRef(({
       id='demo-customized-select'
       ref={ref}
       displayEmpty
-      input={<MagicTextField label={label} />}
+      input={
+        <MagicTextField
+          label={label}
+          labelWidth={labelWidth}
+        />
+      }
       placeholder={placeholder}
       classes={{
         icon: classes.icon

@@ -1,14 +1,13 @@
 
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
-import Paper from '@material-ui/core/Paper'
+import { Typography, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Logo from 'components/Logo'
 import BandLogo from 'components/BandLogo'
 import MagicLoading from 'components/MagicLoading'
 import { AUTH_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
-import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {

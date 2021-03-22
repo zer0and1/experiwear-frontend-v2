@@ -16,9 +16,29 @@ const LINKS = Object.freeze({
     TITLE: 'Home',
     HREF: '/'
   },
-  USER: {
-    TITLE: 'User Management',
-    HREF: '/user'
+  NEWS: {
+    TITLE: 'NEWs',
+    HREF: '/news'
+  },
+  SURVEY: {
+    TITLE: 'Survey',
+    HREF: '/survey'
+  },
+  SCORE: {
+    TITLE: 'Score',
+    HREF: '/score'
+  },
+  PROMO: {
+    TITLE: 'Promo',
+    HREF: '/promo'
+  },
+  SCHEDULE: {
+    TITLE: 'Schedule',
+    HREF: '/schedule'
+  },
+  CANNED: {
+    TITLE: 'Canned',
+    HREF: '/canned'
   }
 });
 

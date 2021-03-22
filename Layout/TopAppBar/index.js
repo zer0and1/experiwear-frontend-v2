@@ -1,54 +1,88 @@
-
-
-import { memo, useMemo } from 'react'
-import { useRouter } from 'next/router'
+import { memo, useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  AppBar,
-  Toolbar,
-  Typography
+  Avatar,
+  Paper,
+  Typography,
 } from '@material-ui/core'
 
-import NavBarMenu from './NavBarMenu'
-import SIDEBAR_MENU from 'utils/constants/sidebar-menu'
+import { logoutUser } from 'actions/auth'
+import BandLogo from 'components/BandLogo'
+import SearchIcon from 'components/Icons/SearchIcon'
+import BadgeChatIcon from './BadgeChatIcon'
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    height: theme.custom.layout.topAppBarHeight,
-    backgroundColor: theme.custom.palette.darkGrey,
-    boxShadow: 'none',
-    width: `calc(100% - ${theme.custom.layout.drawerWidth}px)`,
-    marginLeft: theme.custom.layout.drawerWidth,
-  },
-  toolBar: {
+  root: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '100%'
-  }
+    alignItems: 'center',
+    width: '100%',
+    borderRadius: theme.spacing(1),
+    padding: theme.spacing(0.5, 3),
+    backgroundColor: theme.palette.background.default
+  },
+  userInfo: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: theme.spacing(9)
+  },
+  searchIcon: {
+    margin: theme.spacing(0, 3)
+  },
+  name: {
+    textAlign: 'end'
+  },
+  signOut: {
+    fontSize: 11,
+    cursor: 'pointer',
+    textAlign: 'end'
+  },
+  avatar: {
+    width: 34,
+    height: 34,
+    marginLeft: theme.spacing(1)
+  },
 }));
 
 const TopAppBar = () => {
   const classes = useStyles();
-  const router = useRouter();
+  const dispatch = useDispatch();
 
-  const selectMenu = useMemo(() =>
-    SIDEBAR_MENU.find((item) => item.HREF === router.pathname)
-    , [router]);
+  const { currentUser } = useSelector(state => state.auth);
+
+  const logoutHandler = useCallback(() => {
+    dispatch(logoutUser());
+  }, [dispatch]);
 
   return (
-    <AppBar
-      position='relative'
-      className={classes.appBar}>
-      <Toolbar className={classes.toolBar}>
-        <Typography variant='h5'>
-          {selectMenu.TITLE}
-        </Typography>
-        <NavBarMenu />
-      </Toolbar>
-    </AppBar>
+    <Paper className={classes.root}>
+      <div />
+      <BandLogo />
+      <div className={classes.userInfo}>
+        <SearchIcon className={classes.searchIcon} />
+        <BadgeChatIcon />
+        <div>
+          <Typography
+            variant='body2'
+            color='textSecondary'
+          >
+            {currentUser.name || 'Not Found'}
+          </Typography>
+          <Typography
+            color='textSecondary'
+            className={classes.signOut}
+            onClick={logoutHandler}
+          >
+            Sign Out
+          </Typography>
+        </div>
+        <Avatar
+          src={currentUser.avatar}
+          className={classes.avatar}
+        />
+      </div>
+    </Paper>
   );
 };
 

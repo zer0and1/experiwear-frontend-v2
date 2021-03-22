@@ -10,7 +10,6 @@ import clsx from 'clsx'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center',
     width: '100%'
   },
   container: {
@@ -41,6 +40,9 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.text.secondary
     }
   },
+  multiline: {
+    padding: 0
+  },
   notchedOutline: {
     border: 'none'
   },
@@ -51,7 +53,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
     width: props.labelWidth,
     textAlign: 'end',
-    paddingRight: theme.spacing(1)
+    paddingRight: theme.spacing(1),
+    margin: theme.spacing(0.75, 0)
   }),
   error: {
     fontSize: 14
@@ -93,7 +96,8 @@ const MagicTextField = React.forwardRef(({
           classes={{
             input: classes.input,
             error: classes.errorInput,
-            notchedOutline: classes.notchedOutline
+            notchedOutline: classes.notchedOutline,
+            multiline: classes.multiline
           }}
           {...rest}
         />
