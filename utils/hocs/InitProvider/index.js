@@ -1,13 +1,12 @@
 
 import { memo, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import {
   setAccessToken,
   setCurrentUser
 } from 'actions/auth'
-import { getUsers } from 'actions/users'
 import { isServer } from 'utils/helpers/utility'
 import scrollToTop from 'utils/helpers/scrollToTop'
 import {
@@ -19,8 +18,6 @@ import LINKS from 'utils/constants/links'
 const InitProvider = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const { accessToken } = useSelector(state => state.auth);
 
   useEffect(() => {
     const accessToken = isServer() ? '' : localStorage.accessToken;
@@ -50,12 +47,6 @@ const InitProvider = () => {
     scrollToTop()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
-
-  useEffect(() => {
-    if (!!accessToken) {
-      dispatch(getUsers())
-    }
-  }, [accessToken, dispatch])
 
   return <div />
 };

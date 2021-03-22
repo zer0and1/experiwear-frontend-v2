@@ -7,8 +7,9 @@ import * as yup from 'yup'
 
 import * as authAPI from 'services/api-auth'
 import { setUserToken } from 'actions/auth'
-import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicTextField from 'components/UI/MagicTextField'
+import LinkButton from 'components/UI/Buttons/LinkButton'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import AuthWrapper, { authPageStyles } from '../Shared/AuthWrapper'
 import useLoading from 'utils/hooks/useLoading'
 import { showErrorToast } from 'utils/helpers/toast'
@@ -16,7 +17,6 @@ import {
   EMAIL_VALID,
   PASSWORD_VALID
 } from 'utils/constants/validations'
-import LinkButton from 'components/UI/Buttons/LinkButton'
 import LINKS from 'utils/constants/links'
 
 const schema = yup.object().shape({

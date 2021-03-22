@@ -1,37 +1,36 @@
-import { memo, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import List from '@material-ui/core/List'
+import { memo } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { List, Typography } from '@material-ui/core'
 
-import SideDrawerListItem from './SideDrawerListItem'
-import SIDEBAR_MENU from 'utils/constants/sidebar-menu'
+import SideDrawerListItem from '../SideDrawerListItem'
+import { SECONDARY_SIDEBAR_MENU } from 'utils/constants/sidebar-menu'
+
+const useStyles = makeStyles(theme => ({
+  list: {
+    margin: theme.spacing(4, 0),
+  },
+  header: {
+    padding: theme.spacing(1, 0.5),
+    color: theme.custom.palette.lightGrey
+  }
+}));
 
 const SideDrawerList = () => {
-  const router = useRouter();
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-
-  useEffect(() => {
-    const routerIndex = SIDEBAR_MENU.findIndex((item) => item.HREF === router.pathname)
-    setSelectedIndex(routerIndex);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
-
-  const onMenuHandler = index => () => {
-    if (selectedIndex !== index) {
-      setSelectedIndex(index)
-    } else {
-      setSelectedIndex(-1);
-    }
-  }
+  const classes = useStyles();
 
   return (
-    <List>
+    <List className={classes.list}>
+      <Typography
+        variant='body1'
+        className={classes.header}
+      >
+        FANBAND ALERT ACTIONS
+      </Typography>
       {
-        SIDEBAR_MENU.map((menu, index) =>
+        SECONDARY_SIDEBAR_MENU.map((menu, index) =>
           <SideDrawerListItem
             key={index}
             menu={menu}
-            selected={index === selectedIndex}
-            onMenu={onMenuHandler(index)}
           />
         )
       }

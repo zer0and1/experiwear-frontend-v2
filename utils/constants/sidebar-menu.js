@@ -1,20 +1,47 @@
 
-import AnalyticIcon from '@material-ui/icons/PollOutlined'
-import UserIcon from '@material-ui/icons/PeopleAltOutlined'
-
 import LINKS from 'utils/constants/links'
+import HomeIcon from 'components/Icons/HomeIcon'
+import MailIcon from 'components/Icons/MailIcon'
+import MessageSquareIcon from 'components/Icons/MessageSquareIcon'
+import CheckSquareIcon from 'components/Icons/CheckSquareIcon'
+import DealIcon from 'components/Icons/DealIcon'
+import CalendarIcon from 'components/Icons/CalendarIcon'
 
-const SIDEBAR_MENU = [
+const HOME_MENU = {
+  ICON: HomeIcon,
+  HREF: LINKS.HOME.HREF,
+  TITLE: LINKS.HOME.TITLE
+}
+
+const SECONDARY_SIDEBAR_MENU = [
   {
-    ICON: <AnalyticIcon />,
-    HREF: LINKS.HOME.HREF,
-    TITLE: LINKS.HOME.TITLE
+    ICON: MailIcon,
+    HREF: LINKS.NEWS.HREF,
+    TITLE: LINKS.NEWS.TITLE
   },
   {
-    ICON: <UserIcon />,
-    HREF: LINKS.USER.HREF,
-    TITLE: LINKS.USER.TITLE
+    ICON: MessageSquareIcon,
+    HREF: LINKS.SURVEY.HREF,
+    TITLE: LINKS.SURVEY.TITLE
+  },
+  {
+    ICON: CheckSquareIcon,
+    HREF: LINKS.SCORE.HREF,
+    TITLE: LINKS.SCORE.TITLE
+  },
+  {
+    ICON: DealIcon,
+    HREF: LINKS.PROMO.HREF,
+    TITLE: LINKS.PROMO.TITLE
+  },
+  {
+    ICON: CalendarIcon,
+    HREF: LINKS.SCHEDULE.HREF,
+    TITLE: LINKS.SCHEDULE.TITLE
   },
 ]
 
-export default SIDEBAR_MENU;
+export {
+  HOME_MENU,
+  SECONDARY_SIDEBAR_MENU
+};

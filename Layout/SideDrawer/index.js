@@ -4,17 +4,23 @@ import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 
 import Logo from 'components/Logo'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import SideDrawerList from './SideDrawerList'
+import GameDay from './GameDay'
+import SideDrawerListItem from './SideDrawerListItem'
+import { HOME_MENU } from 'utils/constants/sidebar-menu'
+import LINKS from 'utils/constants/links'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
     width: theme.custom.layout.drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
     width: theme.custom.layout.drawerWidth,
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.default,
+    boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.17)',
     padding: theme.spacing(5.5, 3)
   },
   logo: {
@@ -36,7 +42,15 @@ const SideDrawer = () => {
       }}
     >
       <Logo className={classes.logo} />
+      <SideDrawerListItem menu={HOME_MENU} />
+      <GameDay />
       <SideDrawerList />
+      <ContainedButton
+        color='blue'
+        href={LINKS.CANNED.HREF}
+      >
+        Canned Alert
+      </ContainedButton>
     </Drawer>
   );
 };

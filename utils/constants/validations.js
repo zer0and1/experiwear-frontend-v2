@@ -19,13 +19,13 @@ const CONFIRM_PASSWORD_VALID = yup.string()
     'Passwords needs to match.'
   );
 
-const USER_TYPE_VALID = yup.string()
-  .required('Please select user type.');
+const STRING_VALID = yup.string()
+  .required('Please enter in this field.');
 
 export {
   NAME_VALID,
   EMAIL_VALID,
   PASSWORD_VALID,
   CONFIRM_PASSWORD_VALID,
-  USER_TYPE_VALID,
+  STRING_VALID
 };

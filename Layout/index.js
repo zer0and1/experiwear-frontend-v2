@@ -2,10 +2,12 @@
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
+import { Grid } from '@material-ui/core'
 
 import MagicLoading from 'components/MagicLoading'
 import TopAppBar from './TopAppBar'
 import SideDrawer from './SideDrawer'
+import { AUTH_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,13 +15,26 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0.1,
+      backgroundImage: `url(${AUTH_BACKGROUND_IMAGE_PATH})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      zIndex: -1,
+    }
   },
   container: {
     width: `calc(100% - ${theme.custom.layout.drawerWidth}px)`,
-    minHeight: `calc(100vh - ${theme.custom.layout.topAppBarHeight}px)`,
-    padding: theme.spacing(4),
+    minHeight: '100vh',
+    padding: theme.spacing(3, 4),
     marginLeft: theme.custom.layout.drawerWidth,
-    backgroundColor: theme.custom.palette.darkGrey,
   }
 }));
 
@@ -35,10 +50,16 @@ const Layout = ({
         loadingStatus &&
         <MagicLoading loading={loadingStatus} />
       }
-      <TopAppBar />
       <SideDrawer />
       <div className={classes.container}>
-        {children}
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TopAppBar />
+          </Grid>
+          <Grid item xs={12}>
+            {children}
+          </Grid>
+        </Grid>
       </div>
     </main>
   );

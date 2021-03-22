@@ -23,6 +23,17 @@ const theme = responsiveFontSizes(createMuiTheme({
       '@global': {
         '@font-face': [montserrat]
       }
+    },
+    MuiCard: {
+      root: {
+        borderRadius: 8,
+        height: '100%'
+      }
+    },
+    MuiCardContent: {
+      root: {
+        padding: 32
+      }
     }
   },
   palette: {
@@ -60,13 +71,14 @@ const theme = responsiveFontSizes(createMuiTheme({
       red: '#df0026',
       blue: '#01a1c3',
       purple: '#6f64f8',
-      grey: '#ecebed',
+      green: '#17c400',
+      grey: '#606060',
+      lightGrey: '#999999',
       darkGrey: '#14161f',
       orange: '#da532c',
       white: '#ffffff',
       pink: '#d808dd',
       yellow: '#ffb418',
-      green: '#41d98d',
       border: '#d6d6d6'
     },
     layout: {

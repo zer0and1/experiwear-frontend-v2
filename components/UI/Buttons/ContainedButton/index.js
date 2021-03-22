@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
     fontWeight: 'bold',
     height: 42,
+    borderRadius: theme.spacing(1),
     backgroundColor: theme.custom.palette[props.color],
     padding: theme.spacing(0, 3),
     [theme.breakpoints.down('xs')]: {
