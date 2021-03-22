@@ -2,11 +2,6 @@
   "name": "experiwear.dashboard",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
   "dependencies": {
     "@hookform/resolvers": "1.0.0",
     "@material-ui/core": "^4.11.2",
@@ -34,5 +29,12 @@
     "pm2": "^4.5.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "pm2:restart:dev": "npm run build && pm2 delete frontend || : &&  pm2 start frontend.json --env development",
+    "deploy:dev": "pm2 deploy frontend.json dev update"
   }
 }
