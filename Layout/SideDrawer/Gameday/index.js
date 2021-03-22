@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const GameDay = () => {
+const Gameday = () => {
   const classes = useStyles();
 
   return (
@@ -24,4 +24,4 @@ const GameDay = () => {
   )
 }
 
-export default memo(GameDay)
+export default memo(Gameday)

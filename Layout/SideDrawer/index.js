@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer'
 
 import Logo from 'components/Logo'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
-import GameDay from './GameDay'
+import Gameday from './Gameday'
 import SideDrawerList from './SideDrawerList'
 import SideDrawerListItem from './SideDrawerListItem'
 import { HOME_MENU } from 'utils/constants/sidebar-menu'
@@ -43,7 +43,7 @@ const SideDrawer = () => {
     >
       <Logo className={classes.logo} />
       <SideDrawerListItem menu={HOME_MENU} />
-      <GameDay />
+      <Gameday />
       <SideDrawerList />
       <ContainedButton
         color='blue'
