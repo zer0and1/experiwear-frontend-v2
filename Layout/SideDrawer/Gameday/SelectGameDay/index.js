@@ -1,10 +1,11 @@
 
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core';
 
 import CircleIcon from 'components/Icons/CircleIcon'
 import ChevronDownIcon from 'components/Icons/ChevronDownIcon'
+import MagicGameDayDialog from 'parts/MagicGameDayDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,20 +33,33 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectGameDay = () => {
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState(false)
 
   return (
-    <div className={classes.root}>
-      <div className={classes.container}>
-        <CircleIcon className={classes.icon} />
-        <Typography
-          className={classes.label}
-          color='textSecondary'
-        >
-          Select Gameday
-        </Typography>
+    <>
+      <div
+        className={classes.root}
+        onClick={() => setOpenModal(true)}
+      >
+        <div className={classes.container}>
+          <CircleIcon className={classes.icon} />
+          <Typography
+            className={classes.label}
+            color='textSecondary'
+          >
+            Select Gameday
+          </Typography>
+        </div>
+        <ChevronDownIcon className={classes.icon} />
       </div>
-      <ChevronDownIcon className={classes.icon} />
-    </div>
+      {
+        openModal &&
+        <MagicGameDayDialog
+          open={openModal}
+          setOpen={setOpenModal}
+        />
+      }
+    </>
   )
 }
 

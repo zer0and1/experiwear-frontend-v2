@@ -1,20 +1,26 @@
 
+import LINKS from 'utils/constants/links'
+
 const ALERT_TYPES = [
   {
     LABEL: 'News',
-    VALUE: 'news'
+    VALUE: 'news',
+    HREF: LINKS.NEWS.HREF
   },
   {
     LABEL: 'Survey',
-    VALUE: 'survey'
+    VALUE: 'survey',
+    HREF: LINKS.SURVEY.HREF
   },
   {
     LABEL: 'Score',
-    VALUE: 'score'
+    VALUE: 'score',
+    HREF: LINKS.SCORE.HREF
   },
   {
     LABEL: 'Promo',
-    VALUE: 'promo'
+    VALUE: 'promo',
+    HREF: LINKS.PROMO.HREF
   },
 ]
 

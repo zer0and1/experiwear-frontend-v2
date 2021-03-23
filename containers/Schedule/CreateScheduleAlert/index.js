@@ -75,7 +75,7 @@ const CreateScheduleAlert = () => {
             as={<MagicSelect />}
             name='type'
             label='Alert Type'
-            labelWidth={175}
+            labelWidth={200}
             items={ALERT_TYPES}
             error={errors.type?.message}
             className={classes.input}
@@ -86,7 +86,7 @@ const CreateScheduleAlert = () => {
             as={<MagicTextField />}
             name='title'
             label='Alert Title'
-            labelWidth={175}
+            labelWidth={200}
             error={errors.title?.message}
             className={classes.input}
             control={control}
@@ -98,7 +98,7 @@ const CreateScheduleAlert = () => {
             rows={5}
             name='text'
             label='Alert Body Text'
-            labelWidth={175}
+            labelWidth={200}
             error={errors.text?.message}
             className={classes.input}
             control={control}
@@ -106,7 +106,7 @@ const CreateScheduleAlert = () => {
           />
           <MagicImageField
             label='Select Image'
-            labelWidth={175}
+            labelWidth={200}
             file={file}
             setFile={setFile}
             fileBuffer={fileBuffer}
@@ -118,7 +118,7 @@ const CreateScheduleAlert = () => {
             name='scheduleDate'
             label='Send Schedule'
             type="datetime-local"
-            labelWidth={175}
+            labelWidth={200}
             error={errors.scheduleDate?.message}
             className={classes.input}
             control={control}

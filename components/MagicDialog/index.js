@@ -11,13 +11,12 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
-import { AUTH_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     borderRadius: 10,
     minWidth: 700,
-    backgroundColor: theme.palette.background.secondary,
+    backgroundColor: theme.palette.background.default,
     [theme.breakpoints.down('sm')]: {
       minWidth: 'unset'
     },
@@ -26,39 +25,30 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: theme.spacing(0, 6),
+    padding: theme.spacing(6, 5),
     lineHeight: 'initial',
-    height: 68,
-    backgroundImage: `url(${AUTH_BACKGROUND_IMAGE_PATH})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPositionY: 'bottom',
-    backgroundSize: 'cover'
   },
   title: {
+    fontSize: 18,
     fontWeight: 'bold',
-    textTransform: 'uppercase',
-    color: theme.custom.palette.white
   },
   closeIcon: {
     position: 'absolute',
-    top: theme.spacing(1.5),
-    right: theme.spacing(2),
-    color: theme.custom.palette.white
+    top: 40,
+    right: 40,
+    color: theme.custom.palette.black
   },
   dialogContent: {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    minWidth: 600,
     minHeight: 130,
-    padding: theme.spacing(4, 2),
+    padding: 0,
     [theme.breakpoints.down('sm')]: {
       minWidth: 520
     },
     [theme.breakpoints.down('xs')]: {
       minWidth: 'unset',
-      padding: theme.spacing(2, 1)
     }
   },
   dialogActions: {
