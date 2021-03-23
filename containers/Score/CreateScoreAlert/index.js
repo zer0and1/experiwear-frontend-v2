@@ -71,7 +71,7 @@ const CreateScoreAlert = () => {
             as={<MagicTextField />}
             name='title'
             label='Score Alert Title'
-            labelWidth={165}
+            labelWidth={200}
             error={errors.title?.message}
             className={classes.input}
             control={control}
@@ -83,7 +83,7 @@ const CreateScoreAlert = () => {
             rows={5}
             name='text'
             label='Score Body Text'
-            labelWidth={165}
+            labelWidth={200}
             error={errors.text?.message}
             className={classes.input}
             control={control}
@@ -91,7 +91,7 @@ const CreateScoreAlert = () => {
           />
           <MagicImageField
             label='Select Image'
-            labelWidth={165}
+            labelWidth={200}
             file={file}
             setFile={setFile}
             fileBuffer={fileBuffer}

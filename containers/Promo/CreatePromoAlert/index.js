@@ -71,7 +71,7 @@ const CreatePromoAlert = () => {
             as={<MagicTextField />}
             name='title'
             label='Promo Alert Title'
-            labelWidth={180}
+            labelWidth={200}
             error={errors.title?.message}
             className={classes.input}
             control={control}
@@ -83,7 +83,7 @@ const CreatePromoAlert = () => {
             rows={5}
             name='text'
             label='Promo Body Text'
-            labelWidth={180}
+            labelWidth={200}
             error={errors.text?.message}
             className={classes.input}
             control={control}
@@ -91,7 +91,7 @@ const CreatePromoAlert = () => {
           />
           <MagicImageField
             label='Select Image'
-            labelWidth={180}
+            labelWidth={200}
             file={file}
             setFile={setFile}
             fileBuffer={fileBuffer}
