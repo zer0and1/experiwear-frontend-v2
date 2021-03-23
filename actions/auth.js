@@ -1,6 +1,7 @@
 
 import Router from 'next/router'
 
+import * as authAPI from 'services/api-auth'
 import * as TYPES from './types'
 import LINKS from 'utils/constants/links'
 
@@ -26,7 +27,12 @@ const setCurrentUser = currentUser => {
   };
 };
 
-const logoutUser = () => dispatch => {
+const logoutUser = () => async dispatch => {
+  try {
+    await authAPI.logout();
+  } catch (error) {
+    console.log(error)
+  }
   localStorage.clear();
   dispatch(setAccessToken(''));
   dispatch(setCurrentUser({}));

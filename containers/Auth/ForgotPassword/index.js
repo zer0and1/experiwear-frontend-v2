@@ -34,9 +34,8 @@ const ForgotPassword = () => {
         email: data.email,
       }
 
-      if (false) {
-        await authAPI.login(params);
-      }
+
+      await authAPI.forgotPassword(params);
       router.push({
         pathname: LINKS.RESET_PASSWORD.HREF,
         query: { email: data.email }

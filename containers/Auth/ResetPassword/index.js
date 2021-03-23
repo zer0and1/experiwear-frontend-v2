@@ -40,10 +40,7 @@ const ResetPassword = () => {
         password: data.password
       }
 
-      if (false) {
-        await authAPI.login(params);
-      }
-
+      await authAPI.resetPassword(params);
       router.push(LINKS.SIGN_IN.HREF)
     } catch (error) {
       if (error.response) {
