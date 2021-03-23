@@ -41,24 +41,12 @@ const SignIn = () => {
         password: data.password
       }
 
-      const response = await authAPI.login(params);
-      console.log(response)
-      // const { user, token } = await authAPI.login(params);
-      // dispatch(setUserToken({
-      //   accessToken: token,
-      //   user
-      // }));
-
-      // const token = 'adfasdfasdfasdfasdfasdfasdf';
-      // const user = {
-      //   email: data.email,
-      //   name: 'Mark W',
-      //   avatar: 'https://images.unsplash.com/photo-1542596594-03574c130a79?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDM1fHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-      // }
-      // dispatch(setUserToken({
-      //   accessToken: token,
-      //   user
-      // }));
+      const token = 'adfasdfasdfasdfasdfasdfasdf';
+      const user = await authAPI.login(params);
+      dispatch(setUserToken({
+        accessToken: token,
+        user
+      }));
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
