@@ -6,11 +6,11 @@ const login = async params => {
 };
 
 const logout = async () => {
-  return await axios.post('/auth/logout');
+  return await axios.delete('/auth/logout');
 };
 
 const forgotPassword = async params => {
-  return await axios.put('/auth/restore-password', params);
+  return await axios.post('/auth/restore-password', params);
 };
 
 const resetPassword = async params => {
