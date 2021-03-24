@@ -17,7 +17,7 @@ const LINKS = Object.freeze({
     HREF: '/'
   },
   NEWS: {
-    TITLE: 'NEWs',
+    TITLE: 'News',
     HREF: '/news'
   },
   SURVEY: {

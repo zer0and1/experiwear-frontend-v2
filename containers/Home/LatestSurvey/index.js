@@ -12,36 +12,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     marginBottom: theme.spacing(4)
   },
+  chart: {
+    height: 'fit-content'
+  },
   footer: {
     width: '100%',
     marginTop: theme.spacing(4)
   }
 }));
-
-const options = {
-  legend: {
-    display: false,
-    position: "right"
-  },
-  elements: {
-    arc: {
-      borderWidth: 0
-    }
-  }
-};
-
-const data = {
-  maintainAspectRatio: false,
-  responsive: false,
-  labels: ["a", "b", "c", "d"],
-  datasets: [
-    {
-      data: [300, 50, 100, 50],
-      backgroundColor: ['red', 'green', 'blue', 'yellow'],
-      hoverBackgroundColor: ['red', 'green', 'blue', 'yellow']
-    }
-  ]
-};
 
 const LatestSurvey = () => {
   const classes = useStyles();
@@ -57,10 +35,26 @@ const LatestSurvey = () => {
       >
         Should Trae Young’s shot have counted?
       </Typography>
-      <Doughnut
-        data={data}
-        options={options}
-      />
+      <div className={classes.chart}>
+        <Doughnut
+          data={{
+            labels: ['Yes - 58.6%', 'No - 34.9%', 'No Response - 6.5%'],
+            datasets: [{
+              data: [23043, 14658, 4758],
+              backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],
+              borderColor: ['#7961f9', '#ff9f43', '#ea5455'],
+            }],
+          }}
+          options={{
+            scales: false,
+            cutoutPercentage: 70,
+            legend: false,
+            tooltips: false,
+          }}
+          width={230}
+          height={230}
+        />
+      </div>
       <div className={classes.footer}>
         <ChartFooterItem
           type='yes'
