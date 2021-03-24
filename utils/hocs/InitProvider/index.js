@@ -3,9 +3,11 @@ import { memo, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
+import * as authAPI from 'services/api-auth'
 import {
-  setAccessToken,
-  setCurrentUser
+  setIsAuthenticated,
+  setCurrentUser,
+  setUserToken
 } from 'actions/auth'
 import { isServer } from 'utils/helpers/utility'
 import scrollToTop from 'utils/helpers/scrollToTop'
@@ -20,22 +22,38 @@ const InitProvider = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const accessToken = isServer() ? '' : localStorage.accessToken;
+    const isAuthenticated = isServer() ? '' : localStorage.isAuthenticated;
     const currentUser = isServer() ? null : localStorage.currentUser;
 
-    if (!!accessToken) {
-      dispatch(setAccessToken(accessToken))
-    }
-
+    dispatch(setIsAuthenticated(isAuthenticated === 'true'))
     if (!!currentUser) {
       dispatch(setCurrentUser(JSON.parse(currentUser)))
     }
-  }, [dispatch])
+
+    if (true) {
+      checkAuthenticate();
+    }
+  }, [dispatch]);
+
+  const checkAuthenticate = async () => {
+    try {
+      const user = await authAPI.isAuthenticated();
+      setUserToken({
+        isAuthenticated: true,
+        user,
+      })
+    } catch {
+      setUserToken({
+        isAuthenticated: false,
+        user: {},
+      })
+    }
+  }
 
   useEffect(() => {
-    const accessToken = isServer() ? '' : localStorage.accessToken;
+    const isAuthenticated = isServer() ? '' : localStorage.isAuthenticated;
 
-    if (!!accessToken) {
+    if (isAuthenticated === 'true') {
       if (AUTH_ROUTES.includes(router.pathname)) {
         router.push(LINKS.HOME.HREF)
       }

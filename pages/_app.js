@@ -6,7 +6,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 
 import theme from 'styles/theme'
 import store from 'store'
-import InterceptorProvider from 'utils/hocs/InterceptorProvider'
+// import InterceptorProvider from 'utils/hocs/InterceptorProvider'
 import InitProvider from 'utils/hocs/InitProvider'
 import ToastProvider from 'utils/hocs/ToastProvider'
 import * as COMMON_CONSTANTS from 'utils/constants/common'
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Provider store={store}>
         <InitProvider />
-        <InterceptorProvider />
+        {/* <InterceptorProvider /> */}
         <ThemeProvider theme={theme}>
           <ToastProvider />
           <CssBaseline />

@@ -18,6 +18,7 @@ import {
   PASSWORD_VALID
 } from 'utils/constants/validations'
 import LINKS from 'utils/constants/links'
+import MESSAGES from 'utils/constants/messages'
 
 const schema = yup.object().shape({
   email: EMAIL_VALID,
@@ -41,17 +42,13 @@ const SignIn = () => {
         password: data.password
       }
 
-      const token = 'adfasdfasdfasdfasdfasdfasdf';
       const user = await authAPI.login(params);
       dispatch(setUserToken({
-        accessToken: token,
+        isAuthenticated: true,
         user
       }));
     } catch (error) {
-      if (error.response) {
-        const { data: { message } } = error.response;
-        showErrorToast(message)
-      }
+      showErrorToast(MESSAGES.SIGN_IN_ERROR)
     }
     changeLoadingStatus(false)
   };

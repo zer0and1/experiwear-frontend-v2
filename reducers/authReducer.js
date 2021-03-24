@@ -2,16 +2,16 @@
 import * as TYPES from 'actions/types'
 
 const initialState = {
-  accessToken: '',
+  isAuthenticated: false,
   currentUser: {}
 };
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
-    case TYPES.SET_ACCESS_TOKEN:
+    case TYPES.SET_IS_AUTHENTICATED:
       return {
         ...state,
-        accessToken: action.payload
+        isAuthenticated: action.payload
       };
     case TYPES.SET_CURRENT_USER:
       return {

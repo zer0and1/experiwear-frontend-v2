@@ -10,9 +10,10 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicTextField from 'components/UI/MagicTextField'
 import AuthWrapper, { authPageStyles } from '../Shared/AuthWrapper'
 import useLoading from 'utils/hooks/useLoading'
-import { showErrorToast } from 'utils/helpers/toast'
+import { showErrorToast, showSuccessToast } from 'utils/helpers/toast'
 import { EMAIL_VALID } from 'utils/constants/validations'
 import LINKS from 'utils/constants/links'
+import MESSAGES from 'utils/constants/messages'
 
 const schema = yup.object().shape({
   email: EMAIL_VALID
@@ -34,17 +35,14 @@ const ForgotPassword = () => {
         email: data.email,
       }
 
-
-      await authAPI.forgotPassword(params);
+      const { message } = await authAPI.forgotPassword(params);
+      showSuccessToast(message)
       router.push({
         pathname: LINKS.RESET_PASSWORD.HREF,
         query: { email: data.email }
       });
     } catch (error) {
-      if (error.response) {
-        const { data: { message } } = error.response;
-        showErrorToast(message)
-      }
+      showErrorToast(MESSAGES.EMAIL_NOT_FOUND)
     }
     changeLoadingStatus(false)
   };

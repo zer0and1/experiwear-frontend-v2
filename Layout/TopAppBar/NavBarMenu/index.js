@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBarMenu = () => {
   const classes = useStyles();
-  const { accessToken } = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   return (
     <div className={classes.root}>
       {
-        !accessToken
+        !isAuthenticated
           ? (
             <ContainedButton
               href={LINKS.SIGN_IN.HREF}

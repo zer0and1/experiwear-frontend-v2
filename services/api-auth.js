@@ -9,6 +9,10 @@ const logout = async () => {
   return await axios.delete('/auth/logout');
 };
 
+const isAuthenticated = async () => {
+  return await axios.get('/auth/is-authenticated');
+};
+
 const forgotPassword = async params => {
   return await axios.post('/auth/restore-password', params);
 };
@@ -20,6 +24,7 @@ const resetPassword = async params => {
 export {
   login,
   logout,
+  isAuthenticated,
   forgotPassword,
   resetPassword
 };
