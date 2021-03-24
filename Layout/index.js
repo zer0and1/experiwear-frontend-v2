@@ -43,25 +43,31 @@ const Layout = ({
 }) => {
   const classes = useStyles();
   const { loadingStatus } = useSelector(state => state.loading);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   return (
-    <main className={classes.root}>
-      {
-        loadingStatus &&
-        <MagicLoading loading={loadingStatus} />
-      }
-      <SideDrawer />
-      <div className={classes.container}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TopAppBar />
-          </Grid>
-          <Grid item xs={12}>
-            {children}
-          </Grid>
-        </Grid>
-      </div>
-    </main>
+    isAuthenticated
+      ? (
+        <main className={classes.root}>
+          {
+            loadingStatus &&
+            <MagicLoading loading={loadingStatus} />
+          }
+          <SideDrawer />
+          <div className={classes.container}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TopAppBar />
+              </Grid>
+              <Grid item xs={12}>
+                {children}
+              </Grid>
+            </Grid>
+          </div>
+        </main>
+      ) : (
+        <div />
+      )
   );
 };
 
