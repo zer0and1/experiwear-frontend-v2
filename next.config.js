@@ -1,5 +1,19 @@
 
 module.exports = {
+  async redirects() {
+    const isAuthenticated = typeof window === 'undefined' ? '' : localStorage.isAuthenticated;
+    if (isAuthenticated !== 'true') {
+      return [
+        {
+          source: '/',
+          destination: '/auth/sign-in',
+          permanent: true
+        },
+      ]
+    } else {
+      return []
+    }
+  },
   webpack: (config, { dev }) => {
     if (dev) {
       config.module.rules.push({
@@ -15,5 +29,5 @@ module.exports = {
     });
 
     return config;
-  }
+  },
 };
