@@ -30,9 +30,7 @@ const InitProvider = () => {
       dispatch(setCurrentUser(JSON.parse(currentUser)))
     }
 
-    if (true) {
-      checkAuthenticate();
-    }
+    checkAuthenticate();
   }, [dispatch]);
 
   const checkAuthenticate = async () => {
