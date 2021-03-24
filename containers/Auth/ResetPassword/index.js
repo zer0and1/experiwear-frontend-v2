@@ -10,7 +10,7 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicTextField from 'components/UI/MagicTextField'
 import AuthWrapper, { authPageStyles } from '../Shared/AuthWrapper'
 import useLoading from 'utils/hooks/useLoading'
-import { showErrorToast } from 'utils/helpers/toast'
+import { showErrorToast, showSuccessToast } from 'utils/helpers/toast'
 import {
   PASSWORD_VALID,
   CONFIRM_PASSWORD_VALID
@@ -36,11 +36,12 @@ const ResetPassword = () => {
     changeLoadingStatus(true)
     try {
       const params = {
-        email: router.query.email,
+        token: router.query.token,
         password: data.password
       }
 
-      await authAPI.resetPassword(params);
+      const { message } = await authAPI.resetPassword(params);
+      showSuccessToast(message)
       router.push(LINKS.SIGN_IN.HREF)
     } catch (error) {
       if (error.response) {
@@ -83,12 +84,21 @@ const ResetPassword = () => {
           control={control}
           defaultValue=''
         />
-        <ContainedButton
-          type='submit'
-          className={authClasses.button}
-        >
-          Reset Password
-        </ContainedButton>
+        <div>
+          <ContainedButton
+            color='red'
+            className={authClasses.button}
+            href={LINKS.SIGN_IN.HREF}
+          >
+            Cancel
+          </ContainedButton>
+          <ContainedButton
+            type='submit'
+            className={authClasses.button}
+          >
+            Reset Password
+          </ContainedButton>
+        </div>
       </form>
     </AuthWrapper>
   )

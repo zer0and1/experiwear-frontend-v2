@@ -67,7 +67,7 @@ const TopAppBar = () => {
             variant='body2'
             color='textSecondary'
           >
-            {`${currentUser.firstName} ${currentUser.lastName}` || 'Not Found'}
+            {`${currentUser?.firstName} ${currentUser?.lastName}` || 'Not Found'}
           </Typography>
           <Typography
             color='textSecondary'

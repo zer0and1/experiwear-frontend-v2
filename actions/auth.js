@@ -5,17 +5,17 @@ import * as authAPI from 'services/api-auth'
 import * as TYPES from './types'
 import LINKS from 'utils/constants/links'
 
-const setUserToken = ({ accessToken, user }) => dispatch => {
-  dispatch(setAccessToken(accessToken));
+const setUserToken = ({ isAuthenticated, user }) => dispatch => {
+  dispatch(setIsAuthenticated(isAuthenticated));
   dispatch(setCurrentUser(user));
   Router.push(LINKS.HOME.HREF);
 };
 
-const setAccessToken = accessToken => {
-  localStorage.setItem('accessToken', accessToken);
+const setIsAuthenticated = isAuthenticated => {
+  localStorage.setItem('isAuthenticated', isAuthenticated);
   return {
-    type: TYPES.SET_ACCESS_TOKEN,
-    payload: accessToken
+    type: TYPES.SET_IS_AUTHENTICATED,
+    payload: isAuthenticated
   };
 };
 
@@ -34,14 +34,14 @@ const logoutUser = () => async dispatch => {
     console.log(error)
   }
   localStorage.clear();
-  dispatch(setAccessToken(''));
+  dispatch(setIsAuthenticated(false));
   dispatch(setCurrentUser({}));
   Router.push(LINKS.SIGN_IN.HREF);
 };
 
 export {
   setUserToken,
-  setAccessToken,
+  setIsAuthenticated,
   setCurrentUser,
   logoutUser
 }
