@@ -13,7 +13,20 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4)
   },
   chart: {
+    position: 'relative',
     height: 'fit-content'
+  },
+  chartLabel: {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%'
+  },
+  total: {
+    fontWeight: 'bold'
   },
   footer: {
     width: '100%',
@@ -36,6 +49,14 @@ const LatestSurvey = () => {
         Should Trae Young’s shot have counted?
       </Typography>
       <div className={classes.chart}>
+        <div className={classes.chartLabel}>
+          <Typography variant='body2' color='textPrimary' className={classes.total}>
+            Total
+          </Typography>
+          <Typography variant='body2' color='textPrimary'>
+            23043
+          </Typography>
+        </div>
         <Doughnut
           data={{
             labels: ['Yes - 58.6%', 'No - 34.9%', 'No Response - 6.5%'],
