@@ -53,7 +53,7 @@ const CreateScheduleAlert = () => {
       formData.append('body', data.body);
       formData.append('file', file);
       formData.append('type', data.type);
-      formData.append('time', data.time);
+      formData.append('time', new Date(data.time));
       const { message } = await scheduleAPI.createScheduledNotification(formData);
       showSuccessToast(message)
       initData();
