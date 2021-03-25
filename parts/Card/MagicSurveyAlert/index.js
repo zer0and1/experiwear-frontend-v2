@@ -1,8 +1,10 @@
 import { memo } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import MagicSurveyInfo from 'parts/Card/MagicSurveyInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
+import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -44,13 +46,14 @@ const MagicSurveyAlert = ({
   item
 }) => {
   const classes = useStyles();
+  const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
 
   return (
     <div className={classes.item}>
       <div className={classes.leftContainer}>
         <img
           alt='news image'
-          src={item.image}
+          src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
           className={classes.image}
         />
         <MagicSurveyInfo item={item} />
@@ -60,12 +63,12 @@ const MagicSurveyAlert = ({
         <MagicAlertStatus
           title='Sent:'
           value={item.sent}
-          percent={item.sentPercent}
+          percent={total === 0 ? 0 : item.sent / total}
         />
         <MagicAlertStatus
           title='Open:'
-          value={item.open}
-          percent={item.openPercent}
+          value={item.received}
+          percent={item.sent === 0 ? 0 : item.received / item.sent}
         />
       </div>
     </div>

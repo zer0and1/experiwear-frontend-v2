@@ -1,8 +1,10 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardContent, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx';
 
+import getFanbandsStatistics from 'actions/getFanbandsStatistics'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 
 const useStyles = makeStyles((theme) => ({
@@ -27,13 +29,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const StatsCard = ({
-  total = 28392,
-  online = 26623,
-  offline = 1769,
-  arenaOnline = 23647
-}) => {
+const StatsCard = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { statistics = {} } = useSelector(state => state.fanbands);
+
+  useEffect(() => {
+    dispatch(getFanbandsStatistics());
+  }, [dispatch])
 
   return (
     <Card>
@@ -44,7 +48,7 @@ const StatsCard = ({
             Total Provisioned Fanbands
           </Typography>
           <Typography className={clsx(classes.value, classes.black)}>
-            {total.toLocaleString()}
+            {statistics?.total?.toLocaleString()}
           </Typography>
         </div>
 
@@ -53,7 +57,7 @@ const StatsCard = ({
             Total Fanbands <span className={classes.green}>Online</span> Now
           </Typography>
           <Typography className={clsx(classes.value, classes.green)}>
-            {online.toLocaleString()}
+            {statistics?.online?.toLocaleString()}
           </Typography>
         </div>
 
@@ -62,7 +66,7 @@ const StatsCard = ({
             Total Fanbands <span className={classes.red}>Offline</span> Now
           </Typography>
           <Typography className={clsx(classes.value, classes.red)}>
-            {offline.toLocaleString()}
+            {statistics?.offline?.toLocaleString()}
           </Typography>
         </div>
 
@@ -71,7 +75,7 @@ const StatsCard = ({
             Total Fanbands <span className={classes.green}>Online In Arena</span>
           </Typography>
           <Typography className={clsx(classes.value, classes.green)}>
-            {arenaOnline.toLocaleString()}
+            {statistics?.inArea?.toLocaleString()}
           </Typography>
         </div>
       </CardContent>

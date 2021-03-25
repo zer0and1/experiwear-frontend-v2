@@ -41,7 +41,7 @@ const MagicSurveyInfo = ({
   return (
     <div>
       <MagicAlertInfoHeader
-        title={item.question}
+        title={item.title}
         date={item.createdAt}
       />
       <div className={classes.container}>
@@ -57,12 +57,13 @@ const MagicSurveyInfo = ({
             className={classes.answerValue}
           >
             {item.yes}
+
           </Typography>
           <Typography
             variant='caption'
             className={classes.answerYesPercent}
           >
-            {`${item.yesPercent * 100} %`}
+            {`${Math.round((item.yes + item.no === 0 ? 0 : item.yes / (item.yes + item.no)) * 100)} %`}
           </Typography>
         </div>
 
@@ -83,7 +84,7 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerNoPercent}
           >
-            {`${item.noPercent * 100} %`}
+            {`${Math.round((item.yes + item.no === 0 ? 0 : item.no / (item.yes + item.no)) * 100)} %`}
           </Typography>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
+import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -71,7 +72,7 @@ const MagicScheduleAlert = ({
         <div className={classes.imageView}>
           <img
             alt='news image'
-            src={item.image}
+            src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
             className={classes.image}
           />
           <MagicAlertInfo item={item} />

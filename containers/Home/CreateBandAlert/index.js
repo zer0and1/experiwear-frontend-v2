@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCheckbox from 'components/UI/MagicCheckbox'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
-import ALERT_TYPES from 'utils/constants/alert-types'
+import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import { useRouter } from 'next/router'
 import LINKS from 'utils/constants/links'
 
@@ -71,7 +71,7 @@ const CreateBandAlert = () => {
       </Typography>
       <div className={classes.container}>
         {
-          ALERT_TYPES.map((item, index) => (
+          ALERT_TYPES_ARRAY.map((item, index) => (
             <div
               key={index}
               className={classes.item}

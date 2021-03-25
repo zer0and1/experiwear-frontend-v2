@@ -1,7 +1,9 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
+import getScheduledNotifications from 'actions/getScheduledNotifications'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicScheduleAlert from 'parts/Card/MagicScheduleAlert'
 
@@ -13,6 +15,14 @@ const useStyles = makeStyles(() => ({
 
 const ScheduleList = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { scheduled } = useSelector(state => state.notifications)
+  console.log(scheduled)
+
+  useEffect(() => {
+    dispatch(getScheduledNotifications())
+  }, [dispatch])
 
   return (
     <Card className={classes.card}>

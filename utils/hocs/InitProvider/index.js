@@ -9,6 +9,7 @@ import {
   setCurrentUser,
   setUserToken
 } from 'actions/auth'
+import getFanbandsStatistics from 'actions/getFanbandsStatistics'
 import { isServer } from 'utils/helpers/utility'
 import scrollToTop from 'utils/helpers/scrollToTop'
 import {
@@ -30,6 +31,9 @@ const InitProvider = () => {
       dispatch(setCurrentUser(JSON.parse(currentUser)))
     }
 
+    if (isAuthenticated === 'true') {
+      dispatch(getFanbandsStatistics())
+    }
     checkAuthenticate();
   }, [dispatch]);
 
