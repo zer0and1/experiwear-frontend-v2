@@ -11,7 +11,6 @@ import { AUTH_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',

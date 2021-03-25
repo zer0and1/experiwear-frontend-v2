@@ -26,7 +26,7 @@ const MagicAlertInfo = ({
         variant='caption'
         className={classes.text}
       >
-        {item.text}
+        {item.body}
       </Typography>
     </div>
   );

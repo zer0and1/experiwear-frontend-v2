@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useSelector } from 'react-redux'
 import { Card, CardContent, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OfflineBand = () => {
   const classes = useStyles();
+  const { statistics: { offline = 0 } } = useSelector(state => state.fanbands);
 
   return (
     <Card className={classes.card}>
@@ -35,7 +37,7 @@ const OfflineBand = () => {
           color='textSecondary'
           className={classes.title}
         >
-          26.6K
+          {offline}
         </Typography>
         <Typography
           color='textSecondary'

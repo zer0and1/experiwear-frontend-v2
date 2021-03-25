@@ -1,9 +1,11 @@
 import { memo } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
+import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -63,6 +65,7 @@ const MagicCannedAlert = ({
   item
 }) => {
   const classes = useStyles();
+  const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
 
   return (
     <div className={classes.item}>
@@ -70,7 +73,7 @@ const MagicCannedAlert = ({
         <div className={classes.imageView}>
           <img
             alt='news image'
-            src={item.image}
+            src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
             className={classes.image}
           />
           <MagicAlertInfo item={item} />
@@ -103,13 +106,13 @@ const MagicCannedAlert = ({
       <div className={classes.rightContainer}>
         <MagicAlertStatus
           title='Sent:'
-          value={item.sent}
-          percent={item.sentPercent}
+          value={item?.sent || 0}
+          percent={total === 0 ? 0 : item?.sent / total}
         />
         <MagicAlertStatus
           title='Open:'
-          value={item.open}
-          percent={item.openPercent}
+          value={item?.received || 0}
+          percent={item.sent === 0 ? 0 : item?.received / item.sent}
         />
       </div>
     </div>

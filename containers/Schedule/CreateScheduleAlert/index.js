@@ -1,36 +1,40 @@
 import { memo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import * as scheduleAPI from 'services/api-schedule'
+import getScheduledNotifications from 'actions/getScheduledNotifications'
 import MagicSelect from 'components/UI/MagicSelect'
 import MagicTextField from 'components/UI/MagicTextField'
 import MagicImageField from 'components/UI/MagicImageField'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import useLoading from 'utils/hooks/useLoading'
-import { showErrorToast } from 'utils/helpers/toast'
+import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { STRING_VALID } from 'utils/constants/validations'
-import ALERT_TYPES from 'utils/constants/alert-types'
+import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
 
 const schema = yup.object().shape({
   type: STRING_VALID,
   title: STRING_VALID,
-  text: STRING_VALID,
-  scheduleDate: STRING_VALID
+  body: STRING_VALID,
+  time: STRING_VALID
 });
 
 const CreateScheduleAlert = () => {
   const classes = useFormStyles();
+  const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
 
-  const { control, handleSubmit, errors } = useForm({
+  const { control, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -44,12 +48,16 @@ const CreateScheduleAlert = () => {
 
     changeLoadingStatus(true)
     try {
-      const params = {
-        title: data.title,
-        text: data.text
-      }
-
-      console.log(params)
+      let formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('body', data.body);
+      formData.append('file', file);
+      formData.append('type', data.type);
+      formData.append('time', data.time);
+      const { message } = await scheduleAPI.createScheduledNotification(formData);
+      showSuccessToast(message)
+      initData();
+      dispatch(getScheduledNotifications());
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
@@ -58,6 +66,18 @@ const CreateScheduleAlert = () => {
     }
     changeLoadingStatus(false)
   };
+
+  const initData = () => {
+    setFile(null)
+    setFileBuffer('');
+    setFileError(false)
+    reset({
+      title: '',
+      body: '',
+      type: '',
+      time: ''
+    })
+  }
 
   return (
     <Card>
@@ -76,11 +96,11 @@ const CreateScheduleAlert = () => {
             name='type'
             label='Alert Type'
             labelWidth={200}
-            items={ALERT_TYPES}
+            items={ALERT_TYPES_ARRAY}
             error={errors.type?.message}
             className={classes.input}
             control={control}
-            defaultValue={ALERT_TYPES[0].VALUE}
+            defaultValue={ALERT_TYPES_ARRAY[0].VALUE}
           />
           <Controller
             as={<MagicTextField />}
@@ -96,10 +116,10 @@ const CreateScheduleAlert = () => {
             as={<MagicTextField />}
             multiline
             rows={5}
-            name='text'
+            name='body'
             label='Alert Body Text'
             labelWidth={200}
-            error={errors.text?.message}
+            error={errors.body?.message}
             className={classes.input}
             control={control}
             defaultValue=''
@@ -115,11 +135,11 @@ const CreateScheduleAlert = () => {
           />
           <Controller
             as={<MagicTextField />}
-            name='scheduleDate'
+            name='time'
             label='Send Schedule'
             type="datetime-local"
             labelWidth={200}
-            error={errors.scheduleDate?.message}
+            error={errors.time?.message}
             className={classes.input}
             control={control}
             defaultValue=''

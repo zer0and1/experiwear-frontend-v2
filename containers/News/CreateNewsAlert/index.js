@@ -1,32 +1,37 @@
 import { memo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import * as notificationsAPI from 'services/api-notifications'
+import getNotifications from 'actions/getNotifications'
 import MagicTextField from 'components/UI/MagicTextField'
 import MagicImageField from 'components/UI/MagicImageField'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import useLoading from 'utils/hooks/useLoading'
-import { showErrorToast } from 'utils/helpers/toast'
+import { showErrorToast, showSuccessToast } from 'utils/helpers/toast'
 import { STRING_VALID } from 'utils/constants/validations'
+import { ALERT_TYPES } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
 
 const schema = yup.object().shape({
   title: STRING_VALID,
-  text: STRING_VALID
+  body: STRING_VALID
 });
 
 const CreateNewsAlert = () => {
   const classes = useFormStyles();
+  const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
 
-  const { control, handleSubmit, errors } = useForm({
+  const { control, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -40,12 +45,15 @@ const CreateNewsAlert = () => {
 
     changeLoadingStatus(true)
     try {
-      const params = {
-        title: data.title,
-        text: data.text
-      }
-
-      console.log(params)
+      let formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('body', data.body);
+      formData.append('file', file);
+      formData.append('type', ALERT_TYPES.NEWS.VALUE);
+      const { message } = await notificationsAPI.createNotification(formData);
+      showSuccessToast(message)
+      initData();
+      dispatch(getNotifications(ALERT_TYPES.NEWS.VALUE))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
@@ -54,6 +62,16 @@ const CreateNewsAlert = () => {
     }
     changeLoadingStatus(false)
   };
+
+  const initData = () => {
+    setFile(null)
+    setFileBuffer('');
+    setFileError(false)
+    reset({
+      title: '',
+      body: ''
+    })
+  }
 
   return (
     <Card>
@@ -81,10 +99,10 @@ const CreateNewsAlert = () => {
             as={<MagicTextField />}
             multiline
             rows={5}
-            name='text'
+            name='body'
             label='News Body Text'
             labelWidth={200}
-            error={errors.text?.message}
+            error={errors.body?.message}
             className={classes.input}
             control={control}
             defaultValue=''

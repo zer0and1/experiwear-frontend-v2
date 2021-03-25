@@ -12,6 +12,7 @@ import {
   TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH
 } from 'utils/constants/image-paths'
 import { Typography } from '@material-ui/core'
+import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,7 +118,7 @@ const MagicGameDayDialog = ({
 
                 <div className={classes.infoContainer}>
                   <img
-                    src={item.home.image}
+                    src={item.home.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
                     className={classes.teamImage}
                   />
                   <Typography className={classes.teamText}>
@@ -127,7 +128,7 @@ const MagicGameDayDialog = ({
                     @
                   </Typography>
                   <img
-                    src={item.away.image}
+                    src={item.away.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
                     className={classes.teamImage}
                   />
                   <Typography className={classes.teamText}>

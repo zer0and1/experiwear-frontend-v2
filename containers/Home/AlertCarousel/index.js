@@ -6,6 +6,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 import LinkButton from 'components/UI/Buttons/LinkButton'
 import LINKS from 'utils/constants/links'
+import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   carousel: {
@@ -68,7 +69,7 @@ const AlertCarousel = () => {
             <div key={index}>
               <img
                 alt='carousel'
-                src={item.image}
+                src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
                 className={classes.image}
               />
               <div className={classes.container}>

@@ -52,7 +52,7 @@ const MagicAlertStatus = ({
           {value.toLocaleString()}
         </Typography>
         <Typography className={classes.statusPercent}>
-          {`${percent * 100}%`}
+          {`${Math.round(percent * 100)}%`}
         </Typography>
       </div>
     </div>
