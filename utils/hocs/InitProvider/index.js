@@ -35,20 +35,22 @@ const InitProvider = () => {
       dispatch(getFanbandsStatistics())
     }
     checkAuthenticate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   const checkAuthenticate = async () => {
     try {
       const user = await authAPI.isAuthenticated();
-      setUserToken({
+      dispatch(setUserToken({
         isAuthenticated: true,
         user,
-      })
-    } catch {
-      setUserToken({
+      }))
+    } catch (error) {
+      console.log(error)
+      dispatch(setUserToken({
         isAuthenticated: false,
         user: {},
-      })
+      }))
     }
   }
 
