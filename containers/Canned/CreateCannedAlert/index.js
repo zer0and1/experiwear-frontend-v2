@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
@@ -15,13 +15,17 @@ import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { STRING_VALID } from 'utils/constants/validations'
 import useFormStyles from 'styles/useFormStyles'
+import { isEmpty } from 'utils/helpers/utility'
 
 const schema = yup.object().shape({
   title: STRING_VALID,
   body: STRING_VALID
 });
 
-const CreateCannedAlert = () => {
+const CreateCannedAlert = ({
+  selectedItem,
+  setSelectedItem
+}) => {
   const classes = useFormStyles();
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
@@ -47,10 +51,23 @@ const CreateCannedAlert = () => {
       let formData = new FormData();
       formData.append('title', data.title);
       formData.append('body', data.body);
-      formData.append('file', file);
-      const { message } = await cannedAPI.createCanned(formData);
+
+      let response;
+      if (isEmpty(selectedItem)) {
+        formData.append('file', file);
+        response = await cannedAPI.createCanned(formData);
+        initData();
+      } else {
+        if (!isEmpty(file)) {
+          formData.append('file', file);
+        }
+        response = await cannedAPI.editCanned(selectedItem.id, formData);
+        setSelectedItem({})
+        initData();
+      }
+
+      const { message } = response;
       showSuccessToast(message)
-      initData();
       dispatch(getCannedNotifications())
     } catch (error) {
       if (error.response) {
@@ -60,6 +77,17 @@ const CreateCannedAlert = () => {
     }
     changeLoadingStatus(false)
   };
+
+  useEffect(() => {
+    if (!isEmpty(selectedItem)) {
+      setFileBuffer(selectedItem.imageUrl)
+      reset({
+        title: selectedItem.title,
+        body: selectedItem.body
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedItem]);
 
   const initData = () => {
     setFile(null)

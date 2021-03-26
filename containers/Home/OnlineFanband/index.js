@@ -1,4 +1,5 @@
 import { memo, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Doughnut } from 'react-chartjs-2';
@@ -54,14 +55,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const fanbandsStatus = {
-  inArea: 300,
-  online: 500
-}
-
 const OnlineFanband = () => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false)
+
+  const { statistics: { online = 0 } } = useSelector(state => state.fanbands);
+  const inArea = 5
 
   return (
     <HomeCardWrapper
@@ -82,7 +81,7 @@ const OnlineFanband = () => {
         color='textPrimary'
         className={classes.title}
       >
-        23.3k
+        {inArea}
       </Typography>
       <Typography
         className={classes.description}
@@ -95,21 +94,14 @@ const OnlineFanband = () => {
             Fanbands in Arena
           </Typography>
           <Typography color='textPrimary' className={classes.percent}>
-            {fanbandsStatus.online !== 0
-              ? Math.round((fanbandsStatus.inArea * 100) / fanbandsStatus.online)
-              : 0
-            }%
+            {`${online === 0 ? 0 : Math.round((inArea / online) * 100)}%`}
           </Typography>
         </div>
         <Doughnut
           data={{
             labels: false,
             datasets: [{
-              data: [
-                fanbandsStatus.inArea,
-                fanbandsStatus.online - fanbandsStatus.inArea,
-                (fanbandsStatus.online * 20) / 100,
-              ],
+              data: [inArea, online - inArea, (online * 20) / 100,],
               backgroundColor: ['#7961f9', 'transparent', 'transparent'],
               borderColor: ['#7961f9', 'transparent', 'transparent'],
               hoverBackgroundColor: ['#7961f9', 'transparent', 'transparent'],

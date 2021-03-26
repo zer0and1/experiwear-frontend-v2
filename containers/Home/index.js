@@ -1,7 +1,9 @@
 
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Grid } from '@material-ui/core'
 
+import getNotifications from 'actions/getNotifications'
 import AlertCarousel from './AlertCarousel'
 import OnlineBand from './OnlineBand'
 import OfflineBand from './OfflineBand'
@@ -13,6 +15,12 @@ import OnlineFanband from './OnlineFanband'
 import LatestAlert from './LatestAlert'
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, [dispatch])
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} lg={6}>

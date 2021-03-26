@@ -6,7 +6,7 @@ import { ALERT_TYPES } from 'utils/constants/alert-types'
 const getNotifications = (type) => async (dispatch) => {
   try {
     const response = await notificationsAPI.getNotifications({ type })
-    let actionType = TYPES.SET_NEWS_NOTIFICATIONS;
+    let actionType = TYPES.SET_ALL_NOTIFICATIONS;
 
     switch (type) {
       case ALERT_TYPES.NEWS.VALUE:
@@ -22,7 +22,7 @@ const getNotifications = (type) => async (dispatch) => {
         actionType = TYPES.SET_PROMO_NOTIFICATIONS;
         break;
       default:
-        actionType = TYPES.SET_NEWS_NOTIFICATIONS;
+        actionType = TYPES.SET_ALL_NOTIFICATIONS;
         break;
     }
 

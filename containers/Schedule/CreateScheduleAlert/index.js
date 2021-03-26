@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
@@ -14,6 +14,7 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
+import { isEmpty } from 'utils/helpers/utility'
 import { STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
@@ -25,7 +26,10 @@ const schema = yup.object().shape({
   time: STRING_VALID
 });
 
-const CreateScheduleAlert = () => {
+const CreateScheduleAlert = ({
+  selectedItem,
+  setSelectedItem
+}) => {
   const classes = useFormStyles();
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
@@ -51,12 +55,26 @@ const CreateScheduleAlert = () => {
       let formData = new FormData();
       formData.append('title', data.title);
       formData.append('body', data.body);
-      formData.append('file', file);
       formData.append('type', data.type);
-      formData.append('time', new Date(data.time));
-      const { message } = await scheduleAPI.createScheduledNotification(formData);
+      formData.append('time', '* 00 00 * * *');
+      // formData.append('time', new Date(data.time).toISOString());
+
+      let response;
+      if (isEmpty(selectedItem)) {
+        formData.append('file', file);
+        response = await scheduleAPI.createScheduledNotification(formData);
+        initData();
+      } else {
+        if (!isEmpty(file)) {
+          formData.append('file', file);
+        }
+        response = await scheduleAPI.editScheduledNotification(selectedItem.id, formData);
+        setSelectedItem({})
+        initData();
+      }
+
+      const { message } = response;
       showSuccessToast(message)
-      initData();
       dispatch(getScheduledNotifications());
     } catch (error) {
       if (error.response) {
@@ -66,6 +84,19 @@ const CreateScheduleAlert = () => {
     }
     changeLoadingStatus(false)
   };
+
+  useEffect(() => {
+    if (!isEmpty(selectedItem)) {
+      setFileBuffer(selectedItem.image)
+      reset({
+        title: selectedItem.title,
+        body: selectedItem.body,
+        type: selectedItem.type,
+        time: selectedItem.time,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedItem]);
 
   const initData = () => {
     setFile(null)

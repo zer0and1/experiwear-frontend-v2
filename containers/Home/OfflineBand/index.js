@@ -18,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     marginBottom: theme.spacing(1)
   },
-  chart: {
-    width: '100%',
-    height: 100,
-    backgroundImage: 'linear-gradient(to bottom, #ffc089 21%, #fff)'
-  }
 }));
 
 const OfflineBand = () => {
@@ -46,7 +41,6 @@ const OfflineBand = () => {
           Offline Fanbands
         </Typography>
       </CardContent>
-      <div className={classes.chart} />
     </Card>
   );
 };

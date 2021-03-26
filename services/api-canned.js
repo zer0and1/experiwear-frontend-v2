@@ -20,7 +20,7 @@ const deleteCanned = async (id) => {
 };
 
 const sendCanned = async (id) => {
-  return await axios.post(`/canneds/${id}/send`);
+  return await axios.post(`/canneds/${id}/send`, { id });
 };
 
 export {

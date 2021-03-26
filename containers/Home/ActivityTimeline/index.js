@@ -1,11 +1,30 @@
 import { memo } from 'react'
+import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
-import ACTIVITY_TIMELINES from 'utils/constants/acitivity-timelines'
+import getAlertIcon from 'utils/helpers/getAlertIcon'
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    maxHeight: 400,
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: theme.palette.background.default
+    },
+    '&::-webkit-scrollbar': {
+      width: theme.spacing(0.5),
+      backgroundColor: theme.palette.background.default
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 2,
+      backgroundColor: theme.custom.palette.grey
+    }
+  },
   itemContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -28,25 +47,31 @@ const useStyles = makeStyles((theme) => ({
 
 const ActivityTimeline = () => {
   const classes = useStyles();
+  const { all } = useSelector(state => state.notifications)
 
   return (
     <HomeCardWrapper title='Activity Timeline'>
-      {ACTIVITY_TIMELINES.map((item, index) => (
-        <div key={index} className={classes.itemContainer}>
-          <item.icon className={classes.icon} />
-          <div>
-            <Typography className={classes.title}>
-              {item.title}
-            </Typography>
-            <Typography className={classes.description}>
-              {item.description}
-            </Typography>
-            <Typography className={classes.description}>
-              {item.time}
-            </Typography>
-          </div>
-        </div>
-      ))}
+      <div className={classes.container}>
+        {all.map((item, index) => {
+          const alertInfo = getAlertIcon(item.type)
+          return (
+            <div key={index} className={classes.itemContainer}>
+              <alertInfo.icon className={classes.icon} />
+              <div>
+                <Typography className={classes.title}>
+                  {alertInfo.title}
+                </Typography>
+                <Typography className={classes.description}>
+                  {item.title}
+                </Typography>
+                <Typography className={classes.description}>
+                  {item.createdAt}
+                </Typography>
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </HomeCardWrapper>
   );
 };

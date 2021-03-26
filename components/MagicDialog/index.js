@@ -127,6 +127,7 @@ const MagicDialog = ({
             !!cancelLabel &&
             <ContainedButton
               autoFocus
+              color='red'
               onClick={onCancel}
               className={classes.button}
             >

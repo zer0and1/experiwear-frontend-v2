@@ -1,10 +1,16 @@
-import { memo } from 'react'
-import { Button } from '@material-ui/core'
+import { memo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
+import { Typography } from '@material-ui/core'
 
+import * as scheduleAPI from 'services/api-schedule'
+import getScheduledNotifications from 'actions/getScheduledNotifications'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
+import MagicConfirmDialog from 'parts/MagicConfirmDialog'
+import useLoading from 'utils/hooks/useLoading'
+import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  type: {
+    fontSize: 14,
+    textTransform: 'capitalize',
+    margin: theme.spacing(1.5)
+  },
   button: {
     fontSize: 14,
     height: 35,
@@ -62,9 +73,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MagicScheduleAlert = ({
-  item
+  item,
+  onEdit
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { changeLoadingStatus } = useLoading();
+
+  const [openModal, setOpenModal] = useState(false)
+
+  const deleteHandler = async () => {
+    changeLoadingStatus(true)
+    try {
+      const { message } = await scheduleAPI.deleteScheduledNotification(item.id);
+      showSuccessToast(message)
+      dispatch(getScheduledNotifications())
+    } catch (error) {
+      if (error.response) {
+        const { data: { message } } = error.response;
+        showErrorToast(message)
+      }
+    }
+    changeLoadingStatus(false)
+  }
+
+  const editHandler = () => {
+    onEdit(item)
+  }
 
   return (
     <div className={classes.item}>
@@ -78,13 +113,17 @@ const MagicScheduleAlert = ({
           <MagicAlertInfo item={item} />
         </div>
         <div className={classes.rowView}>
-          <Button className={classes.button}>
-            Promo
-          </Button>
+          <Typography
+            color='textPrimary'
+            className={classes.type}
+          >
+            {item.type}
+          </Typography>
           <ContainedButton
             size='small'
             color='blue'
             className={classes.button}
+            onClick={editHandler}
           >
             Edit
           </ContainedButton>
@@ -92,6 +131,7 @@ const MagicScheduleAlert = ({
             size='small'
             color='red'
             className={classes.button}
+            onClick={() => setOpenModal(true)}
           >
             Cancel
           </ContainedButton>
@@ -110,6 +150,13 @@ const MagicScheduleAlert = ({
           percent={item.openPercent}
         />
       </div>
+      {openModal &&
+        <MagicConfirmDialog
+          open={openModal}
+          setOpen={setOpenModal}
+          onConfirm={deleteHandler}
+        />
+      }
     </div>
   );
 };
