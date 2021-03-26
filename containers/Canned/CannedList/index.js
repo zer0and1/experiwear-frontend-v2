@@ -13,7 +13,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CannedList = () => {
+const CannedList = ({
+  setSelectedItem
+}) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -22,6 +24,10 @@ const CannedList = () => {
   useEffect(() => {
     dispatch(getCannedNotifications())
   }, [dispatch])
+
+  const editHandler = (item) => {
+    setSelectedItem(item)
+  }
 
   return (
     <Card className={classes.card}>
@@ -32,6 +38,7 @@ const CannedList = () => {
             <MagicCannedAlert
               key={index}
               item={item}
+              onEdit={editHandler}
             />
           ))
         }

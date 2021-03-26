@@ -1,10 +1,13 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Doughnut } from 'react-chartjs-2';
 
+import getLatestNotification from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
+import { ALERT_TYPES } from 'utils/constants/alert-types'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -36,6 +39,19 @@ const useStyles = makeStyles((theme) => ({
 
 const LatestSurvey = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLatestNotification(ALERT_TYPES.SURVEY.VALUE));
+  }, [dispatch])
+
+  const { latestSurvey } = useSelector(state => state.notifications)
+
+  const totalAnswer = latestSurvey?.yes || 0 + latestSurvey?.no || 0;
+  const noResponse = latestSurvey?.sent - totalAnswer;
+  const yesPercent = latestSurvey?.sent === 0 ? 0 : Math.round((parseFloat(latestSurvey?.yes || 0) / parseFloat(latestSurvey?.sent)) * 100)
+  const noPercent = latestSurvey?.sent === 0 ? 0 : Math.round((parseFloat(latestSurvey?.no || 0) / parseFloat(latestSurvey?.sent)) * 100)
+  const noResponsePercent = latestSurvey.sent === 0 ? 0 : Math.round((noResponse / latestSurvey.sent) * 100)
 
   return (
     <HomeCardWrapper
@@ -46,7 +62,7 @@ const LatestSurvey = () => {
         color='textPrimary'
         className={classes.title}
       >
-        Should Trae Young’s shot have counted?
+        {latestSurvey?.title}
       </Typography>
       <div className={classes.chart}>
         <div className={classes.chartLabel}>
@@ -54,14 +70,18 @@ const LatestSurvey = () => {
             Total
           </Typography>
           <Typography variant='body2' color='textPrimary'>
-            23043
+            {latestSurvey?.sent}
           </Typography>
         </div>
         <Doughnut
           data={{
-            labels: ['Yes - 58.6%', 'No - 34.9%', 'No Response - 6.5%'],
+            labels: [`Yes - ${yesPercent}%`, `No - ${noPercent}%`, `No Response - ${noResponsePercent}%`],
             datasets: [{
-              data: [23043, 14658, 4758],
+              data: [
+                latestSurvey?.yes,
+                latestSurvey?.no,
+                noResponse
+              ],
               backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],
               borderColor: ['#7961f9', '#ff9f43', '#ea5455'],
             }],
@@ -79,17 +99,17 @@ const LatestSurvey = () => {
       <div className={classes.footer}>
         <ChartFooterItem
           type='yes'
-          percent={0.56}
+          percent={yesPercent}
           ratePercent={0.06}
         />
         <ChartFooterItem
           type='no'
-          percent={0.78}
+          percent={noPercent}
           ratePercent={0.06}
         />
         <ChartFooterItem
           type='noResponse'
-          percent={0.78}
+          percent={noResponsePercent}
           ratePercent={-0.06}
         />
       </div>

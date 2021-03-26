@@ -5,8 +5,8 @@ const getNotifications = async (params) => {
   return await axios.get('/notifications', { params });
 };
 
-const getLatestNotifications = async (params) => {
-  return await axios.get('/notifications​/latest', { params });
+const getLatestNotification = async (params) => {
+  return await axios.get('/notifications/latest', { params });
 };
 
 const createNotification = async (params) => {
@@ -16,6 +16,6 @@ const createNotification = async (params) => {
 
 export {
   getNotifications,
-  getLatestNotifications,
+  getLatestNotification,
   createNotification,
 };

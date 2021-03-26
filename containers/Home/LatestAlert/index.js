@@ -1,8 +1,10 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Doughnut } from 'react-chartjs-2';
 
+import getLatestNotification from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
 
@@ -40,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 const LatestAlert = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLatestNotification());
+  }, [dispatch])
+
+  const { latest } = useSelector(state => state.notifications)
 
   return (
     <HomeCardWrapper
@@ -53,14 +62,16 @@ const LatestAlert = () => {
               Total
             </Typography>
             <Typography variant='body2' color='textPrimary'>
-              23043
+              {latest?.sent}
             </Typography>
           </div>
           <Doughnut
             data={{
-              labels: ['Yes - 58.6%', 'No - 34.9%', 'No Response - 6.5%'],
+              labels: [
+                `Received - ${Math.round(latest?.received * 100 / latest?.sent)}%`,
+                `No Received - ${Math.round((latest?.sent - latest?.received) * 100 / latest?.sent)}%`],
               datasets: [{
-                data: [23043, 14658, 4758],
+                data: [latest?.received, latest?.sent - latest?.received],
                 backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],
                 borderColor: ['#7961f9', '#ff9f43', '#ea5455'],
               }],
@@ -79,18 +90,18 @@ const LatestAlert = () => {
           <ChartFooterItem
             isAction
             type='sent'
-            count={25005}
+            count={latest?.sent}
           />
           <ChartFooterItem
             isAction
             type='received'
-            count={3598}
+            count={latest?.received}
           />
-          <ChartFooterItem
+          {/* <ChartFooterItem
             isAction
             type='reacted'
-            count={1478}
-          />
+            count={latest?.sent - latest?.received}
+          /> */}
         </div>
       </div>
     </HomeCardWrapper>

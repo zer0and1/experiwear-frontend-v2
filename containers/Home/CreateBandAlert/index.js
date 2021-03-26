@@ -1,4 +1,5 @@
 import { memo, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -44,7 +45,9 @@ const CreateBandAlert = () => {
   const classes = useStyles();
   const router = useRouter();
 
+  const { all } = useSelector(state => state.notifications)
   const [page, setPage] = useState('');
+
 
   const goHandler = () => {
     if (!!page) {
@@ -62,7 +65,7 @@ const CreateBandAlert = () => {
         color='textPrimary'
         className={classes.title}
       >
-        213
+        {all.length}
       </Typography>
       <Typography
         className={classes.description}

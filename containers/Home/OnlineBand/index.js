@@ -18,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     marginBottom: theme.spacing(1)
   },
-  chart: {
-    width: '100%',
-    height: 100,
-    backgroundImage: 'linear-gradient(to bottom, #53cc00 21%, #fff)'
-  }
 }));
 
 const OnlineBand = () => {
@@ -46,7 +41,6 @@ const OnlineBand = () => {
           Online Fanbands
         </Typography>
       </CardContent>
-      <div className={classes.chart} />
     </Card>
   );
 };

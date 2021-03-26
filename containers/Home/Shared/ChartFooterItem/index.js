@@ -49,7 +49,7 @@ const ChartFooterItem = ({
       <div className={classes.rowView}>
         <CircleIcon color={info.color} />
         <Typography color='textPrimary' className={classes.text}>
-          {isAction ? info.label : `${info.label} - ${(percent * 100).toFixed(2)} %`}
+          {isAction ? info.label : `${info.label} - ${percent} %`}
         </Typography>
       </div>
 
@@ -63,7 +63,7 @@ const ChartFooterItem = ({
           ratePercent &&
           <>
             <Typography color='textPrimary' className={classes.text}>
-              {`${(ratePercent * 100).toFixed(2)} %`}
+              {ratePercent}
             </Typography>
             {
               ratePercent > 0

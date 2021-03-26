@@ -1,10 +1,15 @@
-import { memo } from 'react'
-import { useSelector } from 'react-redux'
+import { memo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import * as cannedAPI from 'services/api-canned'
+import getCannedNotifications from 'actions/getCannedNotifications'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
+import MagicConfirmDialog from 'parts/MagicConfirmDialog'
+import useLoading from 'utils/hooks/useLoading'
+import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
@@ -62,10 +67,49 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MagicCannedAlert = ({
-  item
+  item,
+  onEdit
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { changeLoadingStatus } = useLoading();
+
   const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
+  const [openModal, setOpenModal] = useState(false)
+
+  const sendHandler = async () => {
+    changeLoadingStatus(true)
+    try {
+      const { message } = await cannedAPI.sendCanned(item.id);
+      showSuccessToast(message)
+      dispatch(getCannedNotifications())
+    } catch (error) {
+      if (error.response) {
+        const { data: { message } } = error.response;
+        showErrorToast(message)
+      }
+    }
+    changeLoadingStatus(false)
+  }
+
+  const deleteHandler = async () => {
+    changeLoadingStatus(true)
+    try {
+      const { message } = await cannedAPI.deleteCanned(item.id);
+      showSuccessToast(message)
+      dispatch(getCannedNotifications())
+    } catch (error) {
+      if (error.response) {
+        const { data: { message } } = error.response;
+        showErrorToast(message)
+      }
+    }
+    changeLoadingStatus(false)
+  }
+
+  const editHandler = () => {
+    onEdit(item)
+  }
 
   return (
     <div className={classes.item}>
@@ -73,7 +117,7 @@ const MagicCannedAlert = ({
         <div className={classes.imageView}>
           <img
             alt='news image'
-            src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
+            src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
             className={classes.image}
           />
           <MagicAlertInfo item={item} />
@@ -83,6 +127,7 @@ const MagicCannedAlert = ({
             size='small'
             color='purple'
             className={classes.button}
+            onClick={sendHandler}
           >
             Send
           </ContainedButton>
@@ -90,6 +135,7 @@ const MagicCannedAlert = ({
             size='small'
             color='blue'
             className={classes.button}
+            onClick={editHandler}
           >
             Edit
           </ContainedButton>
@@ -97,6 +143,7 @@ const MagicCannedAlert = ({
             size='small'
             color='red'
             className={classes.button}
+            onClick={() => setOpenModal(true)}
           >
             Delete
           </ContainedButton>
@@ -115,6 +162,13 @@ const MagicCannedAlert = ({
           percent={item.sent === 0 ? 0 : item?.received / item.sent}
         />
       </div>
+      {openModal &&
+        <MagicConfirmDialog
+          open={openModal}
+          setOpen={setOpenModal}
+          onConfirm={deleteHandler}
+        />
+      }
     </div>
   );
 };
