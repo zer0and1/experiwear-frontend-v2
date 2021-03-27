@@ -1,5 +1,5 @@
 
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -19,9 +19,9 @@ const MagicUserSelect = ({
   const classes = useStyles();
   const { options = [] } = useSelector(state => state.users);
 
-  const selectHandler = (event) => {
+  const selectHandler = useCallback((event) => {
     setUser(event.target.value)
-  }
+  }, [setUser]);
 
   return (
     <MagicSelect

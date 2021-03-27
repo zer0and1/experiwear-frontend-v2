@@ -1,5 +1,5 @@
 
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     changeLoadingStatus(true)
     try {
       const params = {
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
       showErrorToast(MESSAGES.EMAIL_NOT_FOUND)
     }
     changeLoadingStatus(false)
-  };
+  }, [router, changeLoadingStatus]);
 
   return (
     <AuthWrapper title='Reset Password'>

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
@@ -82,7 +82,7 @@ const MagicScheduleAlert = ({
 
   const [openModal, setOpenModal] = useState(false)
 
-  const deleteHandler = async () => {
+  const deleteHandler = useCallback(async () => {
     changeLoadingStatus(true)
     try {
       const { message } = await scheduleAPI.deleteScheduledNotification(item.id);
@@ -95,11 +95,11 @@ const MagicScheduleAlert = ({
       }
     }
     changeLoadingStatus(false)
-  }
+  }, [item, dispatch, changeLoadingStatus]);
 
-  const editHandler = () => {
+  const editHandler = useCallback(() => {
     onEdit(item)
-  }
+  }, [item, onEdit]);
 
   return (
     <div className={classes.item}>
