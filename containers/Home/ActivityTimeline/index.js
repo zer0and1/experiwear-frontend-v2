@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import getAlertIcon from 'utils/helpers/getAlertIcon'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -65,7 +66,7 @@ const ActivityTimeline = () => {
                   {item.title}
                 </Typography>
                 <Typography className={classes.description}>
-                  {item.createdAt}
+                  {getEnglishDateWithTime(item.createdAt)}
                 </Typography>
               </div>
             </div>

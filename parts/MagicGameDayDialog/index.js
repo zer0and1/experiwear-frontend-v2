@@ -84,13 +84,13 @@ const MagicGameDayDialog = ({
     setOpen(false);
   }, [setOpen]);
 
-  const selectHandler = (id) => () => {
+  const selectHandler = useCallback((id) => () => {
     setSelectedId(id)
-  }
+  }, [setSelectedId])
 
-  const goHandler = () => {
+  const goHandler = useCallback(() => {
     setOpen(false);
-  }
+  }, [setOpen])
 
   return (
     <MagicDialog

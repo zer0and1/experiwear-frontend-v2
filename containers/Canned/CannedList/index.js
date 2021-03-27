@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -25,9 +25,9 @@ const CannedList = ({
     dispatch(getCannedNotifications())
   }, [dispatch])
 
-  const editHandler = (item) => {
+  const editHandler = useCallback((item) => {
     setSelectedItem(item)
-  }
+  }, [setSelectedItem])
 
   return (
     <Card className={classes.card}>

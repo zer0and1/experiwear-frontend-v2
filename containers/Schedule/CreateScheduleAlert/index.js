@@ -56,8 +56,7 @@ const CreateScheduleAlert = ({
       formData.append('title', data.title);
       formData.append('body', data.body);
       formData.append('type', data.type);
-      formData.append('time', '* 00 00 * * *');
-      // formData.append('time', new Date(data.time).toISOString());
+      formData.append('time', new Date(data.time).toISOString());
 
       let response;
       if (isEmpty(selectedItem)) {

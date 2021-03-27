@@ -2,7 +2,7 @@ import { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2'
 
 import ChevronDownIcon from 'components/Icons/ChevronDownIcon'
 import MagicGameDayDialog from 'parts/MagicGameDayDialog'

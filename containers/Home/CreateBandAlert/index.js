@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -49,15 +49,15 @@ const CreateBandAlert = () => {
   const [page, setPage] = useState('');
 
 
-  const goHandler = () => {
+  const goHandler = useCallback(() => {
     if (!!page) {
       router.push(page)
     }
-  }
+  }, [router, page])
 
-  const itemHandler = (href) => () => {
+  const itemHandler = useCallback((href) => () => {
     setPage(href)
-  }
+  }, [setPage])
 
   return (
     <HomeCardWrapper title='Create & Send Fanband Alert' >

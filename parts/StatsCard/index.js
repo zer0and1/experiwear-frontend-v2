@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardContent, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 import getFanbandsStatistics from 'actions/getFanbandsStatistics'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'

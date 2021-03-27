@@ -1,5 +1,5 @@
 
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -34,7 +34,7 @@ const SignIn = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     changeLoadingStatus(true)
     try {
       const params = {
@@ -51,14 +51,14 @@ const SignIn = () => {
       showErrorToast(MESSAGES.SIGN_IN_ERROR)
     }
     changeLoadingStatus(false)
-  };
+  }, [dispatch, changeLoadingStatus]);
 
-  const resetHandler = () => {
+  const resetHandler = useCallback(() => {
     reset({
       email: '',
       password: ''
     })
-  }
+  }, [reset]);
 
   return (
     <AuthWrapper title='Login'>

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -77,7 +77,7 @@ const MagicCannedAlert = ({
   const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
   const [openModal, setOpenModal] = useState(false)
 
-  const sendHandler = async () => {
+  const sendHandler = useCallback(async () => {
     changeLoadingStatus(true)
     try {
       const { message } = await cannedAPI.sendCanned(item.id);
@@ -90,9 +90,9 @@ const MagicCannedAlert = ({
       }
     }
     changeLoadingStatus(false)
-  }
+  }, [item, dispatch, changeLoadingStatus]);
 
-  const deleteHandler = async () => {
+  const deleteHandler = useCallback(async () => {
     changeLoadingStatus(true)
     try {
       const { message } = await cannedAPI.deleteCanned(item.id);
@@ -105,11 +105,11 @@ const MagicCannedAlert = ({
       }
     }
     changeLoadingStatus(false)
-  }
+  }, [item, dispatch, changeLoadingStatus]);
 
-  const editHandler = () => {
+  const editHandler = useCallback(() => {
     onEdit(item)
-  }
+  }, [item, onEdit]);
 
   return (
     <div className={classes.item}>
