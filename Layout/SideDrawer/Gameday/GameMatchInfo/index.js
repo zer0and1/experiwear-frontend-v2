@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import {
   Typography,
   Divider
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 import {
   TEMP_TEAM_CELITICS_IMAGE_PATH,

@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2'
 
 import getLatestNotification from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'

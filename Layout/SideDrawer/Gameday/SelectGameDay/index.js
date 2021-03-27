@@ -1,7 +1,7 @@
 
 import { memo, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core'
 
 import CircleIcon from 'components/Icons/CircleIcon'
 import ChevronDownIcon from 'components/Icons/ChevronDownIcon'

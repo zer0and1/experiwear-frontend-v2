@@ -1,4 +1,5 @@
 
+import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import clsx from 'clsx'
@@ -37,4 +38,4 @@ const AlertSurveyIcon = ({
   )
 }
 
-export default AlertSurveyIcon;
+export default memo(AlertSurveyIcon);

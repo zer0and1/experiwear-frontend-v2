@@ -1,4 +1,5 @@
 
+import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import clsx from 'clsx'
@@ -32,4 +33,4 @@ const BellIcon = ({
   )
 }
 
-export default BellIcon;
+export default memo(BellIcon);
