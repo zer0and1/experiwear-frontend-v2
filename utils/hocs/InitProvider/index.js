@@ -7,7 +7,6 @@ import * as authAPI from 'services/api-auth'
 import {
   setIsAuthenticated,
   setCurrentUser,
-  setUserToken
 } from 'actions/auth'
 import getFanbandsStatistics from 'actions/getFanbandsStatistics'
 import { isServer } from 'utils/helpers/utility'
@@ -41,16 +40,12 @@ const InitProvider = () => {
   const checkAuthenticate = async () => {
     try {
       const user = await authAPI.isAuthenticated();
-      dispatch(setUserToken({
-        isAuthenticated: true,
-        user,
-      }))
+      dispatch(setCurrentUser(user))
+      dispatch(setIsAuthenticated(true))
     } catch (error) {
       console.log(error)
-      dispatch(setUserToken({
-        isAuthenticated: false,
-        user: {},
-      }))
+      dispatch(setCurrentUser({}))
+      dispatch(setIsAuthenticated(false))
     }
   }
 

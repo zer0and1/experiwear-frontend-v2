@@ -65,7 +65,7 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerYesPercent}
           >
-            {`${Math.round((item?.sent === 0 ? 0 : item?.yes || 0 / item.sent) * 100)} %`}
+            {`${Math.round((item?.sent === 0 ? 0 : parseFloat(item?.yes || 0) / parseFloat(item.sent)) * 100)} %`}
           </Typography>
         </div>
 
@@ -86,7 +86,7 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerNoPercent}
           >
-            {`${Math.round((item?.sent === 0 ? 0 : item?.no || 0 / item.sent) * 100)} %`}
+            {`${Math.round((item?.sent === 0 ? 0 : parseFloat(item?.no || 0) / parseFloat(item.sent)) * 100)} %`}
           </Typography>
         </div>
       </div>
