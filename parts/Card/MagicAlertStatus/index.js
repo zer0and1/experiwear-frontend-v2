@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MagicAlertStatus = ({
   title,
-  value,
+  value = 0,
   percent
 }) => {
   const classes = useStyles();

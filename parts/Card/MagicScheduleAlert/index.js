@@ -141,12 +141,12 @@ const MagicScheduleAlert = ({
       <div className={classes.rightContainer}>
         <MagicAlertStatus
           title='Sent:'
-          value={item.sent}
+          value={item?.sent || 0}
           percent={item.sentPercent}
         />
         <MagicAlertStatus
           title='Open:'
-          value={item.open}
+          value={item?.open || 0}
           percent={item.openPercent}
         />
       </div>
