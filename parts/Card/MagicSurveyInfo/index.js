@@ -38,6 +38,9 @@ const MagicSurveyInfo = ({
 }) => {
   const classes = useStyles();
 
+  // const yesPercent = latestSurvey?.sent === 0 ? 0 : Math.round((parseFloat(latestSurvey?.yes || 0) / parseFloat(latestSurvey?.sent)) * 100)
+  // const noPercent = latestSurvey?.sent === 0 ? 0 : Math.round((parseFloat(latestSurvey?.no || 0) / parseFloat(latestSurvey?.sent)) * 100)
+
   return (
     <div>
       <MagicAlertInfoHeader
@@ -56,14 +59,13 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerValue}
           >
-            {item.yes}
-
+            {item?.yes || 0}
           </Typography>
           <Typography
             variant='caption'
             className={classes.answerYesPercent}
           >
-            {`${Math.round((item.yes + item.no === 0 ? 0 : item.yes / (item.yes + item.no)) * 100)} %`}
+            {`${Math.round((item?.sent === 0 ? 0 : item?.yes || 0 / item.sent) * 100)} %`}
           </Typography>
         </div>
 
@@ -78,13 +80,13 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerValue}
           >
-            {item.no}
+            {item?.no || 0}
           </Typography>
           <Typography
             variant='caption'
             className={classes.answerNoPercent}
           >
-            {`${Math.round((item.yes + item.no === 0 ? 0 : item.no / (item.yes + item.no)) * 100)} %`}
+            {`${Math.round((item?.sent === 0 ? 0 : item?.no || 0 / item.sent) * 100)} %`}
           </Typography>
         </div>
       </div>
