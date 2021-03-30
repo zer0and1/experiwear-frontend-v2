@@ -11,6 +11,7 @@ import MagicConfirmDialog from 'parts/MagicConfirmDialog'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -154,12 +155,12 @@ const MagicCannedAlert = ({
         <MagicAlertStatus
           title='Sent:'
           value={item?.sent || 0}
-          percent={total === 0 ? 0 : item?.sent / total}
+          percent={getPercent(item?.sent, total)}
         />
         <MagicAlertStatus
           title='Open:'
           value={item?.received || 0}
-          percent={item.sent === 0 ? 0 : item?.received / item.sent}
+          percent={getPercent(item?.received, item?.sent || 0)}
         />
       </div>
       {openModal &&

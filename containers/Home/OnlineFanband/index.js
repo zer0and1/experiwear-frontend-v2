@@ -7,6 +7,7 @@ import { Doughnut } from 'react-chartjs-2'
 import ChevronDownIcon from 'components/Icons/ChevronDownIcon'
 import MagicGameDayDialog from 'parts/MagicGameDayDialog'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
+import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   rightHeader: {
@@ -59,8 +60,7 @@ const OnlineFanband = () => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false)
 
-  const { statistics: { online = 0 } } = useSelector(state => state.fanbands);
-  const inArea = 5
+  const { statistics: { online = 0, inArea = 0 } } = useSelector(state => state.fanbands);
 
   return (
     <HomeCardWrapper
@@ -94,7 +94,7 @@ const OnlineFanband = () => {
             Fanbands in Arena
           </Typography>
           <Typography color='textPrimary' className={classes.percent}>
-            {`${online === 0 ? 0 : Math.round((inArea / online) * 100)}%`}
+            {`${getPercent(inArea, online)}%`}
           </Typography>
         </div>
         <Doughnut

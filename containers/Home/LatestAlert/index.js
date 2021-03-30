@@ -7,6 +7,7 @@ import { Doughnut } from 'react-chartjs-2'
 import getLatestNotification from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
+import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -68,8 +69,9 @@ const LatestAlert = () => {
           <Doughnut
             data={{
               labels: [
-                `Received - ${Math.round(latest?.received * 100 / latest?.sent)}%`,
-                `No Received - ${Math.round((latest?.sent - latest?.received) * 100 / latest?.sent)}%`],
+                `Received - ${getPercent(latest?.received, latest?.sent)}%`,
+                `No Received - ${getPercent(latest?.sent - latest?.received, latest?.sent)}%`
+              ],
               datasets: [{
                 data: [latest?.received, latest?.sent - latest?.received],
                 backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],

@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
 import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -63,12 +64,12 @@ const MagicAlert = ({
         <MagicAlertStatus
           title='Sent:'
           value={item?.sent || 0}
-          percent={total === 0 ? 0 : item.sent / total}
+          percent={getPercent(item?.sent, total)}
         />
         <MagicAlertStatus
           title='Open:'
           value={item?.received || 0}
-          percent={item.sent === 0 ? 0 : item.received / item.sent}
+          percent={getPercent(item?.received, item?.sent || 0)}
         />
       </div>
     </div>
