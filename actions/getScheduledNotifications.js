@@ -4,7 +4,7 @@ import * as scheduleAPI from 'services/api-schedule'
 
 const getScheduledNotifications = () => async (dispatch) => {
   try {
-    const response = await scheduleAPI.getLatestScheduledNotifications()
+    const response = await scheduleAPI.getScheduledNotifications()
     await dispatch({
       type: TYPES.SET_SCHEDULED_NOTIFICATIONS,
       payload: response

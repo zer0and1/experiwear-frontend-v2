@@ -13,6 +13,13 @@ const getEnglishDateWithTime = (date) => {
   return ''
 }
 
+const getISODate = (value) => {
+  const [yyyy, mm, dd, hh, mi] = value.split(/[/:\-T]/)
+
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+}
+
 export {
-  getEnglishDateWithTime
+  getEnglishDateWithTime,
+  getISODate
 }

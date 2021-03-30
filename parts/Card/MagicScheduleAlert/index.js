@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 
@@ -12,6 +12,7 @@ import MagicConfirmDialog from 'parts/MagicConfirmDialog'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -79,6 +80,7 @@ const MagicScheduleAlert = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
+  const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
 
   const [openModal, setOpenModal] = useState(false)
 
@@ -107,7 +109,7 @@ const MagicScheduleAlert = ({
         <div className={classes.imageView}>
           <img
             alt='news image'
-            src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
+            src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
             className={classes.image}
           />
           <MagicAlertInfo item={item} />
@@ -142,12 +144,12 @@ const MagicScheduleAlert = ({
         <MagicAlertStatus
           title='Sent:'
           value={item?.sent || 0}
-          percent={item.sentPercent}
+          percent={getPercent(item?.sent, total)}
         />
         <MagicAlertStatus
           title='Open:'
-          value={item?.open || 0}
-          percent={item.openPercent}
+          value={item?.received || 0}
+          percent={getPercent(item?.received, item?.sent || 0)}
         />
       </div>
       {openModal &&

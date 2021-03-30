@@ -1,6 +1,10 @@
 
 import axios from 'services/axios'
 
+const getScheduledNotifications = async () => {
+  return await axios.get('/notifications/scheduled');
+};
+
 const getLatestScheduledNotifications = async () => {
   return await axios.get('/notifications/scheduled/latest');
 };
@@ -20,6 +24,7 @@ const deleteScheduledNotification = async (id) => {
 };
 
 export {
+  getScheduledNotifications,
   getLatestScheduledNotifications,
   createScheduledNotification,
   editScheduledNotification,

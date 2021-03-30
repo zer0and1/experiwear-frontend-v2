@@ -8,6 +8,7 @@ import getLatestNotification from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
 import { ALERT_TYPES } from 'utils/constants/alert-types'
+import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -49,9 +50,9 @@ const LatestSurvey = () => {
 
   const totalAnswer = latestSurvey?.yes || 0 + latestSurvey?.no || 0;
   const noResponse = latestSurvey?.sent - totalAnswer;
-  const yesPercent = latestSurvey?.sent === 0 ? 0 : Math.round((parseFloat(latestSurvey?.yes || 0) / parseFloat(latestSurvey?.sent)) * 100)
-  const noPercent = latestSurvey?.sent === 0 ? 0 : Math.round((parseFloat(latestSurvey?.no || 0) / parseFloat(latestSurvey?.sent)) * 100)
-  const noResponsePercent = latestSurvey.sent === 0 ? 0 : Math.round((noResponse / latestSurvey.sent) * 100)
+  const yesPercent = getPercent(latestSurvey?.yes, latestSurvey?.sent)
+  const noPercent = getPercent(latestSurvey?.no, latestSurvey?.sent)
+  const noResponsePercent = getPercent(noResponse, latestSurvey?.sent)
 
   return (
     <HomeCardWrapper
