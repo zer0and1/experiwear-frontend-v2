@@ -7,27 +7,17 @@ import { Grid } from '@material-ui/core'
 import MagicLoading from 'components/MagicLoading'
 import TopAppBar from './TopAppBar'
 import SideDrawer from './SideDrawer'
-import { AUTH_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
+import { AUTH_OPACITY_BACKGROUND_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
-    '&:before': {
-      content: '""',
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      width: '100%',
-      height: '100%',
-      opacity: 0.1,
-      backgroundImage: `url(${AUTH_BACKGROUND_IMAGE_PATH})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      zIndex: -1,
-    }
+    backgroundImage: `url(${AUTH_OPACITY_BACKGROUND_IMAGE_PATH})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   container: {
     width: `calc(100% - ${theme.custom.layout.drawerWidth}px)`,
