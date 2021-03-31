@@ -11,7 +11,6 @@ const getFanbandsStatistics = (refresh = false) => async (dispatch, getState) =>
     }
 
     const response = await fanbandsAPI.getFanbandsStatistics();
-    console.log(response)
     await dispatch({
       type: TYPES.FETCH_FANBANDS_STATISTICS,
       payload: response

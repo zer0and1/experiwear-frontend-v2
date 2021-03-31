@@ -25,14 +25,13 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   subTitle: {
-    fontSize: 18
+    fontSize: 16
   },
 }));
 
 const HomeCardWrapper = ({
   title,
   subTitle,
-  rightHeader,
   children
 }) => {
   const classes = useStyles();
@@ -46,11 +45,10 @@ const HomeCardWrapper = ({
           </Typography>
           {
             subTitle &&
-            <Typography color='textPrimary' className={classes.subTitle}>
+            <Typography color='textSecondary' className={classes.subTitle}>
               {subTitle}
             </Typography>
           }
-          {rightHeader && rightHeader}
         </div>
         {children}
       </CardContent>

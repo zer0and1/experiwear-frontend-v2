@@ -1,15 +1,15 @@
 
 import { memo } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Typography,
   Divider
 } from '@material-ui/core'
 
-import {
-  TEMP_TEAM_CELITICS_IMAGE_PATH,
-  TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH
-} from 'utils/constants/image-paths'
+import TeamLogo from 'parts/TeamLogo'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
+import { isEmpty } from 'utils/helpers/utility'
 
 const useStyles = makeStyles((theme) => ({
   gameList: {
@@ -49,12 +49,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  teamImage: {
-    width: 20,
-    height: 20,
-    objectFit: 'container',
-    marginRight: theme.spacing(1)
-  },
   teamText: {
     fontSize: 15,
     fontWeight: 'bold'
@@ -67,27 +61,32 @@ const useStyles = makeStyles((theme) => ({
 
 const GameMatchInfo = () => {
   const classes = useStyles();
+  const { select = {} } = useSelector(state => state.games);
 
   return (
+    !isEmpty(select) &&
     <div className={classes.gameList}>
       <div className={classes.header}>
         <Typography
           color='textPrimary'
           className={classes.date}
         >
-          Today, 7:30pm
+          {getEnglishDateWithTime(select.date)}
         </Typography>
-        <div>
-          <Typography
-            align='right'
-            color='textPrimary'
-            className={classes.date}
-          >
-            2nd Qtr,
-          <br />
-            4:23 remaining
-          </Typography>
-        </div>
+        {
+          false &&
+          <div>
+            <Typography
+              align='right'
+              color='textPrimary'
+              className={classes.date}
+            >
+              2nd Qtr,
+              <br />
+              4:23 remaining
+            </Typography>
+          </div>
+        }
       </div>
       <Divider
         flexItem
@@ -97,16 +96,13 @@ const GameMatchInfo = () => {
       <div className={classes.teamList}>
         <div className={classes.teamItem}>
           <div className={classes.teamName}>
-            <img
-              src={TEMP_TEAM_CELITICS_IMAGE_PATH}
-              className={classes.teamImage}
-            />
+            <TeamLogo team={select.homeTeam.abbreviation} />
             <Typography className={classes.teamText}>
-              Celtics
+              {select.homeTeam.name}
             </Typography>
           </div>
           <Typography className={classes.teamText}>
-            44
+            {select.homeTeamScore}
           </Typography>
         </div>
         <Typography className={classes.signal}>
@@ -114,16 +110,13 @@ const GameMatchInfo = () => {
         </Typography>
         <div className={classes.teamItem}>
           <div className={classes.teamName}>
-            <img
-              src={TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH}
-              className={classes.teamImage}
-            />
+            <TeamLogo team={select.visitorTeam.abbreviation} />
             <Typography className={classes.teamText}>
-              Hawks
-          </Typography>
+              {select.visitorTeam.name}
+            </Typography>
           </div>
           <Typography className={classes.teamText}>
-            46
+            {select.visitorTeamScore}
           </Typography>
         </div>
       </div>

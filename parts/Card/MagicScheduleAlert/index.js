@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   rowView: {
     display: 'flex',
     alignItems: 'center',
+    minWidth: 300
   },
   type: {
     fontSize: 14,
@@ -121,22 +122,27 @@ const MagicScheduleAlert = ({
           >
             {item.type}
           </Typography>
-          <ContainedButton
-            size='small'
-            color='blue'
-            className={classes.button}
-            onClick={editHandler}
-          >
-            Edit
-          </ContainedButton>
-          <ContainedButton
-            size='small'
-            color='red'
-            className={classes.button}
-            onClick={() => setOpenModal(true)}
-          >
-            Cancel
-          </ContainedButton>
+          {
+            item.isSent &&
+            <>
+              <ContainedButton
+                size='small'
+                color='blue'
+                className={classes.button}
+                onClick={editHandler}
+              >
+                Edit
+              </ContainedButton>
+              <ContainedButton
+                size='small'
+                color='red'
+                className={classes.button}
+                onClick={() => setOpenModal(true)}
+              >
+                Cancel
+              </ContainedButton>
+            </>
+          }
         </div>
       </div>
 

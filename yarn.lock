@@ -4224,6 +4224,13 @@ react-lottie@^1.2.3:
     babel-runtime "^6.26.0"
     lottie-web "^5.1.3"
 
+react-nba-logos@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-nba-logos/-/react-nba-logos-1.1.0.tgz#9b1f3f2c21ae6d428e34c65a03e354bf5f8019ae"
+  integrity sha512-E04WZaGC8gtYldLaueo/VD4MR5cmeg1DFH0FeRUkgJNfjXou51FmydQr+iDFip63okGI9z8HvB1pddVLpGT44Q==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-redux@^7.2.2:
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.2.tgz#03862e803a30b6b9ef8582dadcc810947f74b736"

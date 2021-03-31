@@ -1,18 +1,16 @@
 
-
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import clsx from 'clsx'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
+import clsx from 'clsx'
 
+import { setSelectGame } from 'actions/games'
 import MagicDialog from 'components/MagicDialog'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
-import {
-  TEMP_TEAM_CELITICS_IMAGE_PATH,
-  TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH
-} from 'utils/constants/image-paths'
-import { Typography } from '@material-ui/core'
-import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import TeamLogo from 'parts/TeamLogo'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +20,24 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     minHeight: 600,
     marginBottom: theme.spacing(7)
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    maxHeight: 500,
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: theme.palette.background.default
+    },
+    '&::-webkit-scrollbar': {
+      width: theme.spacing(0.5),
+      backgroundColor: theme.palette.background.default
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 2,
+      backgroundColor: theme.custom.palette.grey
+    }
   },
   item: {
     width: '100%',
@@ -41,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   arrowIcon: {
     position: 'absolute',
-    top: 10,
+    top: 15,
     left: 5,
     color: theme.custom.palette.black
   },
@@ -53,16 +69,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  teamImage: {
-    width: 20,
-    height: 20,
-    objectFit: 'container',
-    margin: theme.spacing(0, 1)
-  },
   teamText: {
     fontSize: 15,
     fontWeight: 'bold',
-    margin: theme.spacing(0, 1)
+    margin: theme.spacing(0, 1),
+    minWidth: 80
   },
   signal: {
     fontSize: 12,
@@ -78,15 +89,17 @@ const MagicGameDayDialog = ({
   setOpen,
 }) => {
   const classes = useStyles();
-  const [selectedId, setSelectedId] = useState('');
+  const dispatch = useDispatch();
+
+  const { results = [], select = {} } = useSelector(state => state.games);
 
   const handleClose = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
 
-  const selectHandler = useCallback((id) => () => {
-    setSelectedId(id)
-  }, [setSelectedId])
+  const selectHandler = useCallback((item) => () => {
+    dispatch(setSelectGame(item))
+  }, [dispatch])
 
   const goHandler = useCallback(() => {
     setOpen(false);
@@ -99,46 +112,42 @@ const MagicGameDayDialog = ({
       onClose={handleClose}
     >
       <div className={classes.root}>
-        {
-          results.map((item) => (
-            <div
-              key={item.id}
-              className={clsx(classes.item, { [classes.selectedItem]: selectedId === item.id })}
-              onClick={selectHandler(item.id)}
-            >
-              <div className={classes.itemContent}>
-                {
-                  selectedId === item.id &&
-                  <ArrowRightIcon className={classes.arrowIcon} />
-                }
+        <div className={classes.container}>
+          {
+            results.map((item) => (
+              <div
+                key={item.id}
+                className={clsx(classes.item, { [classes.selectedItem]: select.id === item.id })}
+                onClick={selectHandler(item)}
+              >
+                <div className={classes.itemContent}>
+                  {
+                    select.id === item.id &&
+                    <ArrowRightIcon className={classes.arrowIcon} />
+                  }
 
-                <Typography color='textSecondary' className={classes.date}>
-                  {item.startDate}
-                </Typography>
+                  <Typography color='textSecondary' className={classes.date}>
+                    {getEnglishDateWithTime(item.date)}
+                  </Typography>
 
-                <div className={classes.infoContainer}>
-                  <img
-                    src={item.home.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
-                    className={classes.teamImage}
-                  />
-                  <Typography className={classes.teamText}>
-                    {item.home.name}
-                  </Typography>
-                  <Typography className={classes.signal}>
-                    @
-                  </Typography>
-                  <img
-                    src={item.away.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
-                    className={classes.teamImage}
-                  />
-                  <Typography className={classes.teamText}>
-                    {item.away.name}
-                  </Typography>
+                  <div className={classes.infoContainer}>
+                    <TeamLogo team={item.homeTeam.abbreviation} />
+                    <Typography className={classes.teamText}>
+                      {item.homeTeam.name}
+                    </Typography>
+                    <Typography className={classes.signal}>
+                      @
+                    </Typography>
+                    <TeamLogo team={item.visitorTeam.abbreviation} />
+                    <Typography className={classes.teamText}>
+                      {item.visitorTeam.name}
+                    </Typography>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
         <ContainedButton
           color='purple'
           className={classes.button}
@@ -152,54 +161,3 @@ const MagicGameDayDialog = ({
 }
 
 export default memo(MagicGameDayDialog)
-
-const results = [
-  {
-    id: '0001',
-    startDate: 'Today, 7:30 p.m.',
-    home: {
-      image: TEMP_TEAM_CELITICS_IMAGE_PATH,
-      name: 'Celtics'
-    },
-    away: {
-      image: TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH,
-      name: 'Hawks'
-    }
-  },
-  {
-    id: '0002',
-    startDate: 'Fri. Feb 26, 8:00 p.m.',
-    home: {
-      image: TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH,
-      name: 'Hawks'
-    },
-    away: {
-      image: TEMP_TEAM_CELITICS_IMAGE_PATH,
-      name: 'Celtics'
-    }
-  },
-  {
-    id: '0003',
-    startDate: 'Sun. Feb 28, 8:00 p.m.',
-    home: {
-      image: TEMP_TEAM_CELITICS_IMAGE_PATH,
-      name: 'Celtics'
-    },
-    away: {
-      image: TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH,
-      name: 'Hawks'
-    }
-  },
-  {
-    id: '0004',
-    startDate: 'Tue. Mar 2, 7:30 p.m.',
-    home: {
-      image: TEMP_TEAM_CELITICS_IMAGE_PATH,
-      name: 'Celtics'
-    },
-    away: {
-      image: TEMP_TEAM_HAWKS_SMALL_IMAGE_PATH,
-      name: 'Hawks'
-    }
-  },
-]

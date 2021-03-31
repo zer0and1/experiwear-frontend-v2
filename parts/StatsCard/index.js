@@ -1,10 +1,9 @@
-import { memo, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { memo } from 'react'
+import { useSelector } from 'react-redux'
 import { Card, CardContent, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
-import getFanbandsStatistics from 'actions/getFanbandsStatistics'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 
 const useStyles = makeStyles((theme) => ({
@@ -31,13 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 const StatsCard = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const { statistics = {} } = useSelector(state => state.fanbands);
-
-  useEffect(() => {
-    dispatch(getFanbandsStatistics());
-  }, [dispatch])
 
   return (
     <Card>
