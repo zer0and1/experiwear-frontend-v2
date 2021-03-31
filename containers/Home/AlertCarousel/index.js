@@ -69,7 +69,7 @@ const AlertCarousel = () => {
             <div key={index}>
               <img
                 alt='carousel'
-                src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
+                src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
                 className={classes.image}
               />
               <div className={classes.container}>

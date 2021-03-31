@@ -15,7 +15,7 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 const useStyles = makeStyles((theme) => ({
   paper: {
     borderRadius: 10,
-    minWidth: 700,
+    minWidth: 780,
     backgroundColor: theme.palette.background.default,
     [theme.breakpoints.down('sm')]: {
       minWidth: 'unset'

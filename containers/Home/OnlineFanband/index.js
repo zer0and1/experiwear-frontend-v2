@@ -4,7 +4,6 @@ import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Doughnut } from 'react-chartjs-2'
 
-import ChevronDownIcon from 'components/Icons/ChevronDownIcon'
 import MagicGameDayDialog from 'parts/MagicGameDayDialog'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import getPercent from 'utils/helpers/getPercent'
@@ -65,17 +64,7 @@ const OnlineFanband = () => {
   return (
     <HomeCardWrapper
       title='Online Fanbands in Arena'
-      rightHeader={
-        <div className={classes.rightHeader} onClick={() => setOpenModal(true)}>
-          <Typography
-            className={classes.headerLabel}
-            color='textSecondary'
-          >
-            Current Game
-          </Typography>
-          <ChevronDownIcon className={classes.icon} />
-        </div>
-      }
+      subTitle='Current Game'
     >
       <Typography
         color='textPrimary'

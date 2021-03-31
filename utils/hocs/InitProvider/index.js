@@ -8,6 +8,7 @@ import {
   setIsAuthenticated,
   setCurrentUser,
 } from 'actions/auth'
+import { getGames } from 'actions/games'
 import getFanbandsStatistics from 'actions/getFanbandsStatistics'
 import { isServer } from 'utils/helpers/utility'
 import scrollToTop from 'utils/helpers/scrollToTop'
@@ -31,6 +32,7 @@ const InitProvider = () => {
     }
 
     if (isAuthenticated === 'true') {
+      dispatch(getGames())
       dispatch(getFanbandsStatistics())
     }
     checkAuthenticate();

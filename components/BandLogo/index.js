@@ -3,6 +3,7 @@ import { memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
+import * as COMMON_CONSTANTS from 'utils/constants/common'
 import { BAND_LOGO_IMAGE_PATH } from 'utils/constants/image-paths'
 
 const useStyles = makeStyles(() => ({
@@ -24,13 +25,15 @@ const BandLogo = ({
   const classes = useStyles({ width });
 
   return (
-    <picture className={clsx(classes.picture, className)} {...rest}>
-      <source srcSet={BAND_LOGO_IMAGE_PATH} />
-      <img
-        className={classes.img}
-        src={BAND_LOGO_IMAGE_PATH}
-        alt='band-logo' />
-    </picture>
+    <a aria-label='logo' href={COMMON_CONSTANTS.HAWKS_URL} target='_blank' rel='noreferrer'>
+      <picture className={clsx(classes.picture, className)} {...rest}>
+        <source srcSet={BAND_LOGO_IMAGE_PATH} />
+        <img
+          className={classes.img}
+          src={BAND_LOGO_IMAGE_PATH}
+          alt='band-logo' />
+      </picture>
+    </a>
   )
 }
 
