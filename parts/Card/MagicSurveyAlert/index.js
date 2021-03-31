@@ -54,7 +54,7 @@ const MagicSurveyAlert = ({
       <div className={classes.leftContainer}>
         <img
           alt='news image'
-          src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
+          src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
           className={classes.image}
         />
         <MagicSurveyInfo item={item} />
