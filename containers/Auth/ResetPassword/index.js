@@ -45,8 +45,8 @@ const ResetPassword = () => {
       router.push(LINKS.SIGN_IN.HREF)
     } catch (error) {
       if (error.response) {
-        const { data: { message } } = error.response;
-        showErrorToast(message)
+        const { data: { message = [] } = {} } = error.response
+        showErrorToast(message[0])
       }
     }
     changeLoadingStatus(false)

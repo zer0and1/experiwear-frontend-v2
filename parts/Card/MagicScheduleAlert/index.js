@@ -95,8 +95,8 @@ const MagicScheduleAlert = ({
       dispatch(getScheduledNotifications(results.length - 1))
     } catch (error) {
       if (error.response) {
-        const { data: { message } } = error.response;
-        showErrorToast(message)
+        const { data: { message = [] } = {} } = error.response
+        showErrorToast(message[0])
       }
     }
     changeLoadingStatus(false)
