@@ -6,7 +6,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import TeamLogo from 'parts/TeamLogo'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import { isEmpty } from 'utils/helpers/utility'
-import { getEnglishDateWithTime } from 'utils/helpers/time'
+import {
+  getEnglishDate,
+  getEnglishTime,
+  getEnglishDateWithTime
+} from 'utils/helpers/time'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -88,13 +92,13 @@ const CurrentGame = () => {
             color='textPrimary'
             className={classes.quarter}
           >
-            2nd Quarter
+            {getEnglishDate(select.date)}
           </Typography>
           <Typography
             color='textPrimary'
             className={classes.time}
           >
-            4:23 remaining
+            {getEnglishTime(select.date)}
           </Typography>
         </>
       }
