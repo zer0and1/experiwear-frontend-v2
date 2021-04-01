@@ -3,14 +3,21 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import getScheduledNotifications from 'actions/getScheduledNotifications'
+import { getScheduledNotifications, getMoreScheduledNotifications } from 'actions/getScheduledNotifications'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicScheduleAlert from 'parts/Card/MagicScheduleAlert'
+import { isEmpty } from 'utils/helpers/utility'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     minHeight: 420
   },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: theme.spacing(2)
+  }
 }));
 
 const ScheduleList = ({
@@ -29,6 +36,10 @@ const ScheduleList = ({
     setSelectedItem(item)
   }, [setSelectedItem])
 
+  const moreHandler = () => {
+    dispatch(getMoreScheduledNotifications())
+  }
+
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -41,6 +52,17 @@ const ScheduleList = ({
               onEdit={editHandler}
             />
           ))
+        }
+        {
+          !isEmpty(scheduled) &&
+          <div className={classes.button}>
+            <ContainedButton
+              color='green'
+              onClick={moreHandler}
+            >
+              More
+            </ContainedButton>
+          </div>
         }
       </CardContent>
     </Card>

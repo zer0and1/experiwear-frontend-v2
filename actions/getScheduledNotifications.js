@@ -2,9 +2,15 @@
 import * as TYPES from './types'
 import * as scheduleAPI from 'services/api-schedule'
 
-const getScheduledNotifications = () => async (dispatch) => {
+const PAGE_COUNT = 5;
+const getScheduledNotifications = (take = PAGE_COUNT) => async (dispatch) => {
   try {
-    const response = await scheduleAPI.getScheduledNotifications()
+    const params = {
+      skip: 0,
+      take
+    }
+
+    const response = await scheduleAPI.getScheduledNotifications(params)
     await dispatch({
       type: TYPES.SET_SCHEDULED_NOTIFICATIONS,
       payload: response
@@ -14,4 +20,28 @@ const getScheduledNotifications = () => async (dispatch) => {
   }
 };
 
-export default getScheduledNotifications
+const getMoreScheduledNotifications = () => async (dispatch, getState) => {
+  try {
+    const { notifications: { scheduled } } = getState();
+    const params = {
+      skip: scheduled.length,
+      take: PAGE_COUNT
+    }
+
+    const response = await scheduleAPI.getScheduledNotifications(params)
+    await dispatch({
+      type: TYPES.SET_CANNED_NOTIFICATIONS,
+      payload: [
+        ...scheduled,
+        ...response
+      ]
+    });
+  } catch (error) {
+    console.log('[getMoreScheduledNotifications] error => ', error);
+  }
+};
+
+export {
+  getScheduledNotifications,
+  getMoreScheduledNotifications
+}
