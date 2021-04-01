@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
   selectedItem: {
     backgroundColor: theme.palette.background.primary
   },
+  disabledItem: {
+    opacity: 0.5,
+    pointerEvents: 'none'
+  },
   itemContent: {
     position: 'relative',
     display: 'flex',
@@ -91,7 +95,7 @@ const MagicGameDayDialog = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { results = [], select = {} } = useSelector(state => state.games);
+  const { results = [], select = {}, closestUpcoming = {} } = useSelector(state => state.games);
 
   const handleClose = useCallback(() => {
     setOpen(false);
@@ -117,7 +121,7 @@ const MagicGameDayDialog = ({
             results.map((item) => (
               <div
                 key={item.id}
-                className={clsx(classes.item, { [classes.selectedItem]: select.id === item.id })}
+                className={clsx(classes.item, { [classes.selectedItem]: select.id === item.id }, { [classes.disabledItem]: (new Date(item.date) - new Date(closestUpcoming.date)) > 0 })}
                 onClick={selectHandler(item)}
               >
                 <div className={classes.itemContent}>

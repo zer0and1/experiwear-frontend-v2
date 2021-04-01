@@ -1,12 +1,12 @@
 import { memo, useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import * as scheduleAPI from 'services/api-schedule'
-import getScheduledNotifications from 'actions/getScheduledNotifications'
+import { getScheduledNotifications } from 'actions/getScheduledNotifications'
 import MagicSelect from 'components/UI/MagicSelect'
 import MagicTextField from 'components/UI/MagicTextField'
 import MagicImageField from 'components/UI/MagicImageField'
@@ -35,6 +35,7 @@ const CreateScheduleAlert = ({
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
+  const { scheduled: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -64,6 +65,7 @@ const CreateScheduleAlert = ({
         formData.append('file', file);
         response = await scheduleAPI.createScheduledNotification(formData);
         initData();
+        dispatch(getScheduledNotifications(results.length + 1));
       } else {
         if (!isEmpty(file)) {
           formData.append('file', file);
@@ -71,11 +73,11 @@ const CreateScheduleAlert = ({
         response = await scheduleAPI.editScheduledNotification(selectedItem.id, formData);
         setSelectedItem({})
         initData();
+        dispatch(getScheduledNotifications(results.length));
       }
 
       const { message } = response;
       showSuccessToast(message)
-      dispatch(getScheduledNotifications());
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;

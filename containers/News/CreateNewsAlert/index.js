@@ -1,12 +1,12 @@
 import { memo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import * as notificationsAPI from 'services/api-notifications'
-import getNotifications from 'actions/getNotifications'
+import { getNotifications } from 'actions/getNotifications'
 import MagicTextField from 'components/UI/MagicTextField'
 import MagicImageField from 'components/UI/MagicImageField'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
@@ -27,6 +27,7 @@ const CreateNewsAlert = () => {
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
+  const { news: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -53,7 +54,7 @@ const CreateNewsAlert = () => {
       const { message } = await notificationsAPI.createNotification(formData);
       showSuccessToast(message)
       initData();
-      dispatch(getNotifications(ALERT_TYPES.NEWS.VALUE))
+      dispatch(getNotifications(ALERT_TYPES.NEWS.VALUE, results.length + 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;

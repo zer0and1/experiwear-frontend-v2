@@ -1,12 +1,12 @@
 import { memo, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import * as cannedAPI from 'services/api-canned'
-import getCannedNotifications from 'actions/getCannedNotifications'
+import { getCannedNotifications } from 'actions/getCannedNotifications'
 import MagicTextField from 'components/UI/MagicTextField'
 import MagicImageField from 'components/UI/MagicImageField'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
@@ -30,6 +30,7 @@ const CreateCannedAlert = ({
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
+  const { canned: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -57,6 +58,7 @@ const CreateCannedAlert = ({
         formData.append('file', file);
         response = await cannedAPI.createCanned(formData);
         initData();
+        dispatch(getCannedNotifications(results.length + 1))
       } else {
         if (!isEmpty(file)) {
           formData.append('file', file);
@@ -64,11 +66,11 @@ const CreateCannedAlert = ({
         response = await cannedAPI.editCanned(selectedItem.id, formData);
         setSelectedItem({})
         initData();
+        dispatch(getCannedNotifications(results.length))
       }
 
       const { message } = response;
       showSuccessToast(message)
-      dispatch(getCannedNotifications())
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;

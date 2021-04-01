@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 
 import * as scheduleAPI from 'services/api-schedule'
-import getScheduledNotifications from 'actions/getScheduledNotifications'
+import { getScheduledNotifications } from 'actions/getScheduledNotifications'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
@@ -81,6 +81,8 @@ const MagicScheduleAlert = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
+
+  const { scheduled: { results } } = useSelector(state => state.notifications)
   const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
 
   const [openModal, setOpenModal] = useState(false)
@@ -90,7 +92,7 @@ const MagicScheduleAlert = ({
     try {
       const { message } = await scheduleAPI.deleteScheduledNotification(item.id);
       showSuccessToast(message)
-      dispatch(getScheduledNotifications())
+      dispatch(getScheduledNotifications(results.length - 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
@@ -98,7 +100,7 @@ const MagicScheduleAlert = ({
       }
     }
     changeLoadingStatus(false)
-  }, [item, dispatch, changeLoadingStatus]);
+  }, [item, results, dispatch, changeLoadingStatus]);
 
   const editHandler = useCallback(() => {
     onEdit(item)
@@ -123,7 +125,7 @@ const MagicScheduleAlert = ({
             {item.type}
           </Typography>
           {
-            item.isSent &&
+            !item.isSent &&
             <>
               <ContainedButton
                 size='small'

@@ -3,14 +3,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Card, CardContent } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import getScheduledNotifications from 'actions/getScheduledNotifications'
+import { getScheduledNotifications, getMoreScheduledNotifications } from 'actions/getScheduledNotifications'
+import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicScheduleAlert from 'parts/Card/MagicScheduleAlert'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     minHeight: 420
   },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: theme.spacing(2)
+  }
 }));
 
 const ScheduleList = ({
@@ -19,7 +25,7 @@ const ScheduleList = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { scheduled } = useSelector(state => state.notifications)
+  const { scheduled: { results, total } } = useSelector(state => state.notifications)
 
   useEffect(() => {
     dispatch(getScheduledNotifications())
@@ -29,18 +35,33 @@ const ScheduleList = ({
     setSelectedItem(item)
   }, [setSelectedItem])
 
+  const moreHandler = () => {
+    dispatch(getMoreScheduledNotifications())
+  }
+
   return (
     <Card className={classes.card}>
       <CardContent>
         <MagicCardHeader title='Active Scheduled Alerts' />
         {
-          scheduled.map((item, index) => (
+          results.map((item, index) => (
             <MagicScheduleAlert
               key={index}
               item={item}
               onEdit={editHandler}
             />
           ))
+        }
+        {
+          results.length < total &&
+          <div className={classes.button}>
+            <ContainedButton
+              color='green'
+              onClick={moreHandler}
+            >
+              More
+            </ContainedButton>
+          </div>
         }
       </CardContent>
     </Card>

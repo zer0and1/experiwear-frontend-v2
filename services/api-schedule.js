@@ -1,8 +1,8 @@
 
 import axios from 'services/axios'
 
-const getScheduledNotifications = async () => {
-  return await axios.get('/notifications/scheduled');
+const getScheduledNotifications = async (params) => {
+  return await axios.get('/notifications/scheduled', { params });
 };
 
 const getLatestScheduledNotifications = async () => {

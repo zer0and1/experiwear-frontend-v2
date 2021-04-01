@@ -1,8 +1,8 @@
 
 import axios from 'services/axios'
 
-const getCanneds = async () => {
-  return await axios.get('/canneds');
+const getCanneds = async (params) => {
+  return await axios.get('/canneds', { params });
 };
 
 const createCanned = async (params) => {

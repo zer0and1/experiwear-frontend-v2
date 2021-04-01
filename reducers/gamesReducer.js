@@ -3,7 +3,8 @@ import * as TYPES from 'actions/types'
 
 const INITIAL_STATE = Object.freeze({
   results: [],
-  select: {}
+  select: {},
+  closestUpcoming: {}
 });
 
 const gamesReducer = (state = INITIAL_STATE, action) => {
@@ -12,6 +13,8 @@ const gamesReducer = (state = INITIAL_STATE, action) => {
       return { ...state, results: action.payload };
     case TYPES.SET_SELECT_GAME:
       return { ...state, select: action.payload };
+    case TYPES.SET_CLOSEST_UPCOMING_GAME:
+      return { ...state, closestUpcoming: action.payload };
     default:
       return state;
   }
