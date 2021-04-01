@@ -10,10 +10,13 @@ const getCannedNotifications = (take = PAGE_COUNT) => async (dispatch) => {
       take
     }
 
-    const response = await cannedAPI.getCanneds(params)
+    const { results, total } = await cannedAPI.getCanneds(params)
     await dispatch({
       type: TYPES.SET_CANNED_NOTIFICATIONS,
-      payload: response
+      payload: {
+        results,
+        total
+      }
     });
   } catch (error) {
     console.log('[getCannedNotifications] error => ', error);
@@ -22,19 +25,22 @@ const getCannedNotifications = (take = PAGE_COUNT) => async (dispatch) => {
 
 const getMoreCannedNotifications = () => async (dispatch, getState) => {
   try {
-    const { notifications: { canned } } = getState();
+    const { notifications: { canned: { results: preResults } } } = getState();
     const params = {
-      skip: canned.length,
+      skip: preResults.length,
       take: PAGE_COUNT
     }
 
-    const response = await cannedAPI.getCanneds(params)
+    const { results, total } = await cannedAPI.getCanneds(params)
     await dispatch({
       type: TYPES.SET_CANNED_NOTIFICATIONS,
-      payload: [
-        ...canned,
-        ...response
-      ]
+      payload: {
+        results: [
+          ...preResults,
+          ...results
+        ],
+        total
+      }
     });
   } catch (error) {
     console.log('[getMoreCannedNotifications] error => ', error);

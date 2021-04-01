@@ -7,7 +7,6 @@ import { getCannedNotifications, getMoreCannedNotifications } from 'actions/getC
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicCannedAlert from 'parts/Card/MagicCannedAlert'
-import { isEmpty } from 'utils/helpers/utility'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -26,7 +25,7 @@ const CannedList = ({
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { canned } = useSelector(state => state.notifications)
+  const { canned: { results, total } } = useSelector(state => state.notifications)
 
   useEffect(() => {
     dispatch(getCannedNotifications())
@@ -45,7 +44,7 @@ const CannedList = ({
       <CardContent>
         <MagicCardHeader title='Active Canned Alerts' />
         {
-          canned.map((item, index) => (
+          results.map((item, index) => (
             <MagicCannedAlert
               key={index}
               item={item}
@@ -54,7 +53,7 @@ const CannedList = ({
           ))
         }
         {
-          !isEmpty(canned) &&
+          results.length < total &&
           <div className={classes.button}>
             <ContainedButton
               color='green'

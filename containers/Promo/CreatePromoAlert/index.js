@@ -27,7 +27,7 @@ const CreatePromoAlert = () => {
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { promo } = useSelector(state => state.notifications)
+  const { promo: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -54,7 +54,7 @@ const CreatePromoAlert = () => {
       const { message } = await notificationsAPI.createNotification(formData);
       showSuccessToast(message)
       initData();
-      dispatch(getNotifications(ALERT_TYPES.PROMO.VALUE, promo.length + 1))
+      dispatch(getNotifications(ALERT_TYPES.PROMO.VALUE, results.length + 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;

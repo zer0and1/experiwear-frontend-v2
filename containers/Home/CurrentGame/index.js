@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import TeamLogo from 'parts/TeamLogo'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import { isEmpty } from 'utils/helpers/utility'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -46,7 +47,7 @@ const CurrentGame = () => {
   return (
     <HomeCardWrapper
       title='Current Game'
-      subTitle='February 24, 2021'
+      subTitle={!isEmpty(select) ? getEnglishDateWithTime(select.date) : ''}
     >
       {
         !isEmpty(select) &&

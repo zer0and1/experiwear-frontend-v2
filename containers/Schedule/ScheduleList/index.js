@@ -7,7 +7,6 @@ import { getScheduledNotifications, getMoreScheduledNotifications } from 'action
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicScheduleAlert from 'parts/Card/MagicScheduleAlert'
-import { isEmpty } from 'utils/helpers/utility'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -26,7 +25,7 @@ const ScheduleList = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { scheduled } = useSelector(state => state.notifications)
+  const { scheduled: { results, total } } = useSelector(state => state.notifications)
 
   useEffect(() => {
     dispatch(getScheduledNotifications())
@@ -45,7 +44,7 @@ const ScheduleList = ({
       <CardContent>
         <MagicCardHeader title='Active Scheduled Alerts' />
         {
-          scheduled.map((item, index) => (
+          results.map((item, index) => (
             <MagicScheduleAlert
               key={index}
               item={item}
@@ -54,7 +53,7 @@ const ScheduleList = ({
           ))
         }
         {
-          !isEmpty(scheduled) &&
+          results.length < total &&
           <div className={classes.button}>
             <ContainedButton
               color='green'

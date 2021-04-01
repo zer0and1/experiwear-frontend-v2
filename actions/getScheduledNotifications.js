@@ -10,10 +10,13 @@ const getScheduledNotifications = (take = PAGE_COUNT) => async (dispatch) => {
       take
     }
 
-    const response = await scheduleAPI.getScheduledNotifications(params)
+    const { results, total } = await scheduleAPI.getScheduledNotifications(params)
     await dispatch({
       type: TYPES.SET_SCHEDULED_NOTIFICATIONS,
-      payload: response
+      payload: {
+        results,
+        total
+      }
     });
   } catch (error) {
     console.log('[getScheduledNotifications] error => ', error);
@@ -22,19 +25,22 @@ const getScheduledNotifications = (take = PAGE_COUNT) => async (dispatch) => {
 
 const getMoreScheduledNotifications = () => async (dispatch, getState) => {
   try {
-    const { notifications: { scheduled } } = getState();
+    const { notifications: { scheduled: { results: preResults } } } = getState();
     const params = {
-      skip: scheduled.length,
+      skip: preResults.length,
       take: PAGE_COUNT
     }
 
-    const response = await scheduleAPI.getScheduledNotifications(params)
+    const { results, total } = await scheduleAPI.getScheduledNotifications(params)
     await dispatch({
-      type: TYPES.SET_CANNED_NOTIFICATIONS,
-      payload: [
-        ...scheduled,
-        ...response
-      ]
+      type: TYPES.SET_SCHEDULED_NOTIFICATIONS,
+      payload: {
+        results: [
+          ...preResults,
+          ...results
+        ],
+        total
+      }
     });
   } catch (error) {
     console.log('[getMoreScheduledNotifications] error => ', error);

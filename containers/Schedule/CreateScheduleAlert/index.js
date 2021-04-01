@@ -35,7 +35,7 @@ const CreateScheduleAlert = ({
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { scheduled } = useSelector(state => state.notifications)
+  const { scheduled: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -65,7 +65,7 @@ const CreateScheduleAlert = ({
         formData.append('file', file);
         response = await scheduleAPI.createScheduledNotification(formData);
         initData();
-        dispatch(getScheduledNotifications(scheduled.length + 1));
+        dispatch(getScheduledNotifications(results.length + 1));
       } else {
         if (!isEmpty(file)) {
           formData.append('file', file);
@@ -73,7 +73,7 @@ const CreateScheduleAlert = ({
         response = await scheduleAPI.editScheduledNotification(selectedItem.id, formData);
         setSelectedItem({})
         initData();
-        dispatch(getScheduledNotifications(scheduled.length));
+        dispatch(getScheduledNotifications(results.length));
       }
 
       const { message } = response;

@@ -2,13 +2,34 @@
 import * as TYPES from 'actions/types'
 
 const INITIAL_STATE = Object.freeze({
-  all: [],
-  news: [],
-  survey: [],
-  score: [],
-  promo: [],
-  scheduled: [],
-  canned: [],
+  all: {
+    results: [],
+    total: 0
+  },
+  news: {
+    results: [],
+    total: 0
+  },
+  survey: {
+    results: [],
+    total: 0
+  },
+  score: {
+    results: [],
+    total: 0
+  },
+  promo: {
+    results: [],
+    total: 0
+  },
+  scheduled: {
+    results: [],
+    total: 0
+  },
+  canned: {
+    results: [],
+    total: 0
+  },
   latest: {},
   latestSurvey: {}
 });

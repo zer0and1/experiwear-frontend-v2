@@ -30,7 +30,7 @@ const CreateCannedAlert = ({
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { canned } = useSelector(state => state.notifications)
+  const { canned: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -58,7 +58,7 @@ const CreateCannedAlert = ({
         formData.append('file', file);
         response = await cannedAPI.createCanned(formData);
         initData();
-        dispatch(getCannedNotifications(canned.length + 1))
+        dispatch(getCannedNotifications(results.length + 1))
       } else {
         if (!isEmpty(file)) {
           formData.append('file', file);
@@ -66,7 +66,7 @@ const CreateCannedAlert = ({
         response = await cannedAPI.editCanned(selectedItem.id, formData);
         setSelectedItem({})
         initData();
-        dispatch(getCannedNotifications(canned.length))
+        dispatch(getCannedNotifications(results.length))
       }
 
       const { message } = response;

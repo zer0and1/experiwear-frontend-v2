@@ -8,7 +8,6 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicSurveyAlert from 'parts/Card/MagicSurveyAlert'
 import { ALERT_TYPES } from 'utils/constants/alert-types'
-import { isEmpty } from 'utils/helpers/utility'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -25,7 +24,7 @@ const SurveyList = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { survey } = useSelector(state => state.notifications)
+  const { survey: { results, total } } = useSelector(state => state.notifications)
 
   useEffect(() => {
     dispatch(getNotifications(ALERT_TYPES.SURVEY.VALUE))
@@ -40,7 +39,7 @@ const SurveyList = () => {
       <CardContent>
         <MagicCardHeader title='Survey Alerts Sent' />
         {
-          survey.map((item, index) => (
+          results.map((item, index) => (
             <MagicSurveyAlert
               key={index}
               item={item}
@@ -48,7 +47,7 @@ const SurveyList = () => {
           ))
         }
         {
-          !isEmpty(survey) &&
+          results.length < total &&
           <div className={classes.button}>
             <ContainedButton
               color='green'

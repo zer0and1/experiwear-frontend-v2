@@ -1,7 +1,7 @@
 
 import { memo, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import * as authAPI from 'services/api-auth'
 import {
@@ -22,6 +22,8 @@ const InitProvider = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { isAuthenticated } = useSelector(state => state.auth);
+
   useEffect(() => {
     const isAuthenticated = isServer() ? '' : localStorage.isAuthenticated;
     const currentUser = isServer() ? null : localStorage.currentUser;
@@ -31,13 +33,16 @@ const InitProvider = () => {
       dispatch(setCurrentUser(JSON.parse(currentUser)))
     }
 
-    if (isAuthenticated === 'true') {
-      dispatch(getGames())
-      dispatch(getFanbandsStatistics())
-    }
     checkAuthenticate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getGames())
+      dispatch(getFanbandsStatistics())
+    }
+  }, [isAuthenticated, dispatch])
 
   const checkAuthenticate = async () => {
     try {

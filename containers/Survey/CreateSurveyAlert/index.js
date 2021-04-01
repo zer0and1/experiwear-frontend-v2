@@ -26,7 +26,7 @@ const CreateSurveyAlert = () => {
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { survey } = useSelector(state => state.notifications)
+  const { survey: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -52,7 +52,7 @@ const CreateSurveyAlert = () => {
       const { message } = await notificationsAPI.createNotification(formData);
       showSuccessToast(message)
       initData();
-      dispatch(getNotifications(ALERT_TYPES.SURVEY.VALUE, survey.length + 1))
+      dispatch(getNotifications(ALERT_TYPES.SURVEY.VALUE, results.length + 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;

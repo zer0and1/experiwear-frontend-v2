@@ -29,11 +29,14 @@ const getNotifications = (type = '', take = PAGE_COUNT) => async (dispatch) => {
         take
       }
     }
-    const response = await notificationsAPI.getNotifications(params)
+    const { results = [], total = 0 } = await notificationsAPI.getNotifications(params)
 
     await dispatch({
       type: getActionType(type),
-      payload: response
+      payload: {
+        results,
+        total
+      }
     });
   } catch (error) {
     console.log('[getNotifications] error => ', error);
@@ -43,20 +46,24 @@ const getNotifications = (type = '', take = PAGE_COUNT) => async (dispatch) => {
 const getMoreNotifications = (type) => async (dispatch, getState) => {
   try {
     const { notifications } = getState();
+    const { results: preResults = [] } = notifications[type]
 
     const params = {
       type,
-      skip: notifications[type].length,
+      skip: preResults.length,
       take: PAGE_COUNT
     }
-    const response = await notificationsAPI.getNotifications(params)
+    const { results = [], total = 0 } = await notificationsAPI.getNotifications(params)
 
     await dispatch({
       type: getActionType(type),
-      payload: [
-        ...notifications[type],
-        ...response
-      ]
+      payload: {
+        results: [
+          ...preResults,
+          ...results
+        ],
+        total
+      }
     });
   } catch (error) {
     console.log('[getMoreNotifications] error => ', error);

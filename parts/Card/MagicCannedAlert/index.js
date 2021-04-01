@@ -75,7 +75,7 @@ const MagicCannedAlert = ({
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { canned } = useSelector(state => state.notifications)
+  const { canned: { results } } = useSelector(state => state.notifications)
   const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
   const [openModal, setOpenModal] = useState(false)
 
@@ -98,7 +98,7 @@ const MagicCannedAlert = ({
     try {
       const { message } = await cannedAPI.deleteCanned(item.id);
       showSuccessToast(message)
-      dispatch(getCannedNotifications(canned.length - 1))
+      dispatch(getCannedNotifications(results.length - 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
@@ -106,7 +106,7 @@ const MagicCannedAlert = ({
       }
     }
     changeLoadingStatus(false)
-  }, [item, canned, dispatch, changeLoadingStatus]);
+  }, [item, results, dispatch, changeLoadingStatus]);
 
   const editHandler = useCallback(() => {
     onEdit(item)

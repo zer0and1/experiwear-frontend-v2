@@ -8,7 +8,6 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import MagicAlert from 'parts/Card/MagicAlert'
 import { ALERT_TYPES } from 'utils/constants/alert-types'
-import { isEmpty } from 'utils/helpers/utility'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -25,7 +24,7 @@ const PromoList = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { promo } = useSelector(state => state.notifications)
+  const { promo: { results, total } } = useSelector(state => state.notifications)
 
   useEffect(() => {
     dispatch(getNotifications(ALERT_TYPES.PROMO.VALUE))
@@ -40,7 +39,7 @@ const PromoList = () => {
       <CardContent>
         <MagicCardHeader title='Promo Alerts Sent' />
         {
-          promo.map((item, index) => (
+          results.map((item, index) => (
             <MagicAlert
               key={index}
               item={item}
@@ -48,7 +47,7 @@ const PromoList = () => {
           ))
         }
         {
-          !isEmpty(promo) &&
+          results.length < total &&
           <div className={classes.button}>
             <ContainedButton
               color='green'

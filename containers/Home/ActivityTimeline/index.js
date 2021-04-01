@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
 
 const ActivityTimeline = () => {
   const classes = useStyles();
-  const { all } = useSelector(state => state.notifications)
+  const { all: { results } } = useSelector(state => state.notifications)
 
   return (
     <HomeCardWrapper title='Activity Timeline'>
       <div className={classes.container}>
-        {all.map((item, index) => {
+        {results.map((item, index) => {
           const alertInfo = getAlertIcon(item.type)
           return (
             <div key={index} className={classes.itemContainer}>

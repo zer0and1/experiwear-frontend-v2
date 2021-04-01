@@ -27,7 +27,7 @@ const CreateScoreAlert = () => {
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { score } = useSelector(state => state.notifications)
+  const { score: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
   const [fileError, setFileError] = useState(false);
@@ -54,7 +54,7 @@ const CreateScoreAlert = () => {
       const { message } = await notificationsAPI.createNotification(formData);
       showSuccessToast(message)
       initData();
-      dispatch(getNotifications(ALERT_TYPES.SCORE.VALUE, score.length + 1))
+      dispatch(getNotifications(ALERT_TYPES.SCORE.VALUE, results.length + 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;

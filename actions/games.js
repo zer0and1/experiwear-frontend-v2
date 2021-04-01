@@ -10,15 +10,30 @@ const getGames = (refresh = false) => async (dispatch, getState) => {
       return
     }
 
-    const response = await gameAPI.getGames()
+    const { results: games = [] } = await gameAPI.getGames();
+    const currentDate = new Date();
+    let minDiffTime = 0;
+    let closestUpcomingGame = {};
+
+    for (const game of games) {
+      const diffTime = new Date(game.date) - currentDate;
+      if (diffTime > 0 && (minDiffTime === 0 || diffTime < minDiffTime)) {
+        minDiffTime = diffTime;
+        closestUpcomingGame = game;
+      }
+    };
+
     await dispatch({
       type: TYPES.FETCH_GAMES,
-      payload: response
+      payload: games
     });
 
-    if (!isEmpty(response)) {
-      dispatch(setSelectGame(response[0]));
+    if (!isEmpty(closestUpcomingGame)) {
+      dispatch(setSelectGame(closestUpcomingGame));
+    } else if (!isEmpty(games)) {
+      dispatch(setSelectGame(games[0]));
     }
+    dispatch(setClosestUpcomingGame(closestUpcomingGame));
   } catch (error) {
     console.log('[getGames] error => ', error);
   }
@@ -31,7 +46,15 @@ const setSelectGame = game => {
   };
 };
 
+const setClosestUpcomingGame = game => {
+  return {
+    type: TYPES.SET_CLOSEST_UPCOMING_GAME,
+    payload: game
+  };
+};
+
 export {
   getGames,
-  setSelectGame
+  setSelectGame,
+  setClosestUpcomingGame
 }

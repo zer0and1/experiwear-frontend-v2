@@ -82,7 +82,7 @@ const MagicScheduleAlert = ({
   const dispatch = useDispatch();
   const { changeLoadingStatus } = useLoading();
 
-  const { scheduled } = useSelector(state => state.notifications)
+  const { scheduled: { results } } = useSelector(state => state.notifications)
   const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
 
   const [openModal, setOpenModal] = useState(false)
@@ -92,7 +92,7 @@ const MagicScheduleAlert = ({
     try {
       const { message } = await scheduleAPI.deleteScheduledNotification(item.id);
       showSuccessToast(message)
-      dispatch(getScheduledNotifications(scheduled.length - 1))
+      dispatch(getScheduledNotifications(results.length - 1))
     } catch (error) {
       if (error.response) {
         const { data: { message } } = error.response;
@@ -100,7 +100,7 @@ const MagicScheduleAlert = ({
       }
     }
     changeLoadingStatus(false)
-  }, [item, scheduled, dispatch, changeLoadingStatus]);
+  }, [item, results, dispatch, changeLoadingStatus]);
 
   const editHandler = useCallback(() => {
     onEdit(item)
@@ -125,7 +125,7 @@ const MagicScheduleAlert = ({
             {item.type}
           </Typography>
           {
-            item.isSent &&
+            !item.isSent &&
             <>
               <ContainedButton
                 size='small'
