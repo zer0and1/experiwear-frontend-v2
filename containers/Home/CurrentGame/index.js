@@ -92,13 +92,19 @@ const CurrentGame = () => {
             color='textPrimary'
             className={classes.quarter}
           >
-            {getEnglishDate(select.date)}
+            {select?.gameDuration
+              ? `${select.currentPeriod} Quarter`
+              : getEnglishDate(select.date)
+            }
           </Typography>
           <Typography
             color='textPrimary'
             className={classes.time}
           >
-            {getEnglishTime(select.date)}
+            {select?.gameDuration
+              ? `${select.gameDuration} remaining`
+              : getEnglishTime(select.date)
+            }
           </Typography>
         </>
       }
