@@ -9,6 +9,7 @@ import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
 import { ALERT_TYPES } from 'utils/constants/alert-types'
 import getPercent from 'utils/helpers/getPercent'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -57,7 +58,7 @@ const LatestSurvey = () => {
   return (
     <HomeCardWrapper
       title='Latest Survey'
-      subTitle='March 11, 8:10 PM'
+      subTitle={getEnglishDateWithTime(latestSurvey?.createdAt)}
     >
       <Typography
         color='textPrimary'

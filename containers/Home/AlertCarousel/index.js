@@ -84,7 +84,7 @@ const AlertCarousel = () => {
                 href={LINKS.NEWS.HREF}
                 className={classes.addButton}
               >
-                + Create New Alert
+                + Create News Alert
               </LinkButton>
             </div>
           )

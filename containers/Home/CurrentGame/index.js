@@ -92,20 +92,25 @@ const CurrentGame = () => {
             color='textPrimary'
             className={classes.quarter}
           >
-            {select?.gameDuration
-              ? `${select.currentPeriod} Quarter`
-              : getEnglishDate(select.date)
+            {select?.statusGame === 'Finished'
+              ? 'Finish'
+              : select?.clock
+                ? `${select.currentPeriod} Quarter`
+                : getEnglishDate(select.date)
             }
           </Typography>
-          <Typography
-            color='textPrimary'
-            className={classes.time}
-          >
-            {select?.gameDuration
-              ? `${select.gameDuration} remaining`
-              : getEnglishTime(select.date)
-            }
-          </Typography>
+          {
+            select?.statusGame !== 'Finished' &&
+            <Typography
+              color='textPrimary'
+              className={classes.time}
+            >
+              {select?.clock
+                ? `${select.clock} remaining`
+                : getEnglishTime(select.date)
+              }
+            </Typography>
+          }
         </>
       }
     </HomeCardWrapper>

@@ -19,6 +19,7 @@ import { getISODate } from 'utils/helpers/time'
 import { STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const schema = yup.object().shape({
   type: STRING_VALID,
@@ -118,7 +119,7 @@ const CreateScheduleAlert = ({
       <CardContent>
         <MagicCardHeader
           title='Create Scheduled Alert'
-          subTitle='February 24, 2021'
+          subTitle={getEnglishDateWithTime(new Date())}
         />
         <form
           noValidate
