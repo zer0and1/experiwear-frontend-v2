@@ -20,4 +20,13 @@ const getFanbandsStatistics = (refresh = false) => async (dispatch, getState) =>
   }
 };
 
-export default getFanbandsStatistics
+const updateFanbandsStatistics = (statistics) => {
+  return {
+    type: TYPES.UPDATE_FANBANDS_STATISTICS,
+    payload: statistics
+  };
+}
+export {
+  getFanbandsStatistics,
+  updateFanbandsStatistics
+}
