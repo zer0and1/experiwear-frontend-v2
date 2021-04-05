@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Doughnut } from 'react-chartjs-2'
 
-import getLatestNotification from 'actions/getLatestNotification'
+import { getLatestNotification } from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
 import getPercent from 'utils/helpers/getPercent'

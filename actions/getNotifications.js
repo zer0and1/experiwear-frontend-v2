@@ -83,7 +83,7 @@ const setNotifications = (type = '', results = []) => async (dispatch, getState)
       }
     });
   } catch (error) {
-    console.log('[getNotifications] error => ', error);
+    console.log('[setNotifications] error => ', error);
   }
 };
 
