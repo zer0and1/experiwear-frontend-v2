@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { setNotifications } from 'actions/getNotifications'
+import { setLatestNotification } from 'actions/getLatestNotification'
 import { updateFanbandsStatistics } from 'actions/getFanbandsStatistics'
 import useSocket from 'utils/hooks/useSocket'
 import WS_EVENTS from 'utils/constants/socket'
@@ -24,6 +25,7 @@ const useFanbandSocket = () => {
   const reactHandler = useCallback(({ id, type }) => {
     try {
       const { results = [] } = notifications[type];
+      const { latest = {} } = notifications;
 
       const newNotifications = results.map((item) => {
         if (item.id === id) {
@@ -35,6 +37,14 @@ const useFanbandSocket = () => {
         return item;
       })
       dispatch(setNotifications(type, newNotifications))
+
+      if (latest.id === id) {
+        const newLatest = {
+          ...latest,
+          opened: (latest?.opened || 0) + 1
+        }
+        dispatch(setLatestNotification('', newLatest))
+      }
     } catch (error) {
       console.log(error)
     }
@@ -44,6 +54,7 @@ const useFanbandSocket = () => {
   const answerHandler = useCallback(({ id, type, answer }) => {
     try {
       const { results = [] } = notifications[type];
+      const { latestSurvey = {} } = notifications;
 
       const newNotifications = results.map((item) => {
         if (item.id === id) {
@@ -62,6 +73,22 @@ const useFanbandSocket = () => {
         return item;
       })
       dispatch(setNotifications(type, newNotifications))
+
+      if (latestSurvey.id === id) {
+        let newLatestSurvey = {}
+        if (answer === '1') {
+          newLatestSurvey = {
+            ...latestSurvey,
+            yes: (latestSurvey?.yes || 0) + 1
+          }
+        } else {
+          newLatestSurvey = {
+            ...latestSurvey,
+            no: (latestSurvey?.no || 0) + 1
+          }
+        }
+        dispatch(setLatestNotification(type, newLatestSurvey))
+      }
     } catch (error) {
       console.log(error)
     }

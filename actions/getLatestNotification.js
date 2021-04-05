@@ -26,4 +26,28 @@ const getLatestNotification = (type) => async (dispatch) => {
   }
 };
 
-export default getLatestNotification
+const setLatestNotification = (type, notification) => async (dispatch) => {
+  try {
+    let actionType = TYPES.SET_LATEST_NOTIFICATION;
+    switch (type) {
+      case ALERT_TYPES.SURVEY.VALUE:
+        actionType = TYPES.SET_LATEST_SURVEY_NOTIFICATION;
+        break;
+      default:
+        actionType = TYPES.SET_LATEST_NOTIFICATION;
+        break;
+    }
+
+    await dispatch({
+      type: actionType,
+      payload: notification
+    });
+  } catch (error) {
+    console.log('[setLatestNotification] error => ', error);
+  }
+};
+
+export {
+  getLatestNotification,
+  setLatestNotification
+}
