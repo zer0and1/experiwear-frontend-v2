@@ -9,7 +9,6 @@ import {
 
 import { logoutUser } from 'actions/auth'
 import BandLogo from 'components/BandLogo'
-import SearchIcon from 'components/Icons/SearchIcon'
 import BadgeChatIcon from './BadgeChatIcon'
 
 const useStyles = makeStyles(theme => ({
@@ -60,7 +59,6 @@ const TopAppBar = () => {
       <div />
       <BandLogo />
       <div className={classes.userInfo}>
-        <SearchIcon className={classes.searchIcon} />
         <BadgeChatIcon />
         <div>
           <Typography

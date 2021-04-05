@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.custom.palette.green
     },
     '& .Toastify__toast--success': {
-      backgroundColor: theme.custom.palette.yellow
+      backgroundColor: theme.custom.palette.green
     }
   },
   toast: {

@@ -8,7 +8,14 @@ const INITIAL_STATE = Object.freeze({
 const fanbandsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TYPES.FETCH_FANBANDS_STATISTICS:
-      return { ...state, statistics: action.payload };
+      return { statistics: action.payload };
+    case TYPES.UPDATE_FANBANDS_STATISTICS:
+      return {
+        statistics: {
+          ...state.statistics,
+          ...action.payload
+        }
+      };
     default:
       return state;
   }
