@@ -15,12 +15,16 @@ socket.on('connect', () => {
   socket.emit('test', { timestamp: new Date() });
 })
 
-socket.on('disconnect', function () {
-  console.log('Disconnected');
+socket.on('disconnect', function (error) {
+  console.log('Disconnected => ', error);
 });
 
 socket.on('test', function (data) {
   console.log(data);
+});
+
+socket.on('connect_error', function (data) {
+  console.error(data);
 });
 
 const useSocket = (eventName, callback) => {

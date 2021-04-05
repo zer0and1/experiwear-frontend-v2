@@ -29,7 +29,7 @@ const BadgeChatIcon = () => {
 
   const socketHandler = useCallback((data) => {
     setNotification(data);
-    showSuccessToast('New Notification')
+    showSuccessToast(data?.title || 'New Notification')
   }, [setNotification])
   useSocket(WS_EVENTS.UPCOMING_SCHEDULED_NOTIFICATION, socketHandler);
 

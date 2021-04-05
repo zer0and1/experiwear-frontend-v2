@@ -70,7 +70,25 @@ const getMoreNotifications = (type) => async (dispatch, getState) => {
   }
 };
 
+const setNotifications = (type = '', results = []) => async (dispatch, getState) => {
+  try {
+    const { notifications } = getState();
+    const { total = 0 } = notifications[type]
+
+    await dispatch({
+      type: getActionType(type),
+      payload: {
+        results,
+        total
+      }
+    });
+  } catch (error) {
+    console.log('[getNotifications] error => ', error);
+  }
+};
+
 export {
   getNotifications,
-  getMoreNotifications
+  getMoreNotifications,
+  setNotifications
 }
