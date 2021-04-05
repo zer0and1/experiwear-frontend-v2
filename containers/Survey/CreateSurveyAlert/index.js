@@ -16,6 +16,7 @@ import { showErrorToast, showSuccessToast } from 'utils/helpers/toast'
 import { STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const schema = yup.object().shape({
   title: STRING_VALID,
@@ -74,7 +75,7 @@ const CreateSurveyAlert = () => {
       <CardContent>
         <MagicCardHeader
           title='Create Survey Alert'
-          subTitle='February 24, 2021'
+          subTitle={getEnglishDateWithTime(new Date())}
         />
         <form
           noValidate

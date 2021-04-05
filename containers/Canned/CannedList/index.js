@@ -42,7 +42,7 @@ const CannedList = ({
   return (
     <Card className={classes.card}>
       <CardContent>
-        <MagicCardHeader title='Active Canned Alerts' />
+        <MagicCardHeader title='Active Saved Alerts' />
         {
           results.map((item, index) => (
             <MagicCannedAlert

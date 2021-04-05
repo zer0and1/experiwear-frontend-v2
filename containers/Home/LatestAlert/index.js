@@ -8,6 +8,7 @@ import { getLatestNotification } from 'actions/getLatestNotification'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import ChartFooterItem from '../Shared/ChartFooterItem'
 import getPercent from 'utils/helpers/getPercent'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -54,7 +55,7 @@ const LatestAlert = () => {
   return (
     <HomeCardWrapper
       title='Latest Alert'
-      subTitle='March 11, 8:10 PM'
+      subTitle={getEnglishDateWithTime(latest?.createdAt)}
     >
       <div className={classes.container}>
         <div className={classes.chart}>

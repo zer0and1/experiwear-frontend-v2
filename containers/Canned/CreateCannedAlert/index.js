@@ -16,6 +16,7 @@ import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { STRING_VALID } from 'utils/constants/validations'
 import useFormStyles from 'styles/useFormStyles'
 import { isEmpty } from 'utils/helpers/utility'
+import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const schema = yup.object().shape({
   title: STRING_VALID,
@@ -105,8 +106,8 @@ const CreateCannedAlert = ({
     <Card>
       <CardContent>
         <MagicCardHeader
-          title='Create Canned Alert'
-          subTitle='February 24, 2021'
+          title='Create Saved Alert'
+          subTitle={getEnglishDateWithTime(new Date())}
         />
         <form
           noValidate
@@ -149,7 +150,7 @@ const CreateCannedAlert = ({
               type='submit'
               className={classes.button}
             >
-              Save
+              Saved Alerts
             </ContainedButton>
           </div>
         </form>
