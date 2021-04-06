@@ -24,6 +24,19 @@
       "pre-setup": "",
       "post-setup": "git status; ls -la",
       "post-deploy": "npm install; npm run pm2:restart:dev"
+    },
+    "prod": {
+      "key": "~/.ssh/experiwear",
+      "user": "exp",
+      "host": [
+        "157.230.191.95"
+      ],
+      "ref": "origin/production",
+      "repo": "git@bitbucket.org:voxsyncteam/experiwear-frontend-v2.git",
+      "path": "/home/exp/frontend",
+      "pre-setup": "",
+      "post-setup": "git status; ls -la",
+      "post-deploy": "npm install; npm run pm2:restart:prod"
     }
   }
 }
