@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import MagicSurveyInfo from 'parts/Card/MagicSurveyInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
-import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import { ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,7 @@ const MagicSurveyAlert = ({
       <div className={classes.leftContainer}>
         <img
           alt='news image'
-          src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
+          src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
           className={classes.image}
         />
         <MagicSurveyInfo item={item} />

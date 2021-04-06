@@ -7,7 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 import LinkButton from 'components/UI/Buttons/LinkButton'
 import LINKS from 'utils/constants/links'
-import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import { ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 import getLatestNewsNotifications from 'actions/getLatestNewsNotifications'
 import { isEmpty } from 'utils/helpers/utility'
 
@@ -67,7 +67,7 @@ const AlertCarousel = () => {
       <Carousel
         infiniteLoop
         autoPlay={true}
-        interval={1500}
+        interval={3000}
         showStatus={false}
         showThumbs={false}
         showArrows={false}
@@ -80,7 +80,7 @@ const AlertCarousel = () => {
             <div key={index}>
               <img
                 alt='carousel'
-                src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
+                src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
                 className={classes.image}
               />
               <div className={classes.container}>

@@ -60,7 +60,7 @@ const ChartFooterItem = ({
           </Typography>
         }
         {
-          ratePercent &&
+          false && ratePercent &&
           <>
             <Typography color='textPrimary' className={classes.text}>
               {ratePercent}

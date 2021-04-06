@@ -49,7 +49,7 @@ const SideDrawer = () => {
         color='blue'
         href={LINKS.CANNED.HREF}
       >
-        Saved Alert
+        Saved Alerts
       </ContainedButton>
     </Drawer>
   );
