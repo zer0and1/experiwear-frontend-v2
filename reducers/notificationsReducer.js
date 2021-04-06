@@ -31,7 +31,8 @@ const INITIAL_STATE = Object.freeze({
     total: 0
   },
   latest: {},
-  latestSurvey: {}
+  latestSurvey: {},
+  latestNews: []
 });
 
 const notificationsReducer = (state = INITIAL_STATE, action) => {
@@ -54,6 +55,8 @@ const notificationsReducer = (state = INITIAL_STATE, action) => {
       return { ...state, latest: action.payload };
     case TYPES.SET_LATEST_SURVEY_NOTIFICATION:
       return { ...state, latestSurvey: action.payload };
+    case TYPES.SET_LATEST_NEWS_NOTIFICATIONS:
+      return { ...state, latestNews: action.payload };
     default:
       return state;
   }

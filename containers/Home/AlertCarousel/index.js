@@ -1,4 +1,5 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Carousel } from 'react-responsive-carousel'
@@ -7,6 +8,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import LinkButton from 'components/UI/Buttons/LinkButton'
 import LINKS from 'utils/constants/links'
 import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import getLatestNewsNotifications from 'actions/getLatestNewsNotifications'
+import { isEmpty } from 'utils/helpers/utility'
 
 const useStyles = makeStyles((theme) => ({
   carousel: {
@@ -51,6 +54,13 @@ const useStyles = makeStyles((theme) => ({
 
 const AlertCarousel = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { latestNews = [] } = useSelector(state => state.notifications)
+
+  useEffect(() => {
+    dispatch(getLatestNewsNotifications())
+  }, [dispatch])
 
   return (
     <Card>
@@ -65,11 +75,12 @@ const AlertCarousel = () => {
         className={classes.carousel}
       >
         {
-          results.map((item, index) =>
+          !isEmpty(latestNews) &&
+          latestNews.map((item, index) =>
             <div key={index}>
               <img
                 alt='carousel'
-                src={item.image || IMAGE_PLACEHOLDER_IMAGE_PATH}
+                src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
                 className={classes.image}
               />
               <div className={classes.container}>
@@ -77,7 +88,7 @@ const AlertCarousel = () => {
                   {item.title}
                 </Typography>
                 <Typography className={classes.text}>
-                  {item.text}
+                  {item.body}
                 </Typography>
               </div>
               <LinkButton
@@ -95,36 +106,3 @@ const AlertCarousel = () => {
 };
 
 export default memo(AlertCarousel);
-
-const results = [
-  {
-    title: 'Trae Young in East Hot Spotlight',
-    text: 'Only 21 and in his second season in the NBA, Atlanta\'s Trae Young is already an All-Star.',
-    sent: 28392,
-    sentPercent: 1,
-    open: 26623,
-    openPercent: 0.84,
-    image: 'https://images.unsplash.com/photo-1585071258252-369a36d89e30?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTN8fGJhc2tldGJhbGwlMjBwbGF5ZXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    createdAt: '2021-03-20T15:00:00.000Z'
-  },
-  {
-    title: 'Hawks’ film session puts spotlight on Trae Young, early growing pains',
-    text: '“Trae is my brother regardless,” Collins, who chose not to elaborate further, told The Athletic via text message when he was asked about the situation.',
-    sent: 28392,
-    sentPercent: 1,
-    open: 26623,
-    openPercent: 0.84,
-    image: 'https://images.unsplash.com/photo-1581390720109-23c7bd595f3c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGJhc2tldGJhbGwlMjBwbGF5ZXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    createdAt: '2021-03-20T15:00:00.000Z'
-  },
-  {
-    title: 'Trae Young, Mo Bamba are ready for the NBA spotlight',
-    text: 'He led the nation in points (27.4) and assists (8.8) this season. At one point, his Oklahoma Sooners were the hottest thing in college basketball.',
-    sent: 28392,
-    sentPercent: 1,
-    open: 26623,
-    openPercent: 0.84,
-    image: 'https://images.unsplash.com/photo-1522029928090-697e845b8038?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NTh8fGJhc2tldGJhbGwlMjBwbGF5ZXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    createdAt: '2021-03-20T15:00:00.000Z'
-  }
-]
