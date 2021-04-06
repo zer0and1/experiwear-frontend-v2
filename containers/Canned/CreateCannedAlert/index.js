@@ -34,36 +34,26 @@ const CreateCannedAlert = ({
   const { canned: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
-  const [fileError, setFileError] = useState(false);
 
   const { control, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema)
   });
 
   const onSubmit = async (data) => {
-    if (!fileBuffer) {
-      setFileError(true)
-      return;
-    } else {
-      setFileError(false)
-    }
-
     changeLoadingStatus(true)
     try {
       let formData = new FormData();
       formData.append('title', data.title);
       formData.append('body', data.body);
-
+      if (!isEmpty(file)) {
+        formData.append('file', file);
+      }
       let response;
       if (isEmpty(selectedItem)) {
-        formData.append('file', file);
         response = await cannedAPI.createCanned(formData);
         initData();
         dispatch(getCannedNotifications(results.length + 1))
       } else {
-        if (!isEmpty(file)) {
-          formData.append('file', file);
-        }
         response = await cannedAPI.editCanned(selectedItem.id, formData);
         setSelectedItem({})
         initData();
@@ -95,7 +85,6 @@ const CreateCannedAlert = ({
   const initData = () => {
     setFile(null)
     setFileBuffer('');
-    setFileError(false)
     reset({
       title: '',
       body: ''
@@ -143,7 +132,6 @@ const CreateCannedAlert = ({
             setFile={setFile}
             fileBuffer={fileBuffer}
             setFileBuffer={setFileBuffer}
-            error={fileError}
           />
           <div className={classes.buttonContainer}>
             <ContainedButton

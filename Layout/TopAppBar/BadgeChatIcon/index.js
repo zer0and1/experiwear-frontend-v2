@@ -58,34 +58,7 @@ const useStyles = makeStyles(theme => ({
 const BadgeChatIcon = () => {
   const classes = useStyles();
 
-  const [notifications, setNotifications] = useState([
-    {
-      body: "Sent",
-      createdAt: "2021-04-06T00:36:56.039Z",
-      id: "606bad28bc089d0048f695f5",
-      image: "/usr/src/app/static/notifications/1c595972.jpg",
-      imageRelLink: "/notifications/1c595972.jpg",
-      imageUrl: "https://hawks-dev.api.experiwear.com/notifications/1c595972.jpg",
-      isNotified: false,
-      isSent: false,
-      scheduledTime: "2021-04-06T00:40:00.000Z",
-      title: "Sent",
-      type: "news",
-    },
-    {
-      body: "Sent",
-      createdAt: "2021-04-06T00:36:56.039Z",
-      id: "606bad28bc089d0048f695f5",
-      image: "/usr/src/app/static/notifications/1c595972.jpg",
-      imageRelLink: "/notifications/1c595972.jpg",
-      imageUrl: "https://hawks-dev.api.experiwear.com/notifications/1c595972.jpg",
-      isNotified: false,
-      isSent: false,
-      scheduledTime: "2021-04-06T00:40:00.000Z",
-      title: "Sent",
-      type: "news",
-    }
-  ])
+  const [notifications, setNotifications] = useState([])
   const [anchorEl, setAnchorEl] = useState(null);
 
   const socketHandler = useCallback((data) => {
