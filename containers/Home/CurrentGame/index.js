@@ -93,7 +93,7 @@ const CurrentGame = () => {
             className={classes.quarter}
           >
             {select?.statusGame === 'Finished'
-              ? 'Finish'
+              ? 'Final'
               : select?.clock
                 ? `${select.currentPeriod} Quarter`
                 : getEnglishDate(select.date)

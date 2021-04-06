@@ -13,13 +13,14 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import useLoading from 'utils/hooks/useLoading'
 import { showErrorToast, showSuccessToast } from 'utils/helpers/toast'
-import { STRING_VALID } from 'utils/constants/validations'
+import { TITLE_VALID, STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
 import { getEnglishDateWithTime } from 'utils/helpers/time'
+import { isEmpty } from 'utils/helpers/utility'
 
 const schema = yup.object().shape({
-  title: STRING_VALID,
+  title: TITLE_VALID,
   body: STRING_VALID
 });
 
@@ -31,27 +32,21 @@ const CreatePromoAlert = () => {
   const { promo: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
-  const [fileError, setFileError] = useState(false);
 
   const { control, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema)
   });
 
   const onSubmit = async (data) => {
-    if (!fileBuffer) {
-      setFileError(true)
-      return;
-    } else {
-      setFileError(false)
-    }
-
     changeLoadingStatus(true)
     try {
       let formData = new FormData();
       formData.append('title', data.title);
       formData.append('body', data.body);
-      formData.append('file', file);
       formData.append('type', ALERT_TYPES.PROMO.VALUE);
+      if (!isEmpty(file)) {
+        formData.append('file', file);
+      }
       const { message } = await notificationsAPI.createNotification(formData);
       showSuccessToast(message)
       initData();
@@ -68,7 +63,6 @@ const CreatePromoAlert = () => {
   const initData = () => {
     setFile(null)
     setFileBuffer('');
-    setFileError(false)
     reset({
       title: '',
       body: ''
@@ -116,7 +110,6 @@ const CreatePromoAlert = () => {
             setFile={setFile}
             fileBuffer={fileBuffer}
             setFileBuffer={setFileBuffer}
-            error={fileError}
           />
           <div className={classes.buttonContainer}>
             <ContainedButton

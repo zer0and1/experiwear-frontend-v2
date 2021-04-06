@@ -12,19 +12,10 @@ const socket = io(`${SOCKET_URL}/fanbands`, {
 
 socket.on('connect', () => {
   console.log('connection established')
-  socket.emit('test', { timestamp: new Date() });
 })
 
 socket.on('disconnect', function (error) {
   console.log('Disconnected => ', error);
-});
-
-socket.on('test', function (data) {
-  console.log(data);
-});
-
-socket.on('connect_error', function (data) {
-  console.error(data);
 });
 
 const useSocket = (eventName, callback) => {

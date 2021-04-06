@@ -16,14 +16,14 @@ import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { isEmpty } from 'utils/helpers/utility'
 import { getISODate } from 'utils/helpers/time'
-import { STRING_VALID } from 'utils/constants/validations'
+import { TITLE_VALID, STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
 import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const schema = yup.object().shape({
   type: STRING_VALID,
-  title: STRING_VALID,
+  title: TITLE_VALID,
   body: STRING_VALID,
   time: STRING_VALID
 });
@@ -39,20 +39,12 @@ const CreateScheduleAlert = ({
   const { scheduled: { results } } = useSelector(state => state.notifications)
   const [file, setFile] = useState(null);
   const [fileBuffer, setFileBuffer] = useState('');
-  const [fileError, setFileError] = useState(false);
 
   const { control, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema)
   });
 
   const onSubmit = async (data) => {
-    if (!fileBuffer) {
-      setFileError(true)
-      return;
-    } else {
-      setFileError(false)
-    }
-
     changeLoadingStatus(true)
     try {
       let formData = new FormData();
@@ -60,17 +52,15 @@ const CreateScheduleAlert = ({
       formData.append('body', data.body);
       formData.append('type', data.type);
       formData.append('scheduledTime', new Date(data.time));
-
+      if (!isEmpty(file)) {
+        formData.append('file', file);
+      }
       let response;
       if (isEmpty(selectedItem)) {
-        formData.append('file', file);
         response = await scheduleAPI.createScheduledNotification(formData);
         initData();
         dispatch(getScheduledNotifications(results.length + 1));
       } else {
-        if (!isEmpty(file)) {
-          formData.append('file', file);
-        }
         response = await scheduleAPI.editScheduledNotification(selectedItem.id, formData);
         setSelectedItem({})
         initData();
@@ -98,14 +88,12 @@ const CreateScheduleAlert = ({
         time: getISODate(selectedItem.scheduledTime),
       })
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedItem]);
 
   const initData = () => {
     setFile(null)
     setFileBuffer('');
-    setFileError(false)
     reset({
       title: '',
       body: '',
@@ -166,7 +154,6 @@ const CreateScheduleAlert = ({
             setFile={setFile}
             fileBuffer={fileBuffer}
             setFileBuffer={setFileBuffer}
-            error={fileError}
           />
           <Controller
             as={<MagicTextField />}
