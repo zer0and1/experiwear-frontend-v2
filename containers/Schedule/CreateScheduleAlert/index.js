@@ -16,14 +16,14 @@ import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { isEmpty } from 'utils/helpers/utility'
 import { getISODate } from 'utils/helpers/time'
-import { STRING_VALID } from 'utils/constants/validations'
+import { TITLE_VALID, STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
 import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const schema = yup.object().shape({
   type: STRING_VALID,
-  title: STRING_VALID,
+  title: TITLE_VALID,
   body: STRING_VALID,
   time: STRING_VALID
 });

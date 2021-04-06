@@ -13,13 +13,13 @@ import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
-import { STRING_VALID } from 'utils/constants/validations'
+import { TITLE_VALID, STRING_VALID } from 'utils/constants/validations'
 import useFormStyles from 'styles/useFormStyles'
 import { isEmpty } from 'utils/helpers/utility'
 import { getEnglishDateWithTime } from 'utils/helpers/time'
 
 const schema = yup.object().shape({
-  title: STRING_VALID,
+  title: TITLE_VALID,
   body: STRING_VALID
 });
 

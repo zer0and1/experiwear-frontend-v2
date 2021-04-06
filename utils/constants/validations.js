@@ -19,6 +19,10 @@ const CONFIRM_PASSWORD_VALID = yup.string()
     'Passwords needs to match.'
   );
 
+const TITLE_VALID = yup.string()
+  .required('Please enter in this field.')
+  .matches(/^[A-Za-z0-9 ?!]*$/, 'Please do not input special character');
+
 const STRING_VALID = yup.string()
   .required('Please enter in this field.');
 
@@ -27,5 +31,6 @@ export {
   EMAIL_VALID,
   PASSWORD_VALID,
   CONFIRM_PASSWORD_VALID,
+  TITLE_VALID,
   STRING_VALID
 };
