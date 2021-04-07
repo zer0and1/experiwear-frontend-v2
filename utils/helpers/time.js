@@ -41,9 +41,21 @@ const getISODate = (value) => {
   return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
 }
 
+const getLocalDate = (value) => {
+  const date = new Date(value);
+  const yyyy = date.getFullYear();
+  const mm = date.getMonth() + 1;
+  const dd = date.getDate();
+  const hh = date.getHours();
+  const mi = date.getMinutes();
+
+  return `${yyyy}-${mm > 10 ? mm : `0${mm}`}-${dd > 10 ? dd : `0${dd}`}T${hh > 10 ? hh : `0${hh}`}:${mi > 10 ? mi : `0${mi}`}`;
+}
+
 export {
   getEnglishDate,
   getEnglishTime,
   getEnglishDateWithTime,
-  getISODate
+  getISODate,
+  getLocalDate
 }

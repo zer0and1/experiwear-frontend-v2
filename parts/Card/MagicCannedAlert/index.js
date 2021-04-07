@@ -10,7 +10,7 @@ import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
 import MagicConfirmDialog from 'parts/MagicConfirmDialog'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
-import { IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
+import { ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
@@ -118,7 +118,7 @@ const MagicCannedAlert = ({
         <div className={classes.imageView}>
           <img
             alt='news image'
-            src={item.imageUrl || IMAGE_PLACEHOLDER_IMAGE_PATH}
+            src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
             className={classes.image}
           />
           <MagicAlertInfo item={item} />

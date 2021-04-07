@@ -1,8 +1,9 @@
-import { memo } from 'react'
-import { useSelector } from 'react-redux'
+import { memo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
+import { getGames } from 'actions/games'
 import TeamLogo from 'parts/TeamLogo'
 import HomeCardWrapper from '../Shared/HomeCardWrapper'
 import { isEmpty } from 'utils/helpers/utility'
@@ -11,6 +12,7 @@ import {
   getEnglishTime,
   getEnglishDateWithTime
 } from 'utils/helpers/time'
+import GAME_STATUS from 'utils/constants/game-status'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -44,9 +46,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const REQUEST_TIME = 600000;
 const CurrentGame = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const { select = {} } = useSelector(state => state.games);
+
+  useEffect(() => {
+    if (!isEmpty(select) && select.statusGame === GAME_STATUS.IN_PLAY) {
+      setTimeout(() => {
+        dispatch(getGames(true))
+      }, REQUEST_TIME)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [select])
 
   return (
     <HomeCardWrapper
@@ -92,7 +106,7 @@ const CurrentGame = () => {
             color='textPrimary'
             className={classes.quarter}
           >
-            {select?.statusGame === 'Finished'
+            {select?.statusGame === GAME_STATUS.FINISHED
               ? 'Final'
               : select?.clock
                 ? `${select.currentPeriod} Quarter`
@@ -100,7 +114,7 @@ const CurrentGame = () => {
             }
           </Typography>
           {
-            select?.statusGame !== 'Finished' &&
+            select?.statusGame !== GAME_STATUS.FINISHED &&
             <Typography
               color='textPrimary'
               className={classes.time}
