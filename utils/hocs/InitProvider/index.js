@@ -10,6 +10,7 @@ import {
 } from 'actions/auth'
 import { getGames } from 'actions/games'
 import { getFanbandsStatistics } from 'actions/getFanbandsStatistics'
+import useGameSocket from 'utils/hooks/useGameSocket'
 import useFanbandSocket from 'utils/hooks/useFanbandSocket'
 import { isServer } from 'utils/helpers/utility'
 import scrollToTop from 'utils/helpers/scrollToTop'
@@ -22,6 +23,7 @@ import LINKS from 'utils/constants/links'
 const InitProvider = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  useGameSocket();
   useFanbandSocket();
 
   const { isAuthenticated } = useSelector(state => state.auth);
