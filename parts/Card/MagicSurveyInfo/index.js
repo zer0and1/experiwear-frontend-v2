@@ -63,7 +63,7 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerYesPercent}
           >
-            {`${getPercent(item?.yes, item?.sent)} %`}
+            {`${getPercent(item?.yes || 0, item?.sent || 0)} %`}
           </Typography>
         </div>
 
@@ -84,7 +84,7 @@ const MagicSurveyInfo = ({
             variant='caption'
             className={classes.answerNoPercent}
           >
-            {`${getPercent(item?.no, item?.sent)} %`}
+            {`${getPercent(item?.no || 0, item?.sent || 0)} %`}
           </Typography>
         </div>
       </div>

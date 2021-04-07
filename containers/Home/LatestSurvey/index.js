@@ -50,10 +50,10 @@ const LatestSurvey = () => {
   const { latestSurvey } = useSelector(state => state.notifications)
 
   const totalAnswer = latestSurvey?.yes || 0 + latestSurvey?.no || 0;
-  const noResponse = latestSurvey?.sent - totalAnswer;
-  const yesPercent = getPercent(latestSurvey?.yes, latestSurvey?.sent)
-  const noPercent = getPercent(latestSurvey?.no, latestSurvey?.sent)
-  const noResponsePercent = getPercent(noResponse, latestSurvey?.sent)
+  const noResponse = latestSurvey?.sent || 0 - totalAnswer;
+  const yesPercent = getPercent(latestSurvey?.yes || 0, latestSurvey?.sent || 0)
+  const noPercent = getPercent(latestSurvey?.no || 0, latestSurvey?.sent || 0)
+  const noResponsePercent = getPercent(noResponse, latestSurvey?.sent || 0)
 
   return (
     <HomeCardWrapper
@@ -72,7 +72,7 @@ const LatestSurvey = () => {
             Total
           </Typography>
           <Typography variant='body2' color='textPrimary'>
-            {latestSurvey?.sent}
+            {latestSurvey?.sent || 0}
           </Typography>
         </div>
         <Doughnut
@@ -80,8 +80,8 @@ const LatestSurvey = () => {
             labels: [`Yes - ${yesPercent}%`, `No - ${noPercent}%`, `No Response - ${noResponsePercent}%`],
             datasets: [{
               data: [
-                latestSurvey?.yes,
-                latestSurvey?.no,
+                latestSurvey?.yes || 0,
+                latestSurvey?.no || 0,
                 noResponse
               ],
               backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],

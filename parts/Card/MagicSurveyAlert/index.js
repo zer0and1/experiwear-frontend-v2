@@ -64,12 +64,12 @@ const MagicSurveyAlert = ({
         <MagicAlertStatus
           title='Sent:'
           value={item?.sent || 0}
-          percent={getPercent(item?.sent, total)}
+          percent={getPercent(item?.sent || 0, total)}
         />
         <MagicAlertStatus
           title='Open:'
           value={item?.received || 0}
-          percent={getPercent(item?.received, item?.sent || 0)}
+          percent={getPercent(item?.received || 0, item?.sent || 0)}
         />
       </div>
     </div>
