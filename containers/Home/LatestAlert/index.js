@@ -70,11 +70,11 @@ const LatestAlert = () => {
           <Doughnut
             data={{
               labels: [
-                `Received - ${getPercent(latest?.received, latest?.sent)}%`,
-                `No Received - ${getPercent(latest?.sent - latest?.received, latest?.sent)}%`
+                `Received - ${getPercent(latest?.received || 0, latest?.sent || 0)}%`,
+                `No Received - ${getPercent(latest?.sent || 0 - latest?.received || 0, latest?.sent || 0)}%`
               ],
               datasets: [{
-                data: [latest?.received, latest?.sent - latest?.received],
+                data: [latest?.received || 0, latest?.sent || 0 - latest?.received || 0],
                 backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],
                 borderColor: ['#7961f9', '#ff9f43', '#ea5455'],
               }],
@@ -93,12 +93,12 @@ const LatestAlert = () => {
           <ChartFooterItem
             isAction
             type='sent'
-            count={latest?.sent}
+            count={latest?.sent || 0}
           />
           <ChartFooterItem
             isAction
             type='received'
-            count={latest?.received}
+            count={latest?.received || 0}
           />
           {/* <ChartFooterItem
             isAction
