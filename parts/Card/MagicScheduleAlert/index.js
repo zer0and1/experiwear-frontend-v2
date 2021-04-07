@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core'
 import * as scheduleAPI from 'services/api-schedule'
 import { getScheduledNotifications } from 'actions/getScheduledNotifications'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
-import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
+import MagicScheduleInfo from 'parts/Card/MagicScheduleInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
 import MagicConfirmDialog from 'parts/MagicConfirmDialog'
 import useLoading from 'utils/hooks/useLoading'
@@ -115,7 +115,7 @@ const MagicScheduleAlert = ({
             src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
             className={classes.image}
           />
-          <MagicAlertInfo item={item} />
+          <MagicScheduleInfo item={item} />
         </div>
         <div className={classes.rowView}>
           <Typography
