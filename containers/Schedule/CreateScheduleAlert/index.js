@@ -15,7 +15,7 @@ import MagicCardHeader from 'parts/Card/MagicCardHeader'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { isEmpty } from 'utils/helpers/utility'
-import { getISODate } from 'utils/helpers/time'
+import { getLocalDate } from 'utils/helpers/time'
 import { TITLE_VALID, STRING_VALID } from 'utils/constants/validations'
 import { ALERT_TYPES_ARRAY } from 'utils/constants/alert-types'
 import useFormStyles from 'styles/useFormStyles'
@@ -85,7 +85,7 @@ const CreateScheduleAlert = ({
         title: selectedItem.title,
         body: selectedItem.body,
         type: selectedItem.type,
-        time: getISODate(selectedItem.scheduledTime),
+        time: getLocalDate(selectedItem.scheduledTime),
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
