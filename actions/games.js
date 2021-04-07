@@ -6,7 +6,7 @@ import GAME_STATUS from 'utils/constants/game-status'
 
 const getGames = (refresh = false) => async (dispatch, getState) => {
   try {
-    const { games: { results, select } } = getState();
+    const { games: { results } } = getState();
     if (!refresh && !isEmpty(results)) {
       return
     }
@@ -30,22 +30,19 @@ const getGames = (refresh = false) => async (dispatch, getState) => {
       };
     }
 
-    await dispatch({
-      type: TYPES.FETCH_GAMES,
-      payload: games
-    });
-
-    if (!isEmpty(select)) {
-      const selectedGame = games.find((item) => item.id === select.id);
-      dispatch(setSelectGame(selectedGame));
-    } else {
-      dispatch(setSelectGame(closestUpcomingGame));
-    }
-
+    await dispatch(setGames(games));
+    dispatch(setSelectGame(closestUpcomingGame));
     dispatch(setClosestUpcomingGame(closestUpcomingGame));
   } catch (error) {
     console.log('[getGames] error => ', error);
   }
+};
+
+const setGames = games => {
+  return {
+    type: TYPES.FETCH_GAMES,
+    payload: games
+  };
 };
 
 const setSelectGame = game => {
@@ -64,6 +61,7 @@ const setClosestUpcomingGame = game => {
 
 export {
   getGames,
+  setGames,
   setSelectGame,
   setClosestUpcomingGame
 }
