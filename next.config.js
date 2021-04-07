@@ -1,5 +1,8 @@
 
 module.exports = {
+  env: {
+    CONFIG_ENV: process.env.CONFIG_ENV, // used to set config variables, since NODE_ENV is used to determine build type
+  },
   webpack: (config, { dev }) => {
     if (dev) {
       config.module.rules.push({

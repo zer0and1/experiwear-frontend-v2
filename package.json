@@ -40,7 +40,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "=====PM2=====": "",
     "pm2:restart:dev": "npm run build && pm2 delete frontend || : &&  pm2 start frontend.json --env development",
-    "deploy:dev": "pm2 deploy frontend.json dev update"
+    "pm2:restart:prod": "CONFIG_ENV=production npm run build && pm2 delete frontend || : &&  pm2 start frontend.json --env production",
+    "deploy:dev": "pm2 deploy frontend.json dev update",
+    "deploy:prod": "pm2 deploy frontend.json prod update"
   }
 }
