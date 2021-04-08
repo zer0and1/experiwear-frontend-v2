@@ -107,8 +107,10 @@ const CurrentGame = () => {
               color='textPrimary'
               className={classes.time}
             >
-              {select?.clock
-                ? `${select.clock} remaining`
+              {select?.statusGame === GAME_STATUS.IN_PLAY
+                ? select?.clock
+                  ? `${select.clock} remaining`
+                  : `End Quarter ${select?.endOfPeriod || 0 + 1}`
                 : getEnglishTime(select.date)
               }
             </Typography>

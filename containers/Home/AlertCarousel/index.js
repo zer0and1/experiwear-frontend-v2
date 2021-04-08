@@ -10,6 +10,8 @@ import LINKS from 'utils/constants/links'
 import { ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 import getLatestNewsNotifications from 'actions/getLatestNewsNotifications'
 import { isEmpty } from 'utils/helpers/utility'
+import { useCommonStyles } from 'styles/use-styles'
+import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
   carousel: {
@@ -34,12 +36,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 28,
     fontWeight: 'bold',
     lineHeight: 1,
+    WebkitLineClamp: 1,
     color: theme.custom.palette.white,
     marginBottom: theme.spacing(1)
   },
   text: {
     fontSize: 14,
     lineHeight: 1,
+    WebkitLineClamp: 3,
     color: theme.custom.palette.white,
   },
   addButton: {
@@ -54,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AlertCarousel = () => {
   const classes = useStyles();
+  const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
 
   const { latestNews = [] } = useSelector(state => state.notifications)
@@ -84,10 +89,10 @@ const AlertCarousel = () => {
                 className={classes.image}
               />
               <div className={classes.container}>
-                <Typography className={classes.title}>
+                <Typography className={clsx(commonClasses.breakWords, classes.title)}>
                   {item.title}
                 </Typography>
-                <Typography className={classes.text}>
+                <Typography className={clsx(commonClasses.breakWords, classes.text)}>
                   {item.body}
                 </Typography>
               </div>
