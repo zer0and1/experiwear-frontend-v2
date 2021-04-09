@@ -81,29 +81,30 @@ const AlertCarousel = () => {
       >
         {
           !isEmpty(latestNews) &&
-          latestNews.map((item, index) =>
-            <div key={index}>
-              <img
-                alt='carousel'
-                src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
-                className={classes.image}
-              />
-              <div className={classes.container}>
-                <Typography className={clsx(commonClasses.breakWords, classes.title)}>
-                  {item.title}
-                </Typography>
-                <Typography className={clsx(commonClasses.breakWords, classes.text)}>
-                  {item.body}
-                </Typography>
-              </div>
-              <LinkButton
-                href={LINKS.NEWS.HREF}
-                className={classes.addButton}
-              >
-                + Create News Alert
+          latestNews.filter((alert) => alert?.isSent === true)
+            .map((item, index) =>
+              <div key={index}>
+                <img
+                  alt='carousel'
+                  src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
+                  className={classes.image}
+                />
+                <div className={classes.container}>
+                  <Typography className={clsx(commonClasses.breakWords, classes.title)}>
+                    {item.title}
+                  </Typography>
+                  <Typography className={clsx(commonClasses.breakWords, classes.text)}>
+                    {item.body}
+                  </Typography>
+                </div>
+                <LinkButton
+                  href={LINKS.NEWS.HREF}
+                  className={classes.addButton}
+                >
+                  + Create News Alert
               </LinkButton>
-            </div>
-          )
+              </div>
+            )
         }
       </Carousel>
     </Card>

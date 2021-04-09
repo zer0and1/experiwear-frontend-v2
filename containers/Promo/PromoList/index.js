@@ -39,12 +39,14 @@ const PromoList = () => {
       <CardContent>
         <MagicCardHeader title='Promo Alerts Sent' />
         {
-          results.map((item, index) => (
-            <MagicAlert
-              key={index}
-              item={item}
-            />
-          ))
+          results
+            .filter((alert) => alert?.isSent === true)
+            .map((item, index) => (
+              <MagicAlert
+                key={index}
+                item={item}
+              />
+            ))
         }
         {
           results.length < total &&
