@@ -130,16 +130,16 @@ const GameDaysContent = ({
                 </Typography>
 
                 <div className={classes.infoContainer}>
-                  <TeamLogo team={item.homeTeam.abbreviation} />
+                  <TeamLogo team={item.visitorTeam.abbreviation} />
                   <Typography className={classes.teamText}>
-                    {item.homeTeam.name}
+                    {item.visitorTeam.name}
                   </Typography>
                   <Typography className={classes.signal}>
                     @
                   </Typography>
-                  <TeamLogo team={item.visitorTeam.abbreviation} />
+                  <TeamLogo team={item.homeTeam.abbreviation} />
                   <Typography className={classes.teamText}>
-                    {item.visitorTeam.name}
+                    {item.homeTeam.name}
                   </Typography>
                 </div>
               </div>

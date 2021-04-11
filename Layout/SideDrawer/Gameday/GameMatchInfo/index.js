@@ -96,20 +96,6 @@ const GameMatchInfo = () => {
       <div className={classes.teamList}>
         <div className={classes.teamItem}>
           <div className={classes.teamName}>
-            <TeamLogo team={select.homeTeam.abbreviation} />
-            <Typography className={classes.teamText}>
-              {select.homeTeam.name}
-            </Typography>
-          </div>
-          <Typography className={classes.teamText}>
-            {select.homeTeamScore}
-          </Typography>
-        </div>
-        <Typography className={classes.signal}>
-          @
-        </Typography>
-        <div className={classes.teamItem}>
-          <div className={classes.teamName}>
             <TeamLogo team={select.visitorTeam.abbreviation} />
             <Typography className={classes.teamText}>
               {select.visitorTeam.name}
@@ -117,6 +103,20 @@ const GameMatchInfo = () => {
           </div>
           <Typography className={classes.teamText}>
             {select.visitorTeamScore}
+          </Typography>
+        </div>
+        <Typography className={classes.signal}>
+          @
+        </Typography>
+        <div className={classes.teamItem}>
+          <div className={classes.teamName}>
+            <TeamLogo team={select.homeTeam.abbreviation} />
+            <Typography className={classes.teamText}>
+              {select.homeTeam.name}
+            </Typography>
+          </div>
+          <Typography className={classes.teamText}>
+            {select.homeTeamScore}
           </Typography>
         </div>
       </div>
