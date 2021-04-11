@@ -62,13 +62,13 @@ const CurrentGame = () => {
             <div className={classes.team}>
               <TeamLogo
                 size={130}
-                team={select.homeTeam.abbreviation}
+                team={select.visitorTeam.abbreviation}
               />
               <Typography
                 color='textPrimary'
                 className={classes.score}
               >
-                {select.homeTeamScore}
+                {select.visitorTeamScore}
               </Typography>
             </div>
             <Typography
@@ -80,13 +80,13 @@ const CurrentGame = () => {
             <div className={classes.team}>
               <TeamLogo
                 size={130}
-                team={select.visitorTeam.abbreviation}
+                team={select.homeTeam.abbreviation}
               />
               <Typography
                 color='textPrimary'
                 className={classes.score}
               >
-                {select.visitorTeamScore}
+                {select.homeTeamScore}
               </Typography>
             </div>
           </div>
