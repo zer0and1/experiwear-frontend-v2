@@ -13,6 +13,7 @@ const getLatestNewsNotifications = (refresh = false) => async (dispatch, getStat
 
     const params = {
       type: ALERT_TYPES.NEWS.VALUE,
+      isSent: true,
       skip: 0,
       take: 10
     }

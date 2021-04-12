@@ -53,27 +53,25 @@ const ActivityTimeline = () => {
   return (
     <HomeCardWrapper title='Activity Timeline'>
       <div className={classes.container}>
-        {results
-          .filter((alert) => alert?.isSent === true)
-          .map((item, index) => {
-            const alertInfo = getAlertIcon(item.type)
-            return (
-              <div key={index} className={classes.itemContainer}>
-                <alertInfo.icon className={classes.icon} />
-                <div>
-                  <Typography className={classes.title}>
-                    {alertInfo.title}
-                  </Typography>
-                  <Typography className={classes.description}>
-                    {item.title}
-                  </Typography>
-                  <Typography className={classes.description}>
-                    {getEnglishDateWithTime(item.createdAt)}
-                  </Typography>
-                </div>
+        {results.map((item, index) => {
+          const alertInfo = getAlertIcon(item.type)
+          return (
+            <div key={index} className={classes.itemContainer}>
+              <alertInfo.icon className={classes.icon} />
+              <div>
+                <Typography className={classes.title}>
+                  {alertInfo.title}
+                </Typography>
+                <Typography className={classes.description}>
+                  {item.title}
+                </Typography>
+                <Typography className={classes.description}>
+                  {getEnglishDateWithTime(item.createdAt)}
+                </Typography>
               </div>
-            )
-          })}
+            </div>
+          )
+        })}
       </div>
     </HomeCardWrapper>
   );

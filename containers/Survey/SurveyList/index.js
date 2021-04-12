@@ -39,14 +39,12 @@ const SurveyList = () => {
       <CardContent>
         <MagicCardHeader title='Survey Alerts Sent' />
         {
-          results
-            .filter((alert) => alert?.isSent === true)
-            .map((item, index) => (
-              <MagicSurveyAlert
-                key={index}
-                item={item}
-              />
-            ))
+          results.map((item, index) => (
+            <MagicSurveyAlert
+              key={index}
+              item={item}
+            />
+          ))
         }
         {
           results.length < total &&
