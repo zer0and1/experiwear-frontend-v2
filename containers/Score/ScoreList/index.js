@@ -39,14 +39,12 @@ const ScoreList = () => {
       <CardContent>
         <MagicCardHeader title='Score Alerts Sent' />
         {
-          results
-            .filter((alert) => alert?.isSent === true)
-            .map((item, index) => (
-              <MagicAlert
-                key={index}
-                item={item}
-              />
-            ))
+          results.map((item, index) => (
+            <MagicAlert
+              key={index}
+              item={item}
+            />
+          ))
         }
         {
           results.length < total &&

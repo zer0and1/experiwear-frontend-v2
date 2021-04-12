@@ -25,6 +25,7 @@ const getNotifications = (type = '', take = PAGE_COUNT) => async (dispatch) => {
     if (!!type) {
       params = {
         type,
+        isSent: true,
         skip: 0,
         take
       }
@@ -50,6 +51,7 @@ const getMoreNotifications = (type) => async (dispatch, getState) => {
 
     const params = {
       type,
+      isSent: true,
       skip: preResults.length,
       take: PAGE_COUNT
     }
