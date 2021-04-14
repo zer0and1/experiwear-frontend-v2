@@ -1,18 +1,29 @@
+import { makeStyles } from '@material-ui/core/styles'
 import MagicAccAlert from 'parts/Card/MagicAccAlert'
-import { memo, } from 'react'
+import { memo, useState, } from 'react'
 import { Card, CardContent } from '@material-ui/core'
+import { Pagination } from '@material-ui/lab'
 import { useSelector } from 'react-redux'
 import { Line } from 'react-chartjs-2'
 import range from 'utils/helpers/range'
 
+const useStyles = makeStyles(() => ({
+  paginationContainer: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
+}))
+
 const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526) // toDo: remove once android/ios clients are fixed
 
 const AccChart = ({ selectedItem }) => {
+  const classes = useStyles()
 
-  console.log(selectedItem)
+  const [page, setPage] = useState(1)
+
   const { accelerometerData: { results, total } } = useSelector(state => state.accelerometer)
 
-  const accFrame = results[0]?.frames[0]
+  const accFrame = results[0]?.frames[page - 1]
 
   let data = {}
   if (accFrame) {
@@ -42,7 +53,10 @@ const AccChart = ({ selectedItem }) => {
     }
   }
 
-  console.log(`total acc chars: ${total}`)
+  const handleChange = (event, value) => {
+    setPage(value)
+  }
+
   return (
     <Card>
       <CardContent>
@@ -52,6 +66,9 @@ const AccChart = ({ selectedItem }) => {
               item={selectedItem}
             />
             <Line data={data}/>
+            <div className={classes.paginationContainer}>
+              <Pagination count={total} onChange={handleChange} variant="outlined" color="secondary"/>
+            </div>
           </> :
           <>
             Please select alert first
