@@ -6,6 +6,7 @@ import MessageSquareIcon from 'components/Icons/MessageSquareIcon'
 import CheckSquareIcon from 'components/Icons/CheckSquareIcon'
 import DealIcon from 'components/Icons/DealIcon'
 import CalendarIcon from 'components/Icons/CalendarIcon'
+import AccelerometerIcon from 'components/Icons/AccelerometerIcon'
 
 const HOME_MENU = {
   ICON: HomeIcon,
@@ -40,7 +41,7 @@ const SECONDARY_SIDEBAR_MENU = [
     TITLE: LINKS.SCHEDULE.TITLE
   },
   {
-    ICON: CalendarIcon,
+    ICON: AccelerometerIcon,
     HREF: LINKS.ACCELEROMETER.HREF,
     TITLE: LINKS.ACCELEROMETER.TITLE
   },
