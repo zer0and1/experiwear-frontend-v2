@@ -91,6 +91,7 @@ const MagicAccAlert = ({ item, onSelect }) => {
           >
             {item.type}
           </Typography>
+          {onSelect &&
           <>
             <ContainedButton
               size='small'
@@ -101,6 +102,8 @@ const MagicAccAlert = ({ item, onSelect }) => {
               Show Acc Data
             </ContainedButton>
           </>
+          }
+
         </div>
       </div>
     </div>

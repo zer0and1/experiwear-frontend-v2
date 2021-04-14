@@ -33,8 +33,7 @@ const ScheduleList = ({ setSelectedItem }) => {
   const selectHandler = useCallback((item) => {
     setSelectedItem(item)
     dispatch(getAccelerometerData(item.id))
-  }, [setSelectedItem])
-
+  }, [setSelectedItem, dispatch])
 
   const moreHandler = () => {
     dispatch(getMoreNotifications())

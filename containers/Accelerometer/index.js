@@ -4,14 +4,13 @@ import { memo, useState } from 'react'
 import { Grid } from '@material-ui/core'
 
 const Accelerometer = () => {
-  const [selectedItem, setSelectedItem] = useState({})
+  const [selectedItem, setSelectedItem] = useState(null)
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} lg={8}>
+      <Grid item xs={12}>
         <AccChart
           selectedItem={selectedItem}
-          setSelectedItem={setSelectedItem}
         />
       </Grid>
       <Grid item xs={12}>
