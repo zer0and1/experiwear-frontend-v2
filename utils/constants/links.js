@@ -39,6 +39,10 @@ const LINKS = Object.freeze({
   CANNED: {
     TITLE: 'Canned',
     HREF: '/canned'
+  },
+  ACCELEROMETER: {
+    TITLE: 'Accelerometer',
+    HREF: '/accelerometer'
   }
 });
 
