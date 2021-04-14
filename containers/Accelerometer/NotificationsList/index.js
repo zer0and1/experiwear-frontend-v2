@@ -42,7 +42,7 @@ const ScheduleList = ({ setSelectedItem }) => {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <MagicCardHeader title='Sent Notifications'/>
+        <MagicCardHeader title='Sent Alerts'/>
         {
           results.map((item, index) => (
             <MagicAccAlert

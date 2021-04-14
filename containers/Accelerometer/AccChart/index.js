@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import { Line } from 'react-chartjs-2'
 import range from 'utils/helpers/range'
 
+const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526) // toDo: remove once android/ios clients are fixed
+
 const AccChart = ({ selectedItem }) => {
 
   console.log(selectedItem)
@@ -19,19 +21,19 @@ const AccChart = ({ selectedItem }) => {
       labels: range(0, 33 - 1, 50),
       datasets: [{
         label: 'x axis',
-        data: accFrameData.map(i => i[0]),
+        data: accFrameData.map(i => hackNumbers(i[0])),
         fill: false,
         borderColor: 'rgb(188,19,19)',
         tension: 0.1
       }, {
         label: 'y axis',
-        data: accFrameData.map(i => i[1]),
+        data: accFrameData.map(i => hackNumbers(i[1])),
         fill: false,
         borderColor: 'rgb(87,192,75)',
         tension: 0.1
       }, {
         label: 'z axis',
-        data: accFrameData.map(i => i[2]),
+        data: accFrameData.map(i => hackNumbers(i[2])),
         fill: false,
         borderColor: 'rgb(9,88,224)',
         tension: 0.1
@@ -52,7 +54,7 @@ const AccChart = ({ selectedItem }) => {
             <Line data={data}/>
           </> :
           <>
-            Please select notification first.
+            Please select alert first
           </>
         }
       </CardContent>
