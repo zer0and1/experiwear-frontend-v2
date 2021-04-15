@@ -28,13 +28,13 @@ const AccChart = ({ selectedItem }) => {
     setPage(1)
   }
 
-  const nFrames = result?.frames.length
+  // const nFrames = result?.frames.length
   const accData = result?.frames?.map(i => i.data).flat()
 
   let data = {}
   if (accData) {
     data = {
-      labels: range(0, nFrames * 33 - 1, 50),
+      labels: range(0, accData.length - 1, 50),
       datasets: [{
         label: 'x',
         data: accData.map(i => hackNumbers(i[0])),
