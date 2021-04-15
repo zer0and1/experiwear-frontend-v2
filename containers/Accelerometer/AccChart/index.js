@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526) // toDo: remove once android/ios clients are fixed
+const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526 / 2) // toDo: remove once android/ios clients are fixed
 
 const AccChart = ({ selectedItem }) => {
   const classes = useStyles()
