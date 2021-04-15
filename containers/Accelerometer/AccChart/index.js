@@ -30,7 +30,7 @@ const AccChart = ({ selectedItem }) => {
 
   // const nFrames = result?.frames.length
   const accDataInitial = result?.frames?.map(i => i.data).flat()
-  const accData = accDataInitial?.slice(0, 31) // toDo: remove once android/ios clients are fixed
+  const accData = accDataInitial?.slice(0, 30) // toDo: remove once android/ios clients are fixed
 
   let data = {}
   if (accData) {
