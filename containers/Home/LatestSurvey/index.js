@@ -37,20 +37,20 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(4)
   }
-}));
+}))
 
 const LatestSurvey = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const classes = useStyles()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getLatestNotification(ALERT_TYPES.SURVEY.VALUE));
+    dispatch(getLatestNotification(ALERT_TYPES.SURVEY.VALUE))
   }, [dispatch])
 
   const { latestSurvey } = useSelector(state => state.notifications)
 
-  const totalAnswer = latestSurvey?.yes || 0 + latestSurvey?.no || 0;
-  const noResponse = latestSurvey?.sent || 0 - totalAnswer;
+  const totalAnswer = (latestSurvey?.yes || 0) + (latestSurvey?.no || 0)
+  const noResponse = (latestSurvey?.sent || 0) - totalAnswer
   const yesPercent = getPercent(latestSurvey?.yes || 0, latestSurvey?.sent || 0)
   const noPercent = getPercent(latestSurvey?.no || 0, latestSurvey?.sent || 0)
   const noResponsePercent = getPercent(noResponse, latestSurvey?.sent || 0)
@@ -116,7 +116,7 @@ const LatestSurvey = () => {
         />
       </div>
     </HomeCardWrapper>
-  );
-};
+  )
+}
 
-export default memo(LatestSurvey);
+export default memo(LatestSurvey)
