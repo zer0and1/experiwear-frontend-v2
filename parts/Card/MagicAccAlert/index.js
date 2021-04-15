@@ -99,7 +99,7 @@ const MagicAccAlert = ({ item, onSelect }) => {
               className={classes.button}
               onClick={selectNotification}
             >
-              Show Acc Data
+              Show Chart
             </ContainedButton>
           </>
           }

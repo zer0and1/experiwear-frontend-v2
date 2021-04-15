@@ -29,7 +29,8 @@ const AccChart = ({ selectedItem }) => {
   }
 
   // const nFrames = result?.frames.length
-  const accData = result?.frames?.map(i => i.data).flat()
+  const accDataInitial = result?.frames?.map(i => i.data).flat()
+  const accData = accDataInitial?.slice(0, 31) // toDo: remove once android/ios clients are fixed
 
   let data = {}
   if (accData) {
