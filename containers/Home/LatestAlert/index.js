@@ -40,14 +40,14 @@ const useStyles = makeStyles((theme) => ({
   total: {
     fontWeight: 'bold'
   }
-}));
+}))
 
 const LatestAlert = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const classes = useStyles()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getLatestNotification());
+    dispatch(getLatestNotification())
   }, [dispatch])
 
   const { latest } = useSelector(state => state.notifications)
@@ -70,13 +70,13 @@ const LatestAlert = () => {
           <Doughnut
             data={{
               labels: [
-                `Received - ${getPercent(latest?.received || 0, latest?.sent || 0)}%`,
-                `No Received - ${getPercent(latest?.sent || 0 - latest?.received || 0, latest?.sent || 0)}%`
+                `Received - ${getPercent((latest?.sent || 0) - (latest?.received || 0), latest?.sent || 0)}%`,
+                `No Received - ${getPercent(latest?.received || 0, latest?.sent || 0)}%`
               ],
               datasets: [{
-                data: [latest?.received || 0, latest?.sent || 0 - latest?.received || 0],
-                backgroundColor: ['#7961f9', '#ff9f43', '#ea5455'],
-                borderColor: ['#7961f9', '#ff9f43', '#ea5455'],
+                data: [latest?.received || 0, (latest?.sent || 0) - (latest?.received || 0)],
+                backgroundColor: ['#ff9f43', '#7961f9', '#ea5455'],
+                borderColor: ['#ff9f43', '#7961f9', '#ea5455'],
               }],
             }}
             options={{
@@ -92,13 +92,13 @@ const LatestAlert = () => {
         <div className={classes.footer}>
           <ChartFooterItem
             isAction
-            type='sent'
-            count={latest?.sent || 0}
+            type='received'
+            count={latest?.received || 0}
           />
           <ChartFooterItem
             isAction
-            type='received'
-            count={latest?.received || 0}
+            type='notReceived'
+            count={(latest?.sent || 0) - (latest?.received || 0)}
           />
           {/* <ChartFooterItem
             isAction
@@ -108,7 +108,7 @@ const LatestAlert = () => {
         </div>
       </div>
     </HomeCardWrapper>
-  );
-};
+  )
+}
 
-export default memo(LatestAlert);
+export default memo(LatestAlert)

@@ -29,6 +29,11 @@ const getChartFooterInfo = type => {
         color: theme.custom.palette.yellow,
         label: 'Received',
       }
+    case 'notReceived':
+      return {
+        color: theme.custom.palette.purple,
+        label: 'Not Received',
+      }
     case 'reacted':
       return {
         color: theme.custom.palette.red,
