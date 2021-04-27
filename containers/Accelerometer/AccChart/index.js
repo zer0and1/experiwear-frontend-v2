@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import MagicAccAlert from 'parts/Card/MagicAccAlert'
 import { memo, useState, } from 'react'
-import { Card, CardContent } from '@material-ui/core'
+import { Box, Card, CardContent, LinearProgress, Typography, withStyles } from '@material-ui/core'
 import { Pagination } from '@material-ui/lab'
 import { useSelector } from 'react-redux'
 import { Line } from 'react-chartjs-2'
@@ -11,12 +11,53 @@ const useStyles = makeStyles(() => ({
   paginationContainer: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  progressBarContainer: {
+    margin: '30px'
+  },
+  progressBarContainerText: {
+    marginBottom: '5px',
+    textAlign: 'center'
+  },
+  progressBarContainerSubtext: {
+    marginBottom: '5px',
+    fontSize: '12px',
+    color: '#999999',
+    textAlign: 'center'
   }
 }))
 
 const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526 / 2) // toDo: remove once android/ios clients are fixed
+const normalise = (value, max, min = 0) => (value - min) * 100 / (max - min)
 
-const AccChart = ({ selectedItem }) => {
+function LinearProgressWithLabel (props) {
+  return (
+    <Box display="flex" alignItems="center">
+      <Box width="100%" mr={1}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box minWidth={35}>
+        <Typography variant="body2" color="textSecondary">{`${Math.round(props.value)}%`}</Typography>
+      </Box>
+    </Box>
+  )
+}
+
+const BorderLinearProgress = withStyles((theme) => ({
+  root: {
+    height: 10,
+    borderRadius: 5,
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: '#CD2C31',
+  },
+}))(LinearProgressWithLabel)
+
+const AccChart = ({ alertInstance }) => {
   const classes = useStyles()
   const [page, setPage] = useState(1)
 
@@ -66,14 +107,21 @@ const AccChart = ({ selectedItem }) => {
   return (
     <Card>
       <CardContent>
-        {selectedItem ?
+        {alertInstance ?
           <>
             <MagicAccAlert
-              item={selectedItem}
+              item={alertInstance}
             />
             <Line data={data}/>
             <div className={classes.paginationContainer}>
               <Pagination count={total} page={page} onChange={handleChange} variant="outlined" color="secondary"/>
+            </div>
+            <div className={classes.progressBarContainer}>
+              <div className={classes.progressBarContainerText}>Excitement Score</div>
+              <div className={classes.progressBarContainerSubtext}>
+                Represents the percentage of active Fanbands that responded with vigorous movements when this alert was triggered
+              </div>
+              <BorderLinearProgress variant="determinate" value={normalise(total, alertInstance.received)}/>
             </div>
           </> :
           <>

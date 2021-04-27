@@ -10,7 +10,7 @@ const Accelerometer = () => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <AccChart
-          selectedItem={selectedItem}
+          alertInstance={selectedItem}
         />
       </Grid>
       <Grid item xs={12}>
