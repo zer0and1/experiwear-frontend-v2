@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { LinearProgressWithLabel } from 'components/LinearProgressWithLabel'
 import MagicAccAlert from 'parts/Card/MagicAccAlert'
 import { memo, useState, } from 'react'
-import { Box, Card, CardContent, LinearProgress, Typography, withStyles } from '@material-ui/core'
+import { Card, CardContent, withStyles } from '@material-ui/core'
 import { Pagination } from '@material-ui/lab'
 import { useSelector } from 'react-redux'
 import { Line } from 'react-chartjs-2'
@@ -27,23 +28,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526 / 2) // toDo: remove once android/ios clients are fixed
-const normalise = (value, max, min = 0) => (value - min) * 100 / (max - min)
-
-function LinearProgressWithLabel (props) {
-  return (
-    <Box display="flex" alignItems="center">
-      <Box width="100%" mr={1}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(props.value)}%`}</Typography>
-      </Box>
-    </Box>
-  )
-}
-
-const BorderLinearProgress = withStyles((theme) => ({
+const StyledLinearProgress = withStyles((theme) => ({
   root: {
     height: 10,
     borderRadius: 5,
@@ -56,6 +41,8 @@ const BorderLinearProgress = withStyles((theme) => ({
     backgroundColor: '#CD2C31',
   },
 }))(LinearProgressWithLabel)
+
+const hackNumbers = (value) => value < 10 ? value : (value * 10 / 65526 / 2) // toDo: remove once android/ios clients are fixed
 
 const AccChart = ({ alertInstance }) => {
   const classes = useStyles()
@@ -121,7 +108,7 @@ const AccChart = ({ alertInstance }) => {
               <div className={classes.progressBarContainerSubtext}>
                 Represents the percentage of active Fanbands that responded with vigorous movements when this alert was triggered
               </div>
-              <BorderLinearProgress variant="determinate" value={normalise(total, alertInstance.received)}/>
+              <StyledLinearProgress variant="determinate" value={total} max={alertInstance.received}/>
             </div>
           </> :
           <>
