@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.custom.palette.darkGrey,
     marginLeft: theme.spacing(1)
   }
-}));
+}))
 
 const MagicAlertStatus = ({
-  title,
-  value = 0,
-  percent
-}) => {
-  const classes = useStyles();
+                            title,
+                            value = 0,
+                            percent
+                          }) => {
+  const classes = useStyles()
 
   return (
     <div className={classes.statusItem}>
@@ -51,12 +51,14 @@ const MagicAlertStatus = ({
         <Typography className={classes.statusValue}>
           {value.toLocaleString()}
         </Typography>
+        {percent !== undefined &&
         <Typography className={classes.statusPercent}>
           {`${percent}%`}
         </Typography>
+        }
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default memo(MagicAlertStatus);
+export default memo(MagicAlertStatus)
