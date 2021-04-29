@@ -60,7 +60,7 @@ const useFanbandSocket = () => {
         if (item.id === id) {
           switch (answer) {
             case ANSWER_ENUM.NO:
-              return { ...item, yes: (item?.yes || 0) + 1 }
+              return { ...item, no: (item?.no || 0) + 1 }
             case ANSWER_ENUM.YES:
               return { ...item, yes: (item?.yes || 0) + 1 }
           }
@@ -73,7 +73,7 @@ const useFanbandSocket = () => {
         let newLatestSurvey = {}
         switch (answer) {
           case ANSWER_ENUM.NO:
-            return { ...latestSurvey, yes: (latestSurvey?.yes || 0) + 1 }
+            return { ...latestSurvey, no: (latestSurvey?.no || 0) + 1 }
           case ANSWER_ENUM.YES:
             return { ...latestSurvey, yes: (latestSurvey?.yes || 0) + 1 }
         }
