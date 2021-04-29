@@ -1,4 +1,3 @@
-
 import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -15,17 +14,17 @@ const useFanbandSocket = () => {
   const inAreaHandler = useCallback((statistics) => {
     dispatch(updateFanbandsStatistics(statistics))
   }, [dispatch])
-  useSocket(WS_EVENTS.FANBAND_IN_AREA, inAreaHandler);
+  useSocket(WS_EVENTS.FANBAND_IN_AREA, inAreaHandler)
 
   const statusHandler = useCallback((statistics) => {
     dispatch(updateFanbandsStatistics(statistics))
   }, [dispatch])
-  useSocket(WS_EVENTS.FANBAND_STATUS, statusHandler);
+  useSocket(WS_EVENTS.FANBAND_STATUS, statusHandler)
 
   const reactHandler = useCallback(({ id, type }) => {
     try {
-      const { results = [] } = notifications[type];
-      const { latest = {} } = notifications;
+      const { results = [] } = notifications[type]
+      const { latest = {} } = notifications
 
       const newNotifications = results.map((item) => {
         if (item.id === id) {
@@ -34,7 +33,7 @@ const useFanbandSocket = () => {
             opened: (item?.opened || 0) + 1
           }
         }
-        return item;
+        return item
       })
       dispatch(setNotifications(type, newNotifications))
 
@@ -49,43 +48,33 @@ const useFanbandSocket = () => {
       console.log(error)
     }
   }, [notifications, dispatch])
-  useSocket(WS_EVENTS.FANBAND_REACT, reactHandler);
+  useSocket(WS_EVENTS.FANBAND_REACT, reactHandler)
 
   const answerHandler = useCallback(({ id, type, answer }) => {
     try {
-      const { results = [] } = notifications[type];
-      const { latestSurvey = {} } = notifications;
+      const { results = [] } = notifications[type]
+      const { latestSurvey = {} } = notifications
 
       const newNotifications = results.map((item) => {
         if (item.id === id) {
-          if (answer === '1') {
-            return {
-              ...item,
-              yes: (item?.yes || 0) + 1
-            }
-          } else {
-            return {
-              ...item,
-              no: (item?.no || 0) + 1
-            }
+          switch (answer) {
+            case ANSWER_ENUM.NO:
+              return { ...item, yes: (item?.yes || 0) + 1 }
+            case ANSWER_ENUM.YES:
+              return { ...item, yes: (item?.yes || 0) + 1 }
           }
         }
-        return item;
+        return item
       })
       dispatch(setNotifications(type, newNotifications))
 
       if (latestSurvey.id === id) {
         let newLatestSurvey = {}
-        if (answer === '1') {
-          newLatestSurvey = {
-            ...latestSurvey,
-            yes: (latestSurvey?.yes || 0) + 1
-          }
-        } else {
-          newLatestSurvey = {
-            ...latestSurvey,
-            no: (latestSurvey?.no || 0) + 1
-          }
+        switch (answer) {
+          case ANSWER_ENUM.NO:
+            return { ...latestSurvey, yes: (latestSurvey?.yes || 0) + 1 }
+          case ANSWER_ENUM.YES:
+            return { ...latestSurvey, yes: (latestSurvey?.yes || 0) + 1 }
         }
         dispatch(setLatestNotification(type, newLatestSurvey))
       }
@@ -93,7 +82,7 @@ const useFanbandSocket = () => {
       console.log(error)
     }
   }, [notifications, dispatch])
-  useSocket(WS_EVENTS.FANBAND_ANSWER, answerHandler);
+  useSocket(WS_EVENTS.FANBAND_ANSWER, answerHandler)
 }
 
-export default useFanbandSocket;
+export default useFanbandSocket

@@ -1,4 +1,3 @@
-
 import LINKS from 'utils/constants/links'
 
 const ALERT_TYPES = {
@@ -31,7 +30,13 @@ const ALERT_TYPES_ARRAY = [
   ALERT_TYPES.PROMO,
 ]
 
+const ANSWER_ENUM = {
+  NO: 0,
+  YES: 1,
+}
+
 export {
   ALERT_TYPES,
-  ALERT_TYPES_ARRAY
+  ALERT_TYPES_ARRAY,
+  ANSWER_ENUM
 }
