@@ -33,6 +33,7 @@ const ALERT_TYPES_ARRAY = [
 const ANSWER_ENUM = {
   NO: 0,
   YES: 1,
+  IGNORED: 2,
 }
 
 export {

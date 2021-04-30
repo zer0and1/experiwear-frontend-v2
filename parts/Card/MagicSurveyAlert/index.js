@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import MagicSurveyInfo from 'parts/Card/MagicSurveyInfo'
 import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
+import { ANSWER_ENUM } from 'utils/constants/alert-types'
 import { ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
 import getPercent from 'utils/helpers/getPercent'
 
@@ -48,7 +49,8 @@ const MagicSurveyAlert = ({ item }) => {
   const classes = useStyles()
   const { statistics: { total = 0 } } = useSelector(state => state.fanbands)
 
-  const responseTimeArray = item?.surveyAnswers?.map(i => moment(i.createdAt).diff(moment(item.createdAt))) || []
+  const filteredSurveyAnswers = item?.surveyAnswers?.filter(i => i.answer !== ANSWER_ENUM.IGNORED) || []
+  const responseTimeArray = filteredSurveyAnswers.map(i => moment(i.createdAt).diff(moment(item.createdAt)))
   const responseTimeArraySorted = responseTimeArray.sort()
 
   const mid = Math.ceil(responseTimeArraySorted.length / 2)
@@ -61,7 +63,7 @@ const MagicSurveyAlert = ({ item }) => {
     <div className={classes.item}>
       <div className={classes.leftContainer}>
         <img
-          alt='news image'
+          alt="news image"
           src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
           className={classes.image}
         />
@@ -70,21 +72,21 @@ const MagicSurveyAlert = ({ item }) => {
 
       <div className={classes.rightContainer}>
         <MagicAlertStatus
-          title='Sent:'
+          title="Sent:"
           value={item?.sent || 0}
           percent={getPercent(item?.sent || 0, total)}
         />
         <MagicAlertStatus
-          title='Open:'
+          title="Open:"
           value={item?.received || 0}
           percent={getPercent(item?.received || 0, item?.sent || 0)}
         />
         <MagicAlertStatus
-          title='AVG:'
+          title="AVG:"
           value={`${moment.duration(avgAnswerTime).asSeconds().toFixed(2)}s`}
         />
         <MagicAlertStatus
-          title='MD:'
+          title="MD:"
           value={`${moment.duration(mdAnswerTime).asSeconds().toFixed(2)}s`}
         />
       </div>
