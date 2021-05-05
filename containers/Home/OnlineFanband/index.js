@@ -53,21 +53,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 36,
     fontWeight: 'bold'
   }
-}));
+}))
 
 const OnlineFanband = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   const [openModal, setOpenModal] = useState(false)
 
   const { statistics: { online = 0, inArea = 0 } } = useSelector(state => state.fanbands);
 
+  const inAreaPercentage = getPercent(inArea, online)
+  const inAreaChartData = inAreaPercentage > 100 ? 100 : inAreaPercentage // to ignore > 100% situations
   return (
     <HomeCardWrapper
-      title='Online Fanbands in Arena'
-      subTitle='Current Game'
+      title="Online Fanbands in Arena"
+      subTitle="Current Game"
     >
       <Typography
-        color='textPrimary'
+        color="textPrimary"
         className={classes.title}
       >
         {inArea}
@@ -79,18 +81,18 @@ const OnlineFanband = () => {
       </Typography>
       <div className={classes.chart}>
         <div className={classes.chartLabel}>
-          <Typography color='textPrimary'>
+          <Typography color="textPrimary">
             Fanbands in Arena
           </Typography>
-          <Typography color='textPrimary' className={classes.percent}>
-            {`${getPercent(inArea, online)}%`}
+          <Typography color="textPrimary" className={classes.percent}>
+            {`${inAreaChartData}%`}
           </Typography>
         </div>
         <Doughnut
           data={{
             labels: false,
             datasets: [{
-              data: [inArea, online - inArea, (online * 20) / 100,],
+              data: [inAreaChartData, 100 - inAreaChartData],
               backgroundColor: ['#7961f9', 'transparent', 'transparent'],
               borderColor: ['#7961f9', 'transparent', 'transparent'],
               hoverBackgroundColor: ['#7961f9', 'transparent', 'transparent'],
@@ -117,7 +119,7 @@ const OnlineFanband = () => {
         />
       }
     </HomeCardWrapper>
-  );
-};
+  )
+}
 
-export default memo(OnlineFanband);
+export default memo(OnlineFanband)
