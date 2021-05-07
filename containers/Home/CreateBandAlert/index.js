@@ -45,7 +45,7 @@ const CreateBandAlert = () => {
   const classes = useStyles();
   const router = useRouter();
 
-  const { all: { results } } = useSelector(state => state.notifications)
+  const { all: { total } } = useSelector(state => state.notifications)
   const [page, setPage] = useState('');
 
 
@@ -65,7 +65,7 @@ const CreateBandAlert = () => {
         color='textPrimary'
         className={classes.title}
       >
-        {results.length}
+        {total}
       </Typography>
       <Typography
         className={classes.description}
