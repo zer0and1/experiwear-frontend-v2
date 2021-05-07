@@ -17,13 +17,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: theme.spacing(2)
   }
-}));
+}))
 
-const CannedList = ({
-  setSelectedItem
-}) => {
-  const dispatch = useDispatch();
-  const classes = useStyles();
+const CannedList = ({ setSelectedItem, setFocus }) => {
+  const dispatch = useDispatch()
+  const classes = useStyles()
 
   const { canned: { results, total } } = useSelector(state => state.notifications)
 
@@ -33,6 +31,7 @@ const CannedList = ({
 
   const editHandler = useCallback((item) => {
     setSelectedItem(item)
+    setFocus()
   }, [setSelectedItem])
 
   const moreHandler = () => {
@@ -42,7 +41,7 @@ const CannedList = ({
   return (
     <Card className={classes.card}>
       <CardContent>
-        <MagicCardHeader title='Active Saved Alerts' />
+        <MagicCardHeader title="Active Saved Alerts"/>
         {
           results.map((item, index) => (
             <MagicCannedAlert
@@ -56,7 +55,7 @@ const CannedList = ({
           results.length < total &&
           <div className={classes.button}>
             <ContainedButton
-              color='green'
+              color="green"
               onClick={moreHandler}
             >
               More
@@ -65,7 +64,7 @@ const CannedList = ({
         }
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default memo(CannedList);
+export default memo(CannedList)

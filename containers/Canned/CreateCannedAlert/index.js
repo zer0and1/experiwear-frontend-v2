@@ -21,46 +21,43 @@ import { getEnglishDateWithTime } from 'utils/helpers/time'
 const schema = yup.object().shape({
   title: TITLE_VALID,
   body: STRING_VALID
-});
+})
 
-const CreateCannedAlert = ({
-  selectedItem,
-  setSelectedItem
-}) => {
-  const classes = useFormStyles();
-  const dispatch = useDispatch();
-  const { changeLoadingStatus } = useLoading();
+const CreateCannedAlert = ({ selectedItem, setSelectedItem, inputRef }) => {
+  const classes = useFormStyles()
+  const dispatch = useDispatch()
+  const { changeLoadingStatus } = useLoading()
 
   const { canned: { results } } = useSelector(state => state.notifications)
-  const [file, setFile] = useState(null);
-  const [fileBuffer, setFileBuffer] = useState('');
+  const [file, setFile] = useState(null)
+  const [fileBuffer, setFileBuffer] = useState('')
 
   const { control, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema)
-  });
+  })
 
   const onSubmit = async (data) => {
     changeLoadingStatus(true)
     try {
-      let formData = new FormData();
-      formData.append('title', data.title);
-      formData.append('body', data.body);
+      let formData = new FormData()
+      formData.append('title', data.title)
+      formData.append('body', data.body)
       if (!isEmpty(file)) {
-        formData.append('file', file);
+        formData.append('file', file)
       }
-      let response;
+      let response
       if (isEmpty(selectedItem)) {
-        response = await cannedAPI.createCanned(formData);
-        initData();
+        response = await cannedAPI.createCanned(formData)
+        initData()
         dispatch(getCannedNotifications(results.length + 1))
       } else {
-        response = await cannedAPI.editCanned(selectedItem.id, formData);
+        response = await cannedAPI.editCanned(selectedItem.id, formData)
         setSelectedItem({})
-        initData();
+        initData()
         dispatch(getCannedNotifications(results.length))
       }
 
-      const { message } = response;
+      const { message } = response
       showSuccessToast(message)
     } catch (error) {
       if (error.response) {
@@ -69,7 +66,7 @@ const CreateCannedAlert = ({
       }
     }
     changeLoadingStatus(false)
-  };
+  }
 
   useEffect(() => {
     if (!isEmpty(selectedItem)) {
@@ -80,11 +77,11 @@ const CreateCannedAlert = ({
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedItem]);
+  }, [selectedItem])
 
   const initData = () => {
     setFile(null)
-    setFileBuffer('');
+    setFileBuffer('')
     reset({
       title: '',
       body: ''
@@ -95,7 +92,7 @@ const CreateCannedAlert = ({
     <Card>
       <CardContent>
         <MagicCardHeader
-          title='Create Saved Alert'
+          title="Create Saved Alert"
           subTitle={getEnglishDateWithTime(new Date())}
         />
         <form
@@ -104,29 +101,29 @@ const CreateCannedAlert = ({
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
-            as={<MagicTextField />}
-            name='title'
-            label='Alert Title'
+            as={<MagicTextField inputRef={inputRef}/>}
+            name="title"
+            label="Alert Title"
             labelWidth={175}
             error={errors.title?.message}
             className={classes.input}
             control={control}
-            defaultValue=''
+            defaultValue=""
           />
           <Controller
-            as={<MagicTextField />}
+            as={<MagicTextField/>}
             multiline
             rows={5}
-            name='body'
-            label='Alert Body Text'
+            name="body"
+            label="Alert Body Text"
             labelWidth={175}
             error={errors.body?.message}
             className={classes.input}
             control={control}
-            defaultValue=''
+            defaultValue=""
           />
           <MagicImageField
-            label='Select Image'
+            label="Select Image"
             labelWidth={175}
             file={file}
             setFile={setFile}
@@ -135,7 +132,7 @@ const CreateCannedAlert = ({
           />
           <div className={classes.buttonContainer}>
             <ContainedButton
-              type='submit'
+              type="submit"
               className={classes.button}
             >
               Saved Alerts
@@ -144,7 +141,7 @@ const CreateCannedAlert = ({
         </form>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default memo(CreateCannedAlert);
+export default memo(CreateCannedAlert)
