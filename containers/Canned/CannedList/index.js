@@ -32,7 +32,7 @@ const CannedList = ({ setSelectedItem, setFocus }) => {
   const editHandler = useCallback((item) => {
     setSelectedItem(item)
     setFocus()
-  }, [setSelectedItem])
+  }, [setSelectedItem, setFocus])
 
   const moreHandler = () => {
     dispatch(getMoreCannedNotifications())
