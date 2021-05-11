@@ -6,12 +6,10 @@ import * as cannedAPI from 'services/api-canned'
 import { getCannedNotifications } from 'actions/getCannedNotifications'
 import ContainedButton from 'components/UI/Buttons/ContainedButton'
 import MagicAlertInfo from 'parts/Card/MagicAlertInfo'
-import MagicAlertStatus from 'parts/Card/MagicAlertStatus'
 import MagicConfirmDialog from 'parts/MagicConfirmDialog'
 import useLoading from 'utils/hooks/useLoading'
 import { showSuccessToast, showErrorToast } from 'utils/helpers/toast'
 import { ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH } from 'utils/constants/image-paths'
-import getPercent from 'utils/helpers/getPercent'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -76,7 +74,6 @@ const MagicCannedAlert = ({
   const { changeLoadingStatus } = useLoading();
 
   const { canned: { results } } = useSelector(state => state.notifications)
-  const { statistics: { total = 0 } } = useSelector(state => state.fanbands);
   const [openModal, setOpenModal] = useState(false)
 
   const sendHandler = useCallback(async () => {
@@ -149,19 +146,6 @@ const MagicCannedAlert = ({
             Delete
           </ContainedButton>
         </div>
-      </div>
-
-      <div className={classes.rightContainer}>
-        <MagicAlertStatus
-          title='Sent:'
-          value={item?.sent || 0}
-          percent={getPercent(item?.sent, total)}
-        />
-        <MagicAlertStatus
-          title='Open:'
-          value={item?.received || 0}
-          percent={getPercent(item?.received, item?.sent || 0)}
-        />
       </div>
       {openModal &&
         <MagicConfirmDialog
