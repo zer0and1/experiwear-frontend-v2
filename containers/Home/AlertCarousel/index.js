@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme) => ({
     height: 320,
     objectFit: 'cover',
   },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    height: '100%',
+    background: 'linear-gradient(0deg, rgba(73,73,73,0.55) 0%, rgba(100,100,100,0.20) 100%)',
+    width: '100%',
+  },
   container: {
     position: 'absolute',
     display: 'flex',
@@ -88,20 +95,23 @@ const AlertCarousel = () => {
                 src={item.imageUrl || ALERT_IMAGE_PLACEHOLDER_IMAGE_PATH}
                 className={classes.image}
               />
-              <div className={classes.container}>
-                <Typography className={clsx(commonClasses.breakWords, classes.title)}>
-                  {item.title}
-                </Typography>
-                <Typography className={clsx(commonClasses.breakWords, classes.text)}>
-                  {item.body}
-                </Typography>
+              <div className={classes.overlay}>
+                <div className={classes.container}>
+                  <Typography className={clsx(commonClasses.breakWords, classes.title)}>
+                    {item.title}
+                  </Typography>
+                  <Typography className={clsx(commonClasses.breakWords, classes.text)}>
+                    {item.body}
+                  </Typography>
+                </div>
+                <LinkButton
+                  href={LINKS.NEWS.HREF}
+                  className={classes.addButton}
+                >
+                  + Create News Alert
+                </LinkButton>
               </div>
-              <LinkButton
-                href={LINKS.NEWS.HREF}
-                className={classes.addButton}
-              >
-                + Create News Alert
-              </LinkButton>
+
             </div>
           )
         }
@@ -110,4 +120,4 @@ const AlertCarousel = () => {
   );
 };
 
-export default memo(AlertCarousel);
+export default  memo(AlertCarousel);
