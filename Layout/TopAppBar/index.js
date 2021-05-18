@@ -8,8 +8,10 @@ import {
 } from '@material-ui/core'
 
 import { logoutUser } from 'actions/auth'
+import { setSideDrawer } from 'actions/sidebar'
 import BandLogo from 'components/BandLogo'
 import BadgeChatIcon from './BadgeChatIcon'
+import { Dehaze } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +44,14 @@ const useStyles = makeStyles(theme => ({
     height: 34,
     marginLeft: theme.spacing(1)
   },
+  drawerBtn: {
+    marginRight:  theme.spacing(1),
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+  }
+
 }));
 
 const TopAppBar = () => {
@@ -54,8 +64,14 @@ const TopAppBar = () => {
     dispatch(logoutUser());
   }, [dispatch]);
 
+  const sideDrawerHandler = useCallback(() => {
+    dispatch(setSideDrawer(true));
+  }, [dispatch]);
   return (
     <Paper className={classes.root}>
+      <div className={classes.drawerBtn} onClick={sideDrawerHandler}>
+        <Dehaze />
+      </div>
       <div />
       <BandLogo />
       <div className={classes.userInfo}>
