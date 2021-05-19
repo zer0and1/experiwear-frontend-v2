@@ -7,6 +7,8 @@ import {
   ListItemText
 } from '@material-ui/core'
 import clsx from 'clsx'
+import { setSideDrawer } from "actions/sidebar";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -32,9 +34,12 @@ const SideDrawerListItem = ({
 }) => {
   const classes = useStyles();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const listHandler = useCallback(() => {
     router.push(menu.HREF)
+    dispatch(setSideDrawer(false));
+
   }, [menu, router]);
 
   const selected = useMemo(() => router.pathname === menu.HREF, [router, menu]);

@@ -1,5 +1,6 @@
 
 import { memo } from 'react'
+import clsx from 'clsx';
 import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
@@ -20,11 +21,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
   },
   container: {
-    width: `calc(100% - ${theme.custom.layout.drawerWidth}px)`,
     minHeight: '100vh',
     padding: theme.spacing(3, 4),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
     marginLeft: theme.custom.layout.drawerWidth,
-  }
+  },
+  containerShift: {
+    [theme.breakpoints.down('sm')]: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }
+  },
 }));
 
 const Layout = ({
@@ -33,6 +46,7 @@ const Layout = ({
   const classes = useStyles();
   const { loadingStatus } = useSelector(state => state.loading);
   const { isAuthenticated } = useSelector(state => state.auth);
+  const { sideDrawer } = useSelector(state => state.sidebar);
 
   return (
     isAuthenticated
@@ -43,7 +57,9 @@ const Layout = ({
             <MagicLoading loading={loadingStatus} />
           }
           <SideDrawer />
-          <div className={classes.container}>
+          <div className={clsx(classes.container, {
+            [classes.containerShift]: !sideDrawer,
+          })}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TopAppBar />

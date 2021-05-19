@@ -57,12 +57,12 @@ const InitProvider = () => {
       console.log(error)
       dispatch(setCurrentUser({}))
       dispatch(setIsAuthenticated(false))
+      router.push(LINKS.SIGN_IN.HREF)
     }
   }
 
   useEffect(() => {
     const isAuthenticated = isServer() ? '' : localStorage.isAuthenticated;
-
     if (isAuthenticated === 'true') {
       if (AUTH_ROUTES.includes(router.pathname)) {
         router.push(LINKS.HOME.HREF)
